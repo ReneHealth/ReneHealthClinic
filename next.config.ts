@@ -9,13 +9,16 @@ const wpHost = (() => {
 })();
 
 const nextConfig: NextConfig = {
-  trailingSlash: true,
   images: {
-      remotePatterns: [
-      
+    unoptimized: true,
+    remotePatterns: [
+      { protocol: "http", hostname: wpHost },
       { protocol: "https", hostname: wpHost },
     ],
-    
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    qualities: [75, 85, 90],
   },
   redirects: async () => [
     {
