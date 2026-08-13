@@ -43,7 +43,8 @@ export async function POST(request: Request) {
     }
 
     const formData = new FormData();
-
+    formData.append("_wpcf7", CONTACT_FORM_7_ID);
+formData.append("_wpcf7_unit_tag", `wpcf7-f${CONTACT_FORM_7_ID}-o1`);
     formData.append("name", name);
     formData.append("email", email);
     formData.append("phone", phone || "");
