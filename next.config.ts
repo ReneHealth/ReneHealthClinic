@@ -10,8 +10,7 @@ const wpHost = (() => {
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
-    remotePatterns: [
+      remotePatterns: [
       { protocol: "http", hostname: wpHost },
       { protocol: "https", hostname: wpHost },
     ],
