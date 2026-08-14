@@ -192,18 +192,7 @@ export default function Contact({ content }: { content: ContactSection }) {
               </select>
             </label>
 
-            <label className="block">
-              <span className="text-[16px] font-bold">
-                Date &amp; Time
-              </span>
-
-              <input
-                type="date"
-                name="dateTime"
-                className="input-line mt-2"
-                disabled={isSubmitting}
-              />
-            </label>
+           
           </div>
 
           <label className="mt-10 block">
@@ -239,7 +228,7 @@ export default function Contact({ content }: { content: ContactSection }) {
             disabled={isSubmitting}
             className="btn-3d mt-10 rounded-full bg-aqua px-8 py-3.5 text-sm font-medium text-ink transition-all duration-500 hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isSubmitting ? "Sending..." : "Send Message"}
+            {isSubmitting ? "Sending..." : "SUBMIT YOUR REQUEST"}
           </button>
         </form>
       </div>
