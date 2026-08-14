@@ -72,7 +72,11 @@ export default function MentalSubPageSections({
     sections.push({
       key: "process",
       order: content.process.order,
-      node: <FeatureCards content={content.process} numbered />,
+      node: (
+        <ScrollScene>
+          <FeatureCards content={content.process} />
+        </ScrollScene>
+      ),
     });
   }
 

@@ -78,7 +78,7 @@ export default function InsuranceSubPageSections({
     });
   }
 
-  if (whoWeBill) {
+  if (whoWeBill && content.showWhoWeBill !== false) {
     sections.push({
       key: "whoWeBill",
       node: (

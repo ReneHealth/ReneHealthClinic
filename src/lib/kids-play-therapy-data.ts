@@ -11,6 +11,7 @@ const p = (text: string) => `<p>${text}</p>`;
 
 export const kidsPlayTherapy: KidsPlayTherapyContent = {
   hero: {
+    logo: null,
     label: "Counselling",
     heading: "Kids & Play Therapy",
     paragraph: p(

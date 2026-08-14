@@ -58,7 +58,9 @@ export default async function HomePage() {
           </ScrollScene>
         ) : null}
         {home.goodToKnow ? (
-          <FeatureCards content={home.goodToKnow} numbered />
+          <ScrollScene>
+            <FeatureCards content={home.goodToKnow} />
+          </ScrollScene>
         ) : null}
         {home.faq ? (
           <ScrollScene>

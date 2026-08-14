@@ -326,7 +326,10 @@ export function toHome(data: WpHomeQuery): HomeContent {
             label: str(p?.teamLabel),
             heading: str(p?.teamHeading),
             paragraph: str(p?.teamParagraph),
-            cta: cta(p?.teamButtonLabel, p?.teamButtonUrl),
+            cta:
+              p?.showTeamButton === false
+                ? null
+                : cta(p?.teamButtonLabel, p?.teamButtonUrl),
             members,
             categories: teamCategoryOptions(data.teamCategories),
           }
@@ -437,6 +440,7 @@ function toCounsellingHub(
             paragraph: str(p?.heroParagraph),
             cta: cta(p?.heroButtonLabel, p?.heroButtonUrl),
             image: image(p?.heroImage),
+            logo: image(p?.heroLogo) ?? null,
           }
         : null,
 
@@ -572,6 +576,7 @@ export function toContactUs(data: WpContactUsQuery): ContactUsContent {
             paragraph: str(p?.heroParagraph),
             cta: cta(p?.heroButtonLabel, p?.heroButtonUrl),
             image: image(p?.heroImage),
+            logo: image(p?.heroLogo) ?? null,
           }
         : null,
 
@@ -681,6 +686,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
             paragraph: str(p?.heroParagraph),
             cta: cta(p?.heroButtonLabel, p?.heroButtonUrl),
             image: image(p?.heroImage),
+            logo: image(p?.heroLogo) ?? null,
           }
         : null,
 
@@ -793,6 +799,7 @@ export function toKidsPlayTherapy(
             paragraph: str(p?.heroParagraph),
             cta: cta(p?.heroButtonLabel, p?.heroButtonUrl),
             image: image(p?.heroImage),
+            logo: image(p?.heroLogo) ?? null,
           }
         : null,
 

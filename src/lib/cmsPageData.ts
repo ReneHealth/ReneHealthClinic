@@ -89,6 +89,7 @@ export type CounsellingHeroType = {
   paragraph?: string;
   cta?: CtaType;
   image?: ImageType;
+  logo?: ImageType;
 };
 
 export type NoticeItemType = {
@@ -270,6 +271,11 @@ export const COMMON_PAGE_QUERY = `
           heroButtonLabel
           heroButtonUrl
           heroImage {
+            node {
+              ...Img
+            }
+          }
+          heroLogo {
             node {
               ...Img
             }
@@ -550,6 +556,7 @@ export function formatCommonPageData(data: any): CommonPageType {
             paragraph: str(p?.heroParagraph),
             cta: cta(p?.heroButtonLabel, p?.heroButtonUrl),
             image: image(p?.heroImage),
+            logo: image(p?.heroLogo),
           }
         : null,
       notice: hasNotice

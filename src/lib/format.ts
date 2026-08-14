@@ -58,6 +58,10 @@ export function cta(
   };
 }
 
+export function bookNowCta(url?: string | null): CtaLink | undefined {
+  return cta("Book Now", url);
+}
+
 export function image(
   field?: WpImageField | WpImageNode | null,
 ): MediaImage | undefined {

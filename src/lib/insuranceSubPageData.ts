@@ -62,6 +62,7 @@ export type HeroSectionType = {
   paragraph?: string;
   cta?: CtaType;
   image?: ImageType;
+  logo?: ImageType;
 };
 
 export type IconTextItemType = {
@@ -135,6 +136,7 @@ export type InsuranceSubPageContentType = {
   splitGrid?: SplitCardGridSectionType | null;
   steps?: StepScrollerSectionType | null;
   support?: SupportSectionType | null;
+  showWhoWeBill?: boolean;
   panel?: CtaPanelSectionType | null;
   faq?: FaqSectionType | null;
   cta?: CtaBannerType | null;
@@ -164,6 +166,11 @@ export const INSURANCE_SUB_PAGE_QUERY = `
           heroButtonLabel
           heroButtonUrl
           heroImage {
+            node {
+              ...Img
+            }
+          }
+          heroLogo {
             node {
               ...Img
             }
@@ -223,6 +230,8 @@ export const INSURANCE_SUB_PAGE_QUERY = `
             buttonLabel
             buttonUrl
           }
+
+          showWhoWeBill
 
           panelOrder
           panelLabel
@@ -292,6 +301,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
             paragraph: str(p?.heroParagraph),
             cta: cta(p?.heroButtonLabel, p?.heroButtonUrl),
             image: image(p?.heroImage),
+            logo: image(p?.heroLogo),
           }
         : null,
       highlights: hasHighlights
@@ -347,6 +357,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
             })),
           }
         : null,
+      showWhoWeBill: p?.showWhoWeBill !== false,
       panel: hasPanel
         ? {
             order: toOrder(p?.panelOrder),

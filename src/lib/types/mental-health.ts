@@ -1,6 +1,7 @@
 import type { CtaLink, FaqSection, Html, MediaImage, TeamSection } from "./common";
 
 export interface CounsellingHero {
+  logo: MediaImage | null;
   label: string;
   heading: string;
   paragraph: Html;

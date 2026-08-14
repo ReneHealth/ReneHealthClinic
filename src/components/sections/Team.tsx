@@ -10,6 +10,7 @@ import SplitReveal from "@/components/ui/SplitReveal";
 import TiltCard from "@/components/ui/TiltCard";
 import TeamPopup from "@/components/sections/TeamPopup";
 import { useRailScrollChain } from "@/lib/useRailScrollChain";
+import { bookNowCta } from "@/lib/format";
 
 export type ImageDataType = {
   src?: string;
@@ -34,6 +35,7 @@ export type TeamPopupDataType = {
   designation?: string;
   image?: ImageDataType | null;
   introduction?: string;
+  buttonUrl?: string;
 };
 
 export type TeamMemberItemType = {
@@ -371,6 +373,7 @@ export default function Team({
                 const memberBio = member?.bio ?? "";
                 const memberImageSrc = member?.image?.src ?? "";
                 const memberImageAlt = member?.image?.alt || memberName;
+                const booking = bookNowCta(member?.popup?.buttonUrl);
 
                 return (
                   <motion.div
@@ -446,6 +449,20 @@ export default function Team({
                         html={memberBio}
                         className="mt-4 text-[16px] leading-[normal] [display:-webkit-box] [-webkit-line-clamp:3] [-webkit-box-orient:vertical] overflow-hidden"
                       />
+                      {booking ? (
+                        <div
+                          className="mt-auto pt-5"
+                          onClick={(e) => e.stopPropagation()}
+                          onKeyDown={(e) => e.stopPropagation()}
+                        >
+                          <Button
+                            cta={booking}
+                            variant="solid"
+                            className="w-full"
+                            size="sm"
+                          />
+                        </div>
+                      ) : null}
                     </TiltCard>
                   </motion.div>
                 );

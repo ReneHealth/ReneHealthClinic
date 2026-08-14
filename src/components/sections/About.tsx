@@ -44,16 +44,16 @@ export default function About({ content }: { content: AboutSection }) {
           >
             <TiltCard
               as="article"
-              className="group flex h-full flex-col rounded-xl bg-foam px-5 pb-5 pt-6"
+              className="group flex h-full flex-col rounded-xl bg-foam px-5 pb-5 pt-5"
             >
-              <div className="mx-auto flex h-[300px] shrink-0 items-center justify-center">
+              <div className="mx-auto rounded-2xl overflow-hidden flex w-full shrink-0 items-center justify-center">
                 {card.image ? (
                   <Image
                     src={card.image.src}
                     alt={card.image.alt || `${card.titleA} ${card.titleB}`}
                     width={card.image.width}
                     height={card.image.height}
-                    className="h-auto w-[285px] drop-shadow-[0_18px_28px_rgba(20,41,43,0.18)] transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    className="h-auto w-full drop-shadow-[0_18px_28px_rgba(20,41,43,0.18)] transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                   />
                 ) : null}
               </div>

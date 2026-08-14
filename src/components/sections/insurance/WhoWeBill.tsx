@@ -211,7 +211,7 @@ export default function WhoWeBill({ content }: { content: WhoWeBillSection }) {
           ) : tab.html ? (
             <RichText
               html={tab.html}
-              className="mt-6 rounded-2xl bg-foam p-6 text-[16px] leading-[normal] md:p-10 [&_li]:mb-2.5 [&_li]:break-inside-avoid [&_ul]:gap-x-10 sm:[&_ul]:columns-2 lg:[&_ul]:columns-3 [&_li]:before:mr-2 [&_li]:before:opacity-40 [&_li]:before:content-['•']"
+              className="mt-6 rounded-2xl bg-foam p-6 text-[16px] leading-[normal] md:p-10 [&_li]:mb-2.5 [&_li]:break-inside-avoid [&_ul]:gap-x-10 sm:[&_ul]:columns-2 lg:[&_ul]:columns-3"
             />
           ) : tab.providers.length === 0 ? (
             <p className="mt-6 py-6 text-center opacity-50">

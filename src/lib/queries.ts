@@ -263,6 +263,7 @@ export const HOME_QUERY = `
           teamParagraph
           teamButtonLabel
           teamButtonUrl
+          showTeamButton
 
           videoFile {
             node {
@@ -370,6 +371,11 @@ export const CONTACT_US_QUERY = `
               ...Img
             }
           }
+          heroLogo {
+            node {
+              ...Img
+            }
+          }
 
           infoLabel
           infoHeading
@@ -436,6 +442,11 @@ export const INSURANCE_QUERY = `
           heroButtonLabel
           heroButtonUrl
           heroImage {
+            node {
+              ...Img
+            }
+          }
+          heroLogo {
             node {
               ...Img
             }
@@ -548,6 +559,11 @@ export const KIDS_PLAY_THERAPY_QUERY = `
           heroButtonLabel
           heroButtonUrl
           heroImage {
+            node {
+              ...Img
+            }
+          }
+          heroLogo {
             node {
               ...Img
             }
@@ -783,6 +799,11 @@ export const MENTAL_HEALTH_QUERY = `
               ...Img
             }
           }
+          heroLogo {
+            node {
+              ...Img
+            }
+          }
 
           introLabel
           introHeading
@@ -895,6 +916,11 @@ export const PHYSICAL_HEALTH_QUERY = `
           heroButtonLabel
           heroButtonUrl
           heroImage {
+            node {
+              ...Img
+            }
+          }
+          heroLogo {
             node {
               ...Img
             }

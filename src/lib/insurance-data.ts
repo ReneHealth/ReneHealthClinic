@@ -21,6 +21,7 @@ const listTab = (items: string[]) => ({
 
 export const insurance: InsuranceContent = {
   hero: {
+    logo: null,
     label: "Insurance",
     heading: "Direct Billing & Insurance Coverage",
     paragraph: p(

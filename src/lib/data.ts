@@ -463,6 +463,7 @@ const supportIcons = [
 
 export const mentalHealth: MentalHealthContent = {
   hero: {
+    logo: null,
     label: "Counselling Hero Label",
     heading: "Counselling Hero Heading",
     paragraph: p("Counselling Hero Content"),
@@ -576,6 +577,7 @@ export const mentalHealth: MentalHealthContent = {
 
 export const physicalHealth: PhysicalHealthContent = {
   hero: {
+    logo: null,
     label: "Physical Health Hero Label",
     heading: "Physical Health Hero Heading",
     paragraph: p("Physical Health Hero Content"),

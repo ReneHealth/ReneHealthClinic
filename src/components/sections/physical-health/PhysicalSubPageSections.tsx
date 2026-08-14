@@ -105,7 +105,11 @@ export default function PhysicalSubPageSections({
     sections.push({
       key: "benefits",
       order: content.benefits.order,
-      node: <FeatureCards content={content.benefits} />,
+      node: (
+        <ScrollScene>
+          <FeatureCards content={content.benefits} />
+        </ScrollScene>
+      ),
     });
   }
 

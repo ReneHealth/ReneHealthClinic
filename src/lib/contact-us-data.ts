@@ -11,6 +11,7 @@ const p = (text: string) => `<p>${text}</p>`;
 
 export const contactUs: ContactUsContent = {
   hero: {
+    logo: null,
     label: "Contact",
     heading: "We're Here to Help",
     paragraph: p(

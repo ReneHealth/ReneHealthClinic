@@ -105,6 +105,7 @@ export interface WpHomePage {
   teamParagraph: string | null;
   teamButtonLabel: string | null;
   teamButtonUrl: string | null;
+  showTeamButton: boolean | null;
 
   videoFile: { node: { mediaItemUrl: string | null } | null } | null;
   videoPoster: WpMediaNode | null;
@@ -156,6 +157,7 @@ export interface WpMentalHealthPage {
   heroButtonLabel: string | null;
   heroButtonUrl: string | null;
   heroImage: WpMediaNode | null;
+  heroLogo: WpMediaNode | null;
 
   introLabel: string | null;
   introHeading: string | null;
@@ -223,6 +225,7 @@ export interface WpContactUsPage {
   heroButtonLabel: string | null;
   heroButtonUrl: string | null;
   heroImage: WpMediaNode | null;
+  heroLogo: WpMediaNode | null;
 
   infoLabel: string | null;
   infoHeading: string | null;
@@ -255,6 +258,7 @@ export interface WpInsurancePage {
   heroButtonLabel: string | null;
   heroButtonUrl: string | null;
   heroImage: WpMediaNode | null;
+  heroLogo: WpMediaNode | null;
 
   coverageLabel: string | null;
   coverageHeading: string | null;
@@ -319,6 +323,7 @@ export interface WpKidsPlayTherapyPage {
   heroButtonLabel: string | null;
   heroButtonUrl: string | null;
   heroImage: WpMediaNode | null;
+  heroLogo: WpMediaNode | null;
 
   noticeLabel: string | null;
   noticeHeading: string | null;

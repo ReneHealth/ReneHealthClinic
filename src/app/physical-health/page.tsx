@@ -48,7 +48,11 @@ export default async function PhysicalHealthPage() {
             <Team content={page.team} scroll />
           </ScrollScene>
         ) : null}
-        {page.benefits ? <FeatureCards content={page.benefits} /> : null}
+        {page.benefits ? (
+          <ScrollScene>
+            <FeatureCards content={page.benefits} />
+          </ScrollScene>
+        ) : null}
         {page.faq ? (
           <ScrollScene>
             <Faq content={page.faq} className={"py-10 md:py-15"} />

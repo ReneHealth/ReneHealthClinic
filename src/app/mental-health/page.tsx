@@ -1,21 +1,21 @@
-import type { Metadata } from 'next';
-import { MetaData } from '@/lib/metadata';
-import JsonLd from '@/components/seo/JsonLd';
-import GlobalInnerHero from '@/components/sections/GlobalInnerHero';
-import PlaceToTalk from '@/components/sections/mental-health/PlaceToTalk';
-import SupportGrid from '@/components/sections/shared/SupportGrid';
-import WhatToExpect from '@/components/sections/mental-health/WhatToExpect';
-import FeatureCards from '@/components/sections/shared/FeatureCards';
-import CtaImageBanner from '@/components/sections/shared/CtaImageBanner';
-import Team from '@/components/sections/Team';
-import Faq from '@/components/sections/Faq';
-import ScrollScene from '@/components/ui/ScrollScene';
-import { getMentalHealthContent } from '@/lib/wp';
+import type { Metadata } from "next";
+import { MetaData } from "@/lib/metadata";
+import JsonLd from "@/components/seo/JsonLd";
+import GlobalInnerHero from "@/components/sections/GlobalInnerHero";
+import PlaceToTalk from "@/components/sections/mental-health/PlaceToTalk";
+import SupportGrid from "@/components/sections/shared/SupportGrid";
+import WhatToExpect from "@/components/sections/mental-health/WhatToExpect";
+import FeatureCards from "@/components/sections/shared/FeatureCards";
+import CtaImageBanner from "@/components/sections/shared/CtaImageBanner";
+import Team from "@/components/sections/Team";
+import Faq from "@/components/sections/Faq";
+import ScrollScene from "@/components/ui/ScrollScene";
+import { getMentalHealthContent } from "@/lib/wp";
 const FALLBACK: Metadata = {
-  title: 'Counselling & Wellness Support | Rene Health Clinic',
+  title: "Counselling & Wellness Support | Rene Health Clinic",
   description:
-    'Counselling in Coquitlam and online across BC. Individual, couples, family and kids counselling, ADHD and anger management, with direct billing and extended health coverage.',
-  alternates: { canonical: '/mental-health' }
+    "Counselling in Coquitlam and online across BC. Individual, couples, family and kids counselling, ADHD and anger management, with direct billing and extended health coverage.",
+  alternates: { canonical: "/mental-health" },
 };
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getMentalHealthContent();
@@ -48,10 +48,14 @@ export default async function MentalHealthPage() {
             <Team content={page.team} scroll />
           </ScrollScene>
         ) : null}
-        {page.benefits ? <FeatureCards content={page.benefits} /> : null}
+        {page.benefits ? (
+          <ScrollScene>
+            <FeatureCards content={page.benefits} />
+          </ScrollScene>
+        ) : null}
         {page.faq ? (
           <ScrollScene>
-            <Faq content={page.faq} className={'py-10 md:py-15'} />
+            <Faq content={page.faq} className={"py-10 md:py-15"} />
           </ScrollScene>
         ) : null}
         {page.cta ? <CtaImageBanner content={page.cta} /> : null}

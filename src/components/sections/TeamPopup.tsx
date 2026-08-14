@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import type { TeamMemberType } from "@/lib/teamContent";
 import RichText from "@/components/ui/RichText";
+import { getLenis } from "@/lib/lenis";
 
 interface TeamPopupProps {
   member: TeamMemberType | null;
@@ -48,40 +49,41 @@ const itemVariants: Variants = {
 
 export default function TeamPopup({ member, onClose }: TeamPopupProps) {
   const [isMounted, setIsMounted] = useState(false);
+  const onCloseRef = useRef(onClose);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!member) return;
-    const scrollY = window.scrollY;
-    const originalStyles = {
-      overflow: document.body.style.overflow,
-      position: document.body.style.position,
-      top: document.body.style.top,
-      width: document.body.style.width,
-    };
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
-    Object.assign(document.body.style, {
-      overflow: "hidden",
-      position: "fixed",
-      top: `-${scrollY}px`,
-      width: "100%",
-    });
+  const isOpen = !!member;
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const lenis = getLenis();
+    lenis?.stop();
+
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    root.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose();
+        onCloseRef.current();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      Object.assign(document.body.style, originalStyles);
-      window.scrollTo(0, scrollY);
+      root.style.overflow = previousOverflow;
+      lenis?.start();
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [member, onClose]);
+  }, [isOpen]);
   if (!isMounted) return null;
 
   return createPortal(

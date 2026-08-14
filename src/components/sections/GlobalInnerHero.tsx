@@ -8,6 +8,8 @@ import SplitReveal from "@/components/ui/SplitReveal";
 export type ImageDataType = {
   src?: string;
   alt?: string;
+  width?: number;
+  height?: number;
 };
 export type CtaLinkType = {
   href?: string;
@@ -15,6 +17,7 @@ export type CtaLinkType = {
   target?: string;
 };
 export type GlobalInnerHeroDataType = {
+  logo?: ImageDataType | null;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -31,6 +34,8 @@ export default function GlobalInnerHero({
 }: GlobalInnerHeroPropsType) {
   const introDone = useIntroDone();
   const typedContent = content;
+  const logo = typedContent?.logo ?? null;
+  const logoSrc = logo?.src ?? "";
   const label = typedContent?.label ?? "";
   const heading = typedContent?.heading ?? "";
   const paragraph = typedContent?.paragraph ?? "";
@@ -66,6 +71,18 @@ export default function GlobalInnerHero({
       <div className="absolute inset-0 bg-black opacity-30" />
       <div className="noise-layer absolute inset-0" aria-hidden="true" />
       <div className="relative z-10 flex flex-col items-center px-5 text-center text-white md:px-6">
+        {logoSrc ? (
+          <motion.div {...enter(0)} className="mb-5">
+            <Image
+              src={logoSrc}
+              alt={logo?.alt ?? ""}
+              width={logo?.width ?? 200}
+              height={logo?.height ?? 80}
+              priority
+              className="h-[60px] w-[180px] object-contain md:h-[80px] md:w-[220px]"
+            />
+          </motion.div>
+        ) : null}
         {label ? (
           <motion.p
             {...enter(0)}

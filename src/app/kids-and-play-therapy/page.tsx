@@ -1,23 +1,23 @@
-import type { Metadata } from 'next';
-import { MetaData } from '@/lib/metadata';
-import JsonLd from '@/components/seo/JsonLd';
-import GlobalInnerHero from '@/components/sections/GlobalInnerHero';
-import IconTextList from '@/components/sections/shared/IconTextList';
-import WhyPlayTherapyWorks from '@/components/sections/kids-play-therapy/WhyPlayTherapyWorks';
-import WhatWeSupport from '@/components/sections/kids-play-therapy/WhatWeSupport';
-import FeatureCards from '@/components/sections/shared/FeatureCards';
-import YourRole from '@/components/sections/kids-play-therapy/YourRole';
-import Team from '@/components/sections/Team';
-import CtaPanel from '@/components/sections/shared/CtaPanel';
-import Faq from '@/components/sections/Faq';
-import CtaImageBanner from '@/components/sections/shared/CtaImageBanner';
-import ScrollScene from '@/components/ui/ScrollScene';
-import { getKidsPlayTherapyContent } from '@/lib/wp';
+import type { Metadata } from "next";
+import { MetaData } from "@/lib/metadata";
+import JsonLd from "@/components/seo/JsonLd";
+import GlobalInnerHero from "@/components/sections/GlobalInnerHero";
+import IconTextList from "@/components/sections/shared/IconTextList";
+import WhyPlayTherapyWorks from "@/components/sections/kids-play-therapy/WhyPlayTherapyWorks";
+import WhatWeSupport from "@/components/sections/kids-play-therapy/WhatWeSupport";
+import FeatureCards from "@/components/sections/shared/FeatureCards";
+import YourRole from "@/components/sections/kids-play-therapy/YourRole";
+import Team from "@/components/sections/Team";
+import CtaPanel from "@/components/sections/shared/CtaPanel";
+import Faq from "@/components/sections/Faq";
+import CtaImageBanner from "@/components/sections/shared/CtaImageBanner";
+import ScrollScene from "@/components/ui/ScrollScene";
+import { getKidsPlayTherapyContent } from "@/lib/wp";
 const FALLBACK: Metadata = {
-  title: 'Kids & Play Therapy | Rene Health Clinic',
+  title: "Kids & Play Therapy | Rene Health Clinic",
   description:
-    'Play therapy for children in Coquitlam and online across BC, supporting emotions, behaviour, confidence, relationships, and major life changes.',
-  alternates: { canonical: '/kids-and-play-therapy' }
+    "Play therapy for children in Coquitlam and online across BC, supporting emotions, behaviour, confidence, relationships, and major life changes.",
+  alternates: { canonical: "/kids-and-play-therapy" },
 };
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getKidsPlayTherapyContent();
@@ -50,7 +50,9 @@ export default async function KidsAndPlayTherapyPage() {
           </ScrollScene>
         ) : null}
         {content.process ? (
-          <FeatureCards content={content.process} numbered />
+          <ScrollScene>
+            <FeatureCards content={content.process} />
+          </ScrollScene>
         ) : null}
         {content.role ? (
           <ScrollScene>

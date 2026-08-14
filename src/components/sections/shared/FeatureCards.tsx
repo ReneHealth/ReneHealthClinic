@@ -50,66 +50,20 @@ export default function FeatureCards({
     () => {
       if (prefersReducedMotion()) return;
 
-      const mm = gsap.matchMedia();
-
-      mm.add(
-        { mobile: "(max-width: 767px)", desktop: "(min-width: 768px)" },
-        (context) => {
-          const desktop = !!context.conditions?.desktop;
-
-          const tl = gsap.timeline({
-            scrollTrigger: desktop
-              ? {
-                  trigger: sectionRef.current,
-                  start: "top top",
-                  end: "+=150%",
-                  pin: true,
-                  anticipatePin: 0.5,
-                  scrub: 0.8,
-                  invalidateOnRefresh: true,
-                }
-              : { trigger: sectionRef.current, start: "top 75%", once: true },
-          });
-
-          tl.fromTo(
-            ".fc-head > *",
-            { y: 60, rotateX: -20, transformPerspective: 800, autoAlpha: 0 },
-            {
-              y: 0,
-              rotateX: 0,
-              stagger: 0.12,
-              autoAlpha: 1,
-              duration: 0.6,
-              onComplete: () =>
-                gsap.set(".fc-head > *", { clearProps: "transform" }),
-            },
-            0,
-          );
-
-          tl.fromTo(
-            ".fc-card",
-            desktop
-              ? {
-                  y: 120,
-                  rotateX: 35,
-                  transformPerspective: 900,
-                  transformOrigin: "50% 100%",
-                  autoAlpha: 0,
-                  filter: "blur(12px)",
-                }
-              : { y: 60, autoAlpha: 0 },
-            desktop
-              ? {
-                  y: 0,
-                  rotateX: 0,
-                  autoAlpha: 1,
-                  filter: "blur(0px)",
-                  duration: 0.8,
-                  ease: "power3.out",
-                }
-              : { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out" },
-            desktop ? 0.8 : 0.4,
-          );
+      gsap.fromTo(
+        ".fc-inner",
+        { y: 40, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            once: true,
+          },
+          onComplete: () => gsap.set(".fc-inner", { clearProps: "transform" }),
         },
       );
     },
@@ -119,12 +73,12 @@ export default function FeatureCards({
   return (
     <section
       ref={sectionRef}
-      className={`relative min-h-svh overflow-hidden bg-cover bg-center md:h-svh md:min-h-[640px] ${className}`}
+      className={`relative min-h-svh overflow-hidden bg-cover bg-center ${className}`}
       style={background ? { backgroundImage: `url(${background})` } : undefined}
     >
       {background ? <div className="absolute inset-0 bg-black/25" /> : null}
 
-      <div className="relative z-10 mx-auto flex min-h-svh w-full max-w-[1400px] flex-col gap-8 px-5 py-16 md:min-h-0 md:h-full md:justify-between md:gap-0 md:px-6 md:pt-24 md:pb-10">
+      <div className="fc-inner relative z-10 mx-auto flex min-h-svh w-full max-w-[1400px] flex-col gap-8 px-5 py-16 md:justify-between md:gap-0 md:px-6 md:pt-24 md:pb-10">
         <div className="fc-head w-full text-white [text-shadow:0_1px_18px_rgba(20,41,43,0.45)]">
           <p className="section-label">{label}</p>
           <h2 className="display-serif mt-1 text-[30px] md:text-[50px]">
@@ -150,7 +104,7 @@ export default function FeatureCards({
               key={i}
               as="article"
               maxTilt={6}
-              className={`fc-card fc-card-${i} relative flex h-full flex-col rounded-xl bg-ink/80 p-5 text-white will-change-[transform,opacity] md:min-h-[280px] md:bg-ink/35 md:p-6 md:backdrop-blur-2xl`}
+              className={`fc-card fc-card-${i} relative flex h-full flex-col rounded-xl bg-ink/80 p-5 text-white md:min-h-[280px] md:bg-ink/35 md:p-6 md:backdrop-blur-2xl`}
             >
               <h3 className="text-[20px] font-bold italic md:text-[25px]">
                 {card?.title ?? ""}

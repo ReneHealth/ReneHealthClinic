@@ -69,6 +69,7 @@ export type HeroSectionType = {
   paragraph?: string;
   cta?: CtaType;
   image?: ImageType;
+  logo?: ImageType;
 };
 
 export type IntroSectionType = {
@@ -282,6 +283,11 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
           heroButtonLabel
           heroButtonUrl
           heroImage {
+            node {
+              ...Img
+            }
+          }
+          heroLogo {
             node {
               ...Img
             }
@@ -544,6 +550,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
             paragraph: str(p?.heroParagraph),
             cta: cta(p?.heroButtonLabel, p?.heroButtonUrl),
             image: image(p?.heroImage),
+            logo: image(p?.heroLogo),
           }
         : null,
       intro: hasIntro
