@@ -261,18 +261,7 @@ export default function ContactDetails({
                   </select>
                 </label>
 
-                <label className="block">
-                  <span className="text-[16px] font-bold">
-                    Date &amp; Time
-                  </span>
-
-                  <input
-                    type="date"
-                    name="dateTime"
-                    className={fieldClass}
-                    disabled={isSubmitting}
-                  />
-                </label>
+                
               </div>
 
               <label className="mt-8 block">
@@ -306,7 +295,7 @@ export default function ContactDetails({
                 disabled={isSubmitting}
                 className="btn-3d mt-8 rounded-full bg-aqua px-8 py-3.5 text-sm font-medium uppercase tracking-[0.05em] text-ink transition-all duration-500 hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {isSubmitting ? "Sending..." : "Book Appointment"}
+                {isSubmitting ? "Sending..." : "SUBMIT YOUR REQUEST"}
               </button>
             </form>
           </Reveal>
