@@ -159,10 +159,8 @@ export default function Contact({ content }: { content: ContactSection }) {
               />
             </label>
 
-            <label className="block">
-              <span className="text-[16px] font-bold sm:col-[1_/_span_2]">
-                Service Type
-              </span>
+            <label className="block sm:col-[1_/_span_2]">
+              <span className="text-[16px] font-bold">Service Type</span>
 
               <select
                 name="service"
