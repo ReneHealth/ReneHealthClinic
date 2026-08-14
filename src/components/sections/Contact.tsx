@@ -54,9 +54,7 @@ export default function Contact({ content }: { content: ContactSection }) {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(
-          result.message || "Unable to send your message."
-        );
+        throw new Error(result.message || "Unable to send your message.");
       }
 
       setStatus({
@@ -118,14 +116,9 @@ export default function Contact({ content }: { content: ContactSection }) {
       </motion.div>
 
       <div className="flex items-center px-5 py-10 md:px-14 md:py-20">
-        <form
-          onSubmit={handleSubmit}
-          className="w-full max-w-xl"
-        >
+        <form onSubmit={handleSubmit} className="w-full max-w-xl">
           <label className="block">
-            <span className="text-[16px] font-bold">
-              Your Name
-            </span>
+            <span className="text-[16px] font-bold">Your Name</span>
 
             <input
               required
@@ -140,9 +133,7 @@ export default function Contact({ content }: { content: ContactSection }) {
 
           <div className="mt-10 grid gap-10 sm:grid-cols-2">
             <label className="block">
-              <span className="text-[16px] font-bold">
-                Email
-              </span>
+              <span className="text-[16px] font-bold">Email</span>
 
               <input
                 required
@@ -156,9 +147,7 @@ export default function Contact({ content }: { content: ContactSection }) {
             </label>
 
             <label className="block">
-              <span className="text-[16px] font-bold">
-                Phone Number
-              </span>
+              <span className="text-[16px] font-bold">Phone Number</span>
 
               <input
                 type="tel"
@@ -171,7 +160,7 @@ export default function Contact({ content }: { content: ContactSection }) {
             </label>
 
             <label className="block">
-              <span className="text-[16px] font-bold">
+              <span className="text-[16px] font-bold sm:col-[1_/_span_2]">
                 Service Type
               </span>
 
@@ -191,14 +180,10 @@ export default function Contact({ content }: { content: ContactSection }) {
                 ))}
               </select>
             </label>
-
-           
           </div>
 
           <label className="mt-10 block">
-            <span className="text-[16px] font-bold">
-              Message
-            </span>
+            <span className="text-[16px] font-bold">Message</span>
 
             <textarea
               required

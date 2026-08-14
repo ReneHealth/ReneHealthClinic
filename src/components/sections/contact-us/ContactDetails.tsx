@@ -64,7 +64,7 @@ export default function ContactDetails({
 
       if (!response.ok || !result.success) {
         throw new Error(
-          result.message || "Unable to submit your appointment request."
+          result.message || "Unable to submit your appointment request.",
         );
       }
 
@@ -223,9 +223,7 @@ export default function ContactDetails({
                 </label>
 
                 <label className="block">
-                  <span className="text-[16px] font-bold">
-                    Phone Number
-                  </span>
+                  <span className="text-[16px] font-bold">Phone Number</span>
 
                   <input
                     type="tel"
@@ -238,11 +236,9 @@ export default function ContactDetails({
                 </label>
               </div>
 
-              <div className="mt-8 grid gap-8 sm:grid-cols-2">
+              <div className="mt-8 grid gap-8">
                 <label className="block">
-                  <span className="text-[16px] font-bold">
-                    Service Type
-                  </span>
+                  <span className="text-[16px] font-bold">Service Type</span>
 
                   <select
                     name="service"
@@ -260,8 +256,6 @@ export default function ContactDetails({
                     ))}
                   </select>
                 </label>
-
-                
               </div>
 
               <label className="mt-8 block">
