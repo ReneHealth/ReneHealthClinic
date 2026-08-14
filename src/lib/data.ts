@@ -59,6 +59,7 @@ export const settings: SiteSettings = {
     ],
     booking: { label: "Menu Booking Button", href: "/contact-us" },
   },
+  favicon: null,
 };
 
 const navLeft = [

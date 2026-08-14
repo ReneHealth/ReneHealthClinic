@@ -113,7 +113,10 @@ export default function Footer({ settings, menus }: FooterProps) {
             </h3>
             <p className="mt-3 text-sm text-white/80">
               {settings.phone ? (
-                <a href={settings.phoneHref} className="touch-target hover:text-aqua">
+                <a
+                  href={settings.phoneHref}
+                  className="touch-target hover:text-aqua"
+                >
                   {settings.phone}
                 </a>
               ) : null}
@@ -237,7 +240,9 @@ export default function Footer({ settings, menus }: FooterProps) {
       ) : null}
 
       <div className="relative z-10 mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-2 px-6 pb-[7px] pt-16 text-center text-[13px] text-white/50 md:flex-row md:pt-44 md:text-left md:text-[14px] lg:px-10">
-        <p>© {new Date().getFullYear()} Rene Health Clinic. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} Rene Health Clinic. All rights reserved.
+        </p>
         <p>
           Designed &amp; Developed by{" "}
           <a

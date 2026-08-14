@@ -46,6 +46,12 @@ export interface MenuContact {
   booking: CtaLink;
 }
 
+export interface SiteIcon {
+  url: string;
+  type?: string;
+  sizes?: string;
+}
+
 export interface SiteSettings {
   headerLogo: MediaImage | null;
   marquee: Html;
@@ -68,6 +74,7 @@ export interface SiteSettings {
   address: Html;
   booking: CtaLink;
   menu: MenuContact;
+  favicon: SiteIcon | null;
 }
 
 export interface FaqItem {

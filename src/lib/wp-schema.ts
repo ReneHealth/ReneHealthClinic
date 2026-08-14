@@ -32,7 +32,18 @@ export interface WpMenuItems {
   nodes: WpMenuItem[] | null;
 }
 
+export interface WpIconItem {
+  sourceUrl: string | null;
+  mimeType: string | null;
+  mediaDetails: { width: number | null; height: number | null } | null;
+}
+
+export interface WpIconNode {
+  node: WpIconItem | null;
+}
+
 export interface WpSettings {
+  favicon: WpIconNode | null;
   headerLogo: WpMediaNode | null;
   marqueeText: string | null;
   footerLogo: WpMediaNode | null;

@@ -77,6 +77,16 @@ const SITE_FIELDS = `
       # Not "settings": WPGraphQL core already owns a root "Settings" type, and
       # an ACF group of that name resolves to core's instead of ours.
       siteSettings {
+        favicon {
+          node {
+            sourceUrl
+            mimeType
+            mediaDetails {
+              width
+              height
+            }
+          }
+        }
         headerLogo {
           node {
             ...Img

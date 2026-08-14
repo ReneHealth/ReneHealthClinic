@@ -9,6 +9,7 @@ import Header from "@/components/layout/Header";
 import BookButton from "@/components/layout/BookButton";
 import Footer from "@/components/layout/Footer";
 import { getSiteChrome } from "@/lib/wp";
+import type { SiteIcon } from "@/lib/types/common";
 
 const boska = localFont({
   src: [
@@ -29,17 +30,35 @@ const boska = localFont({
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://renehealth.ca",
-  ),
-  title: {
-    default: "Rene Health Clinic | Counselling & Physical Health in Coquitlam",
-    template: "%s",
-  },
-  description:
-    "Rene Health brings counselling and physical health services together in one Coquitlam clinic. Care for your mind and body, so you can feel stronger, steadier, and more like yourself.",
-};
+// Shipped in /public so an empty (or unreachable) CMS field still yields an icon.
+const FALLBACK_FAVICON = { url: "/favicon.ico", sizes: "any" };
+
+const descriptor = (icon: SiteIcon) => ({
+  url: icon.url,
+  ...(icon.type ? { type: icon.type } : null),
+  ...(icon.sizes ? { sizes: icon.sizes } : null),
+});
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getSiteChrome();
+  const { favicon } = settings;
+
+  return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://renehealth.ca",
+    ),
+    title: {
+      default:
+        "Rene Health Clinic | Counselling & Physical Health in Coquitlam",
+      template: "%s",
+    },
+    description:
+      "Rene Health brings counselling and physical health services together in one Coquitlam clinic. Care for your mind and body, so you can feel stronger, steadier, and more like yourself.",
+    icons: {
+      icon: [favicon ? descriptor(favicon) : FALLBACK_FAVICON],
+    },
+  };
+}
 
 export default async function RootLayout({
   children,

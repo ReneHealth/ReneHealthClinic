@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import * as format from "./format";
 import { wpQuery } from "./graphql";
 import {
@@ -31,6 +33,7 @@ import type {
   WpFaqNodes,
   WpHomeQuery,
   WpHours,
+  WpIconNode,
   WpInsurancePage,
   WpInsuranceQuery,
   WpKidsPlayTherapyQuery,
@@ -54,6 +57,7 @@ import type {
   MenuContact,
   NavLink,
   OpeningHours,
+  SiteIcon,
   SiteMenus,
   SiteSettings,
   TeamCategory,
@@ -83,6 +87,25 @@ const cta = (
   label: string | null | undefined,
   url: string | null | undefined,
 ): CtaLink | null => format.cta(label, url) ?? null;
+
+const icon = (field: WpIconNode | null | undefined): SiteIcon | null => {
+  const node = field?.node;
+  if (!node?.sourceUrl) return null;
+
+  const { width, height } = node.mediaDetails ?? {};
+  const sizes =
+    node.mimeType === "image/svg+xml"
+      ? "any"
+      : width && height
+        ? `${width}x${height}`
+        : null;
+
+  return {
+    url: node.sourceUrl,
+    ...(node.mimeType ? { type: node.mimeType } : null),
+    ...(sizes ? { sizes } : null),
+  };
+};
 
 const serviceCardLayout = (value: unknown): ServiceCardLayout =>
   format.selectValue(value) === "split" ? "split" : "stacked";
@@ -251,6 +274,7 @@ export function toSettings(data: WpSiteQuery): SiteSettings {
     address: str(s?.address),
     booking: cta(s?.bookingLabel, s?.bookingUrl) ?? FALLBACK_BOOKING,
     menu: toMenuContact(s),
+    favicon: icon(s?.favicon),
   };
 }
 
@@ -1302,10 +1326,14 @@ export const getPhysicalHealthContent =
       ["page:physical-health", "team"],
     );
 
-export const getSiteChrome = (): Promise<SiteChrome> =>
-  fromWordPress<WpSiteQuery, SiteChrome>(
-    SITE_QUERY,
-    (data) => ({ settings: toSettings(data), menus: toMenus(data) }),
-    () => ({ settings: local.settings, menus: local.menus }),
-    ["site"],
-  );
+// Cached: the root layout resolves site chrome twice per render (once in
+// generateMetadata for the favicon, once in the layout body for header/footer).
+export const getSiteChrome = cache(
+  (): Promise<SiteChrome> =>
+    fromWordPress<WpSiteQuery, SiteChrome>(
+      SITE_QUERY,
+      (data) => ({ settings: toSettings(data), menus: toMenus(data) }),
+      () => ({ settings: local.settings, menus: local.menus }),
+      ["site"],
+    ),
+);
