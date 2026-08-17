@@ -7,12 +7,7 @@ import RichText from "@/components/ui/RichText";
 import SplitReveal from "@/components/ui/SplitReveal";
 import { SERVICE_OPTIONS } from "@/lib/contact-form";
 import { FormEvent, useState } from "react";
-declare global {
-  interface Window {
-    dataLayer: Record<string, unknown>[];
-    gtag?: (...args: unknown[]) => void;
-  }
-}
+import { trackLeadConversion } from "@/lib/google-ads";
 const fieldClass =
   "mt-2 w-full rounded-full bg-[#fff] px-6 py-3.5 text-[15px] text-ink placeholder:text-slate-body/60 outline-none ring-1 ring-transparent transition focus:ring-aqua";
 
@@ -72,10 +67,7 @@ export default function ContactDetails({
           result.message || "Unable to submit your appointment request.",
         );
       }
-// Google Ads conversion
-window.gtag?.("event", "conversion", {
-  send_to: "AW-18328119686/FW0JCIHT7dUcEIbTw6NE",
-});
+trackLeadConversion();
       setStatus({
         type: "success",
         message:
