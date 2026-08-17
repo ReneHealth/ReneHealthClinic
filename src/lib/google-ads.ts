@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 let leadConversionSent = false;
 
 export function trackLeadConversion() {
