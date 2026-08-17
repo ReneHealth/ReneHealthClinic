@@ -7,6 +7,7 @@ import IntroProvider from "@/components/providers/IntroProvider";
 import ScrollScene from "@/components/ui/ScrollScene";
 import Header from "@/components/layout/Header";
 import BookButton from "@/components/layout/BookButton";
+import Script from "next/script";
 import Footer from "@/components/layout/Footer";
 import { getSiteChrome } from "@/lib/wp";
 import type { SiteIcon } from "@/lib/types/common";
