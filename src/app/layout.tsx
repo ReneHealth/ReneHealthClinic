@@ -68,6 +68,25 @@ export default async function RootLayout({
   return (
     <html lang="en" className={boska.variable}>
       <body suppressHydrationWarning>
+	  {/* Google Ads Tag */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18328119686"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-ads-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-18328119686');
+
+            gtag('config', 'AW-18328119686/RuMMCPv-8NUcEIbTw6NE', {
+              'phone_conversion_number': '604-554-2620'
+            });
+          `}
+        </Script>
         <SmoothScroll>
           <Header menus={menus} settings={settings} />
           <IntroProvider>
