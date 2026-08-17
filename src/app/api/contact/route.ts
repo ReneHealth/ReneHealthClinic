@@ -2,12 +2,7 @@ import { NextResponse } from "next/server";
 
 const WORDPRESS_URL = process.env.WP_URL;
 const CONTACT_FORM_7_ID = process.env.CONTACT_FORM_7_ID;
-declare global {
-  interface Window {
-    dataLayer: Record<string, unknown>[];
-    gtag?: (...args: unknown[]) => void;
-  }
-}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -82,11 +77,6 @@ formData.append("_wpcf7_unit_tag", `wpcf7-f${CONTACT_FORM_7_ID}-o1`);
         { status: 400 }
       );
     }
-	
-// Google Ads conversion
-window.gtag?.("event", "conversion", {
-  send_to: "AW-18328119686/FW0JCIHT7dUcEIbTw6NE",
-});
 
     return NextResponse.json({
       success: true,

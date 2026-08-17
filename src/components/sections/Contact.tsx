@@ -56,7 +56,10 @@ export default function Contact({ content }: { content: ContactSection }) {
       if (!response.ok || !result.success) {
         throw new Error(result.message || "Unable to send your message.");
       }
-
+// Google Ads conversion
+window.gtag?.("event", "conversion", {
+  send_to: "AW-18328119686/FW0JCIHT7dUcEIbTw6NE",
+});
       setStatus({
         type: "success",
         message:
