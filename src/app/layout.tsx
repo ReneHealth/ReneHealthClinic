@@ -82,9 +82,30 @@ export default async function RootLayout({
             gtag('js', new Date());
 
             gtag('config', 'AW-18328119686');
-
+         
+          `}
+        </Script>
+        {/* 2. Global Phone Conversion Config */}
+        <Script id="google-phone-conversion" strategy="afterInteractive">
+          {`
             gtag('config', 'AW-18328119686/RuMMCPv-8NUcEIbTw6NE', {
               'phone_conversion_number': '604-554-2620'
+            });
+          `}
+        </Script>
+
+        {/* 3. Global Click Listener for ANY tel: link on the site */}
+        <Script id="global-phone-click-listener" strategy="afterInteractive">
+          {`
+            document.addEventListener('click', function(event) {
+              var target = event.target.closest('a');
+              if (target && target.href && target.href.startsWith('tel:')) {
+                if (typeof gtag === 'function') {
+                  gtag('event', 'conversion', {
+                    'send_to': 'AW-18328119686/RuMMCPv-8NUcEIbTw6NE'
+                  });
+                }
+              }
             });
           `}
         </Script>
