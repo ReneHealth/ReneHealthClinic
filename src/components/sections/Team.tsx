@@ -61,6 +61,7 @@ export type TeamPropsType = {
   content?: TeamSectionDataType;
   scroll?: boolean;
   tabs?: boolean;
+  allTab?: boolean;
   centered?: boolean;
   className?: string;
 };
@@ -244,6 +245,7 @@ export default function Team({
   content,
   scroll = false,
   tabs = true,
+  allTab = true,
   centered = false,
   className = "",
 }: TeamPropsType) {
@@ -256,15 +258,32 @@ export default function Team({
   const categories = typedContent?.categories ?? [];
   const membersList = typedContent?.members ?? [];
 
-  const [tab, setTab] = useState(ALL_CATEGORY.id);
+  const tabList = allTab ? [ALL_CATEGORY, ...categories] : categories;
+
+  // Without an "All" tab something has to be selected on first paint, and
+  // `categories` already arrives ordered by each term's Display Order.
+  const [tab, setTab] = useState(tabList[0]?.id ?? ALL_CATEGORY.id);
   const [progress, setProgress] = useState(0);
   const [selectedMember, setSelectedMember] = useState<any>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
+  // Categories drive the tab row on their own, so a page that wants one flat
+  // list just ships an empty `categories` array — including in `scroll` mode,
+  // where the tabs sit above the rail rather than replacing it.
+  const showTabs = tabs && categories.length > 0;
+
   const members =
-    scroll || !tabs || tab === ALL_CATEGORY.id
+    !showTabs || tab === ALL_CATEGORY.id
       ? membersList
       : membersList.filter((m) => m?.category === tab);
+
+  const selectTab = (id: string) => {
+    setTab(id);
+    // A filtered rail is shorter than the one before it, so leaving scrollLeft
+    // where it was can land the viewer past the last card.
+    trackRef.current?.scrollTo({ left: 0 });
+    setProgress(0);
+  };
 
   const openMemberPopup = (member: TeamMemberItemType) => {
     const memberName = member?.name ?? "";
@@ -330,15 +349,15 @@ export default function Team({
             </Reveal>
           </div>
 
-          {scroll || !tabs || categories.length === 0 ? null : (
+          {showTabs ? (
             <Reveal delay={0.25} className="min-w-0 md:max-w-[560px]">
               <CategoryTabs
-                categories={[ALL_CATEGORY, ...categories]}
+                categories={tabList}
                 active={tab}
-                onSelect={setTab}
+                onSelect={selectTab}
               />
             </Reveal>
-          )}
+          ) : null}
         </div>
 
         <div
@@ -353,7 +372,7 @@ export default function Team({
         >
           <AnimatePresence mode="wait">
             <motion.div
-              key={scroll ? "all" : tab}
+              key={showTabs ? tab : "all"}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.25 } }}

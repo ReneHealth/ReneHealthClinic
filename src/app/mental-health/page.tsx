@@ -45,7 +45,7 @@ export default async function MentalHealthPage() {
         {page.process ? <WhatToExpect content={page.process} /> : null}
         {page.team ? (
           <ScrollScene>
-            <Team content={page.team} scroll />
+            <Team content={page.team} scroll allTab={false} />
           </ScrollScene>
         ) : null}
         {page.benefits ? (

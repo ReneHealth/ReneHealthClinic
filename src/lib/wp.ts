@@ -197,6 +197,48 @@ const teamCategoryOptions = (
     description,
   }));
 
+/**
+ * The hub pages let the editor choose between one flat rail of everyone and a
+ * tabbed rail scoped to specific categories. Handing the section an empty
+ * `categories` array is what tells <Team /> to skip the tab row, so "all" is
+ * expressed as "no categories" rather than as a separate flag.
+ */
+function teamDisplay(
+  p: WpMentalHealthPage | null | undefined,
+  members: TeamMember[],
+  allCategories: TeamCategoryOption[],
+): { members: TeamMember[]; categories: TeamCategoryOption[] } {
+  if (str(p?.teamDisplayMode) !== "categories") {
+    return { members, categories: [] };
+  }
+
+  const picked = new Set(
+    (p?.teamCategoriesPicked?.nodes ?? [])
+      .map((node) => str(node.slug))
+      .filter(Boolean),
+  );
+
+  // Nothing picked yet: fall back to every category rather than an empty rail.
+  const scoped = picked.size
+    ? allCategories.filter((category) => picked.has(category.id))
+    : allCategories;
+
+  // These rails have no "All" tab, so a category nobody belongs to would be a
+  // tab onto an empty rail.
+  const categories = scoped.filter((category) =>
+    members.some((member) => member.category === category.id),
+  );
+
+  if (categories.length === 0) return { members, categories: [] };
+
+  const allowed = new Set(categories.map((category) => category.id));
+
+  return {
+    members: members.filter((member) => allowed.has(member.category)),
+    categories,
+  };
+}
+
 function toMenuContact(s: WpSettings | null | undefined): MenuContact {
   const phone = str(s?.menuPhone);
 
@@ -449,10 +491,11 @@ export function toHome(data: WpHomeQuery): HomeContent {
 
 function toCounsellingHub(
   p: WpMentalHealthPage | null | undefined,
-  members: TeamMember[],
-  categories: TeamCategoryOption[],
+  allMembers: TeamMember[],
+  allCategories: TeamCategoryOption[],
 ): MentalHealthContent {
   const faq = faqItems(p?.faqItems);
+  const { members, categories } = teamDisplay(p, allMembers, allCategories);
 
   return {
     hero:

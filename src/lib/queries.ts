@@ -855,6 +855,17 @@ export const MENTAL_HEALTH_QUERY = `
           teamLabel
           teamHeading
           teamParagraph
+          # "all" (the default) renders every member in one rail. "categories"
+          # adds the All / category tabs above it, scoped to the terms picked in
+          # teamCategoriesPicked.
+          teamDisplayMode
+          teamCategoriesPicked(first: 100) {
+            nodes {
+              ... on TeamCategory {
+                slug
+              }
+            }
+          }
 
           benefitsLabel
           benefitsHeading
@@ -976,6 +987,17 @@ export const PHYSICAL_HEALTH_QUERY = `
           teamLabel
           teamHeading
           teamParagraph
+          # "all" (the default) renders every member in one rail. "categories"
+          # adds the All / category tabs above it, scoped to the terms picked in
+          # teamCategoriesPicked.
+          teamDisplayMode
+          teamCategoriesPicked(first: 100) {
+            nodes {
+              ... on TeamCategory {
+                slug
+              }
+            }
+          }
 
           benefitsLabel
           benefitsHeading

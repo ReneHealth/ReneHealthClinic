@@ -202,6 +202,8 @@ export interface WpMentalHealthPage {
   teamLabel: string | null;
   teamHeading: string | null;
   teamParagraph: string | null;
+  teamDisplayMode?: string | null;
+  teamCategoriesPicked?: WpTeamCategorySlugs | null;
 
   benefitsLabel: string | null;
   benefitsHeading: string | null;
@@ -443,6 +445,14 @@ export interface WpSiteQuery {
   menuFullscreen: WpMenuItems | null;
   footerExplore: WpMenuItems | null;
   footerBottom: WpMenuItems | null;
+}
+
+/**
+ * ACF Taxonomy fields resolve to a term connection, so a picker only ever needs
+ * the slug: the display data still comes from the full `teamCategories` list.
+ */
+export interface WpTeamCategorySlugs {
+  nodes: { slug: string | null }[];
 }
 
 export interface WpTeamCategoryNodes {
