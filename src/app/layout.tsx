@@ -7,6 +7,7 @@ import IntroProvider from "@/components/providers/IntroProvider";
 import ScrollScene from "@/components/ui/ScrollScene";
 import Header from "@/components/layout/Header";
 import BookButton from "@/components/layout/BookButton";
+import Script from "next/script";
 import Footer from "@/components/layout/Footer";
 import { getSiteChrome } from "@/lib/wp";
 import type { SiteIcon } from "@/lib/types/common";
@@ -68,6 +69,46 @@ export default async function RootLayout({
   return (
     <html lang="en" className={boska.variable}>
       <body suppressHydrationWarning>
+	  {/* Google Ads Tag */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18328119686"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-ads-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-18328119686');
+         
+          `}
+        </Script>
+        {/* 2. Global Phone Conversion Config */}
+        <Script id="google-phone-conversion" strategy="afterInteractive">
+          {`
+            gtag('config', 'AW-18328119686/RuMMCPv-8NUcEIbTw6NE', {
+              'phone_conversion_number': '604-554-2620'
+            });
+          `}
+        </Script>
+
+        {/* 3. Global Click Listener for ANY tel: link on the site */}
+        <Script id="global-phone-click-listener" strategy="afterInteractive">
+          {`
+            document.addEventListener('click', function(event) {
+              var target = event.target.closest('a');
+              if (target && target.href && target.href.startsWith('tel:')) {
+                if (typeof gtag === 'function') {
+                  gtag('event', 'conversion', {
+                    'send_to': 'AW-18328119686/RuMMCPv-8NUcEIbTw6NE'
+                  });
+                }
+              }
+            });
+          `}
+        </Script>
         <SmoothScroll>
           <Header menus={menus} settings={settings} />
           <IntroProvider>

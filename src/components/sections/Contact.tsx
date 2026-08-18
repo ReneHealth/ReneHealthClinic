@@ -8,6 +8,7 @@ import RichText from "@/components/ui/RichText";
 import SplitReveal from "@/components/ui/SplitReveal";
 import Parallax from "@/components/ui/Parallax";
 import { SERVICE_OPTIONS } from "@/lib/contact-form";
+import { trackLeadConversion } from "@/lib/google-ads";
 
 const selectChevronStyle = {
   backgroundImage:
@@ -56,7 +57,7 @@ export default function Contact({ content }: { content: ContactSection }) {
       if (!response.ok || !result.success) {
         throw new Error(result.message || "Unable to send your message.");
       }
-
+    trackLeadConversion();
       setStatus({
         type: "success",
         message:
