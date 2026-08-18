@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
     },
     { source: "/contact", destination: "/contact-us", permanent: true },
     { source: "/counselling", destination: "/mental-health", permanent: true },
+    {
+    source:
+      "/wp-content/uploads/2025/11/Rene-Health-Clinic-Visitor-Guide-1.pdf",
+    destination: "/Rene-Health-Clinic-Visitor-Guide.pdf",
+    permanent: true,
+  },
   ],
   headers: async () => [
     {
