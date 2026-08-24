@@ -32,7 +32,7 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd seo={seo} />
-      <main className="RKtest2">
+      <main>
         {home.hero.length > 0 ? (
           <ScrollScene enter={false}>
             <Hero panels={home.hero} />

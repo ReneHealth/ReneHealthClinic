@@ -173,10 +173,10 @@ function CategoryTabs({
         type="button"
         onClick={() => onSelect(id)}
         aria-pressed={active === id}
-        className={`btn-3d inline-flex min-h-[44px] min-w-[135px] shrink-0 cursor-pointer items-center justify-center rounded-full border px-6 py-[9px] text-sm transition-all duration-400 ${
+        className={`btn-3d inline-flex text-ink min-h-[44px] min-w-[135px] shrink-0 cursor-pointer items-center justify-center rounded-full px-6 py-[9px] text-sm transition-all duration-400 ${
           active === id
-            ? "border-ink text-ink"
-            : "border-line text-slate-body hover:border-slate-body"
+            ? "bg-aqua border-aqua"
+            : "bg-foam border border-aqua/20 text-slate-body hover:border-slate-body"
         }`}
       >
         {label}
@@ -202,7 +202,7 @@ function CategoryTabs({
           ? "Scroll categories left"
           : "Scroll categories right"
       }
-      className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-ink transition-all duration-300 hover:border-slate-body disabled:pointer-events-none disabled:opacity-30 md:inline-flex"
+      className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-full cursor-pointer border border text-ink transition-all duration-300 hover:border-slate-body disabled:pointer-events-none disabled:opacity-30 md:inline-flex"
     >
       <ChevronIcon direction={direction} />
     </button>
