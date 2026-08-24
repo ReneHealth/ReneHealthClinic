@@ -1,6 +1,6 @@
 "use client";
 
-import { type MouseEvent } from "react";
+import { type FormEvent, type MouseEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -14,16 +14,23 @@ const isFaqLink = (href: string) => href.split("?")[0].endsWith(`#${FAQ_ID}`);
 
 const onFaqClick = (e: MouseEvent<HTMLAnchorElement>) => {
   if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+
   const target = document.getElementById(FAQ_ID);
   if (!target) return;
 
   e.preventDefault();
+
   const lenis = getLenis();
+
   if (lenis) {
     lenis.scrollTo(target);
     return;
   }
-  target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  target.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 };
 
 interface FooterProps {
@@ -39,9 +46,68 @@ function splitInHalf(links: NavLink[]): [NavLink[], NavLink[]] {
 export default function Footer({ settings, menus }: FooterProps) {
   const [bottomLeft, bottomRight] = splitInHalf(menus.footerBottom);
 
+  const [email, setEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [newsletterMessage, setNewsletterMessage] = useState("");
+
+  useEffect(() => {
+    if (newsletterStatus === "idle") return;
+
+    const timeout = window.setTimeout(() => {
+      setNewsletterStatus("idle");
+      setNewsletterMessage("");
+    }, 5000);
+
+    return () => window.clearTimeout(timeout);
+  }, [newsletterStatus]);
+
+  async function handleNewsletterSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!email.trim()) return;
+
+    setNewsletterStatus("loading");
+    setNewsletterMessage("");
+
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to subscribe.");
+      }
+
+      setNewsletterStatus("success");
+      setNewsletterMessage(
+        data.message || "Thanks! You've been added to our mailing list."
+      );
+      setEmail("");
+    } catch (error) {
+      console.error("Newsletter subscription error:", error);
+
+      setNewsletterStatus("error");
+      setNewsletterMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
+    }
+  }
+
   return (
     <footer className="relative overflow-hidden bg-pine text-white">
-      <div className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-6 pb-5 md:pb-10 pt-10 md:pt-24 lg:px-10">
+      <div className="relative z-10 mx-auto max-w-[1400px] px-5 pb-5 pt-10 md:px-6 md:pb-10 md:pt-24 lg:px-10">
         {settings.footerLogo ? (
           <Image
             src={settings.footerLogo.src}
@@ -58,7 +124,11 @@ export default function Footer({ settings, menus }: FooterProps) {
               html={settings.footerLogoContent}
               className="mx-auto max-w-xs text-center text-[16px] leading-[normal] text-white lg:mx-0 lg:text-left"
             />
-            <form className="mt-8 lg:max-w-sm">
+
+            <form
+              className="mt-8 lg:max-w-sm"
+              onSubmit={handleNewsletterSubmit}
+            >
               <div className="flex items-center border-b border-white/30 transition-colors duration-300 focus-within:border-aqua">
                 <input
                   type="email"
@@ -67,30 +137,79 @@ export default function Footer({ settings, menus }: FooterProps) {
                   autoComplete="email"
                   placeholder="Your email here"
                   aria-label="Email for updates"
-                  className="w-full bg-transparent py-3 text-sm text-white outline-none placeholder:text-white/50"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+
+                    if (newsletterStatus !== "idle") {
+                      setNewsletterStatus("idle");
+                      setNewsletterMessage("");
+                    }
+                  }}
+                  disabled={newsletterStatus === "loading"}
+                  className="w-full bg-transparent py-3 text-sm text-white outline-none placeholder:text-white/50 disabled:opacity-50"
                 />
+
                 <button
                   type="submit"
                   aria-label="Subscribe"
-                  className="btn-3d touch-target p-2"
+                  disabled={newsletterStatus === "loading"}
+                  className="btn-3d touch-target p-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  <svg
-                    viewBox="0 0 16 16"
-                    className="h-4 w-4 fill-none stroke-white stroke-[1.5]"
-                  >
-                    <path d="M3 13 13 3M5 3h8v8" />
-                  </svg>
+                  {newsletterStatus === "loading" ? (
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4 animate-spin fill-none stroke-white stroke-[1.5]"
+                      aria-hidden="true"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="9"
+                        className="opacity-30"
+                      />
+                      <path d="M21 12a9 9 0 0 0-9-9" />
+                    </svg>
+                  ) : (
+                    <svg
+                      viewBox="0 0 16 16"
+                      className="h-4 w-4 fill-none stroke-white stroke-[1.5]"
+                      aria-hidden="true"
+                    >
+                      <path d="M3 13 13 3M5 3h8v8" />
+                    </svg>
+                  )}
                 </button>
               </div>
-              <RichText
-                html={settings.newsletterNote}
-                className="mt-4 text-[10px] leading-[normal] text-white/40"
-              />
+
+              {newsletterMessage ? (
+                <p
+                  role="status"
+                  aria-live="polite"
+                  className={`mt-3 text-[11px] leading-[normal] ${
+                    newsletterStatus === "success"
+                      ? "text-aqua"
+                      : "text-red-300"
+                  }`}
+                >
+                  {newsletterMessage}
+                </p>
+              ) : null}
+
+              {!newsletterMessage ? (
+                <RichText
+                  html={settings.newsletterNote}
+                  className="mt-4 text-[10px] leading-[normal] text-white/40"
+                />
+              ) : null}
             </form>
           </div>
 
           <div>
-            <h3 className="display-serif text-[25px]">{settings.hoursTitle}</h3>
+            <h3 className="display-serif text-[25px]">
+              {settings.hoursTitle}
+            </h3>
+
             <ul className="mt-3 space-y-4 text-sm">
               {settings.hours.map((h, i) => (
                 <li key={i}>
@@ -102,15 +221,20 @@ export default function Footer({ settings, menus }: FooterProps) {
           </div>
 
           <div>
-            <h3 className="display-serif text-[25px]">{settings.visitTitle}</h3>
+            <h3 className="display-serif text-[25px]">
+              {settings.visitTitle}
+            </h3>
+
             <RichText
               html={settings.address}
               as="p"
               className="mt-3 text-sm text-white/80"
             />
+
             <h3 className="display-serif mt-5 text-[25px]">
               {settings.contactTitle}
             </h3>
+
             <p className="mt-3 text-sm text-white/80">
               {settings.phone ? (
                 <a
@@ -120,7 +244,9 @@ export default function Footer({ settings, menus }: FooterProps) {
                   {settings.phone}
                 </a>
               ) : null}
+
               {settings.phone && settings.email ? <br /> : null}
+
               {settings.email ? (
                 <span className="inline-flex items-center gap-2 md:gap-10">
                   <a
@@ -129,6 +255,7 @@ export default function Footer({ settings, menus }: FooterProps) {
                   >
                     {settings.email}
                   </a>
+
                   <svg
                     viewBox="0 0 16 16"
                     aria-hidden="true"
@@ -145,6 +272,7 @@ export default function Footer({ settings, menus }: FooterProps) {
             <h3 className="display-serif text-[25px]">
               {settings.exploreTitle}
             </h3>
+
             <ul className="mt-3 grid grid-cols-2 gap-x-6 text-sm lg:block lg:space-y-px">
               {menus.footerExplore.map((link) => (
                 <li key={link.id}>
@@ -171,6 +299,7 @@ export default function Footer({ settings, menus }: FooterProps) {
               <h3 className="display-serif text-[25px]">
                 {settings.socialTitle}
               </h3>
+
               <div className="mt-3 flex items-center gap-4 text-lg">
                 {settings.socialFacebook ? (
                   <a
@@ -180,9 +309,13 @@ export default function Footer({ settings, menus }: FooterProps) {
                     aria-label="Facebook"
                     className="touch-target text-white/70 transition-colors duration-300 hover:text-aqua"
                   >
-                    <i className="fa-brands fa-facebook" aria-hidden="true" />
+                    <i
+                      className="fa-brands fa-facebook"
+                      aria-hidden="true"
+                    />
                   </a>
                 ) : null}
+
                 {settings.socialInstagram ? (
                   <a
                     href={settings.socialInstagram}
@@ -191,7 +324,10 @@ export default function Footer({ settings, menus }: FooterProps) {
                     aria-label="Instagram"
                     className="touch-target text-white/70 transition-colors duration-300 hover:text-aqua"
                   >
-                    <i className="fa-brands fa-instagram" aria-hidden="true" />
+                    <i
+                      className="fa-brands fa-instagram"
+                      aria-hidden="true"
+                    />
                   </a>
                 ) : null}
               </div>
@@ -199,11 +335,11 @@ export default function Footer({ settings, menus }: FooterProps) {
           ) : null}
         </div>
 
-        <div className="mt-1 md:mt-16 flex flex-col md:gap-4 text-[14px] md:font-medium normal-case md:mt-32 md:flex-row md:justify-between md:uppercase">
+        <div className="mt-1 flex flex-col text-[14px] normal-case md:mt-32 md:flex-row md:justify-between md:gap-4 md:font-medium md:uppercase">
           {[bottomLeft, bottomRight].map((group, i) => (
             <nav
               key={i}
-              className="grid grid-cols-2 gap-x-6 md:gap-y-2 md:flex md:flex-wrap md:gap-x-8"
+              className="grid grid-cols-2 gap-x-6 md:flex md:flex-wrap md:gap-x-8 md:gap-y-2"
             >
               {group.map((link) => (
                 <Link
@@ -212,7 +348,9 @@ export default function Footer({ settings, menus }: FooterProps) {
                   target={link.target}
                   onClick={isFaqLink(link.href) ? onFaqClick : undefined}
                   rel={
-                    link.target === "_blank" ? "noopener noreferrer" : undefined
+                    link.target === "_blank"
+                      ? "noopener noreferrer"
+                      : undefined
                   }
                   className="btn-3d touch-target inline-block text-white/70 md:text-white/80 md:hover:text-white"
                 >
@@ -230,7 +368,10 @@ export default function Footer({ settings, menus }: FooterProps) {
             initial={{ y: "45%", opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 1.2,
+              ease: [0.16, 1, 0.3, 1],
+            }}
             aria-hidden="true"
             className="display-serif whitespace-nowrap text-center text-[16vw] leading-[0.92] text-white/10 md:text-[255px] md:leading-[243px]"
           >
@@ -243,6 +384,7 @@ export default function Footer({ settings, menus }: FooterProps) {
         <p>
           © {new Date().getFullYear()} Rene Health Clinic. All rights reserved.
         </p>
+
         <p>
           Designed &amp; Developed by{" "}
           <a
