@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import "./fontawesome-brands.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";

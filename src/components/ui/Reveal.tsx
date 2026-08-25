@@ -4,7 +4,6 @@ import { useRef, type ReactNode } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { isDesktop, prefersReducedMotion } from "@/lib/motion";
 
-
 interface RevealProps {
   children: ReactNode;
   delay?: number;
@@ -61,6 +60,7 @@ export default function Reveal({
           duration: 1,
           delay,
           ease: "power3.out",
+          onStart: () => gsap.set(el, { willChange: "transform, opacity" }),
           onComplete: () => gsap.set(el, { clearProps: "willChange,filter" }),
           scrollTrigger: {
             trigger: el,
@@ -75,11 +75,7 @@ export default function Reveal({
   );
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{ opacity: 0, willChange: "transform, opacity" }}
-    >
+    <div ref={ref} className={className} style={{ opacity: 0 }}>
       {children}
     </div>
   );

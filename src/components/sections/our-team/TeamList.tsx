@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { TeamMemberType, TeamSectionType } from "@/lib/teamContent";
 import Button, { FOCUS_RING } from "@/components/ui/Button";
 import { bookNowCta } from "@/lib/format";
@@ -8,56 +8,10 @@ import Reveal from "@/components/ui/Reveal";
 import RichText from "@/components/ui/RichText";
 import SplitReveal from "@/components/ui/SplitReveal";
 import TiltCard from "@/components/ui/TiltCard";
+import TickRing from "@/components/ui/TickRing";
 interface TeamProps {
   content: TeamSectionType;
   onSelectMember: (member: TeamMemberType) => void;
-}
-function TickRing({ index }: { index: number }) {
-  const reduce = useReducedMotion();
-  const ticks = 80;
-  return (
-    <motion.div
-      className="absolute inset-0"
-      style={{
-        transformOrigin: "50% 50%",
-        willChange: "transform",
-      }}
-      animate={
-        reduce
-          ? undefined
-          : {
-              rotate: index % 2 === 0 ? 360 : -360,
-            }
-      }
-      transition={{
-        duration: 90,
-        ease: "linear",
-        repeat: Infinity,
-      }}
-      aria-hidden
-    >
-      <svg viewBox="0 0 100 100" className="h-full w-full">
-        {Array.from({ length: ticks }).map((_, i) => {
-          const a = (i / ticks) * Math.PI * 2;
-          const x1 = (50 + Math.sin(a) * 49).toFixed(3);
-          const y1 = (50 - Math.cos(a) * 49).toFixed(3);
-          const x2 = (50 + Math.sin(a) * 47.5).toFixed(3);
-          const y2 = (50 - Math.cos(a) * 47.5).toFixed(3);
-          return (
-            <line
-              key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="#9db0b1"
-              strokeWidth="0.5"
-            />
-          );
-        })}
-      </svg>
-    </motion.div>
-  );
 }
 export default function TeamList({ content, onSelectMember }: TeamProps) {
   return (
@@ -65,6 +19,7 @@ export default function TeamList({ content, onSelectMember }: TeamProps) {
       {content.categories.map((category, categoryIndex) => (
         <section
           key={category.id}
+          id={category.id}
           className={`px-6  py-16 md:py-24 ${categoryIndex % 2 === 1 ? "bg-[#F6FAFC]" : "bg-[#ffffff]"}
           `}
         >
@@ -136,7 +91,7 @@ export default function TeamList({ content, onSelectMember }: TeamProps) {
                         </div>
                         <span
                           aria-hidden="true"
-                          className="absolute bottom-3.5 right-3.5 flex h-18.75 w-18.75 flex-col items-center justify-center rounded-full bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-1px_1px_rgba(255,255,255,0.15),0_8px_24px_-6px_rgba(20,41,43,0.35)] backdrop-blur-[3px] transition-transform duration-500 group-hover:scale-110"
+                          className="absolute bottom-3.5 right-3.5 flex h-18.75 w-18.75 flex-col items-center justify-center rounded-full bg-white/45 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-1px_1px_rgba(255,255,255,0.15),0_8px_24px_-6px_rgba(20,41,43,0.35)] transition-transform duration-500 group-hover:scale-110"
                         >
                           <Image
                             src="/images/teams-arrow.svg"

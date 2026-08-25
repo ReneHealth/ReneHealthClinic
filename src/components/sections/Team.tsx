@@ -3,11 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Button, { FOCUS_RING } from "@/components/ui/Button";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import RichText from "@/components/ui/RichText";
 import SplitReveal from "@/components/ui/SplitReveal";
 import TiltCard from "@/components/ui/TiltCard";
+import TickRing from "@/components/ui/TickRing";
 import TeamPopup from "@/components/sections/TeamPopup";
 import { useRailScrollChain } from "@/lib/useRailScrollChain";
 import { bookNowCta } from "@/lib/format";
@@ -66,41 +67,6 @@ export type TeamPropsType = {
   className?: string;
 };
 
-function TickRing({ index }: { index: number }) {
-  const reduce = useReducedMotion();
-  const ticks = 80;
-  return (
-    <motion.div
-      className="absolute inset-0"
-      style={{ transformOrigin: "50% 50%", willChange: "transform" }}
-      animate={reduce ? undefined : { rotate: index % 2 === 0 ? 360 : -360 }}
-      transition={{ duration: 90, ease: "linear", repeat: Infinity }}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 100 100" className="h-full w-full">
-        {Array.from({ length: ticks }).map((_, i) => {
-          const a = (i / ticks) * Math.PI * 2;
-          const x1 = (50 + Math.sin(a) * 49).toFixed(3);
-          const y1 = (50 - Math.cos(a) * 49).toFixed(3);
-          const x2 = (50 + Math.sin(a) * 47.5).toFixed(3);
-          const y2 = (50 - Math.cos(a) * 47.5).toFixed(3);
-          return (
-            <line
-              key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="#9db0b1"
-              strokeWidth="0.5"
-            />
-          );
-        })}
-      </svg>
-    </motion.div>
-  );
-}
-
 const SCROLL_AFTER = 4;
 
 const ALL_CATEGORY = { id: "all", label: "All" };
@@ -126,7 +92,7 @@ function ChevronIcon({ direction }: { direction: "left" | "right" }) {
   );
 }
 
-function CategoryTabs({
+export function CategoryTabs({
   categories,
   active,
   onSelect,
@@ -156,6 +122,17 @@ function CategoryTabs({
     observer.observe(el);
     return () => observer.disconnect();
   }, [scrolls, readEdges, categories.length]);
+
+  const activeIndex = categories.findIndex((t) => (t?.id ?? "") === active);
+  useEffect(() => {
+    const el = railRef.current;
+    const btn = el?.children[activeIndex] as HTMLElement | undefined;
+    if (!scrolls || !el || !btn) return;
+    el.scrollTo({
+      left: btn.offsetLeft - (el.clientWidth - btn.clientWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [activeIndex, scrolls]);
 
   const nudge = (direction: -1 | 1) => {
     const el = railRef.current;
@@ -379,7 +356,7 @@ export default function Team({
               transition={{ duration: 0.3 }}
               className={
                 scroll
-                  ? "flex snap-x snap-mandatory items-stretch gap-2"
+                  ? "flex items-stretch gap-2"
                   : centered
                     ? "flex flex-wrap items-stretch justify-center gap-2"
                     : "grid gap-2 sm:grid-cols-2 lg:grid-cols-4"
@@ -409,7 +386,7 @@ export default function Team({
                     }}
                     className={
                       scroll
-                        ? "flex h-full w-[280px] shrink-0 snap-start sm:w-[340px]"
+                        ? "flex h-full w-[280px] shrink-0 sm:w-[340px]"
                         : centered
                           ? "flex h-full w-full sm:w-[345px]"
                           : "h-full"
@@ -444,7 +421,7 @@ export default function Team({
                         </div>
                         <span
                           aria-hidden="true"
-                          className="absolute bottom-3.5 right-3.5 flex h-[75px] w-[75px] flex-col items-center justify-center gap-0.5 rounded-full bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-1px_1px_rgba(255,255,255,0.15),0_8px_24px_-6px_rgba(20,41,43,0.35)] backdrop-blur-[3px] transition-transform duration-500 group-hover:scale-110"
+                          className="absolute bottom-3.5 right-3.5 flex h-[75px] w-[75px] flex-col items-center justify-center gap-0.5 rounded-full bg-white/45 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-1px_1px_rgba(255,255,255,0.15),0_8px_24px_-6px_rgba(20,41,43,0.35)] transition-transform duration-500 group-hover:scale-110"
                         >
                           <Image
                             src="/images/teams-arrow.svg"

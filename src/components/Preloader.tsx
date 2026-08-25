@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
 
-
 const SESSION_KEY = "rene-preloaded";
 
 const GRAIN =
@@ -108,6 +107,7 @@ export default function Preloader({ onDone }: PreloaderProps) {
       };
 
       if (alreadyPlayed || prefersReduced) {
+        safety = window.setTimeout(finish, 2000);
         gsap.set([".pl-line-a", ".pl-line-b", ".pl-meta"], {
           autoAlpha: 1,
           yPercent: 0,
@@ -173,7 +173,11 @@ export default function Preloader({ onDone }: PreloaderProps) {
 
       const exitAt = 2.55;
 
-      tl.to(".pl-rule", { autoAlpha: 0, duration: 0.45, ease: "power2.in" }, exitAt);
+      tl.to(
+        ".pl-rule",
+        { autoAlpha: 0, duration: 0.45, ease: "power2.in" },
+        exitAt,
+      );
 
       tl.to(
         ".pl-half-top",

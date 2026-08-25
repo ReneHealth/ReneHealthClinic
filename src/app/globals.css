@@ -28,6 +28,7 @@
 }
 html {
   scroll-behavior: initial;
+  overflow-x: clip;
 }
 body {
   color: var(--color-ink);
@@ -162,22 +163,32 @@ body {
     color 0.4s var(--ease-out-expo),
     border-color 0.4s var(--ease-out-expo),
     box-shadow 0.4s var(--ease-out-expo);
-  will-change: transform;
 }
 .btn-3d:hover,
 .btn-3d:focus-visible {
   transform: perspective(600px) rotateX(-12deg) translateY(-2px);
+  will-change: transform;
 }
 .btn-3d-wide {
   transform: perspective(2400px) rotateX(0deg) translateY(0);
   transition:
     transform 0.4s var(--ease-out-expo),
     background-color 0.4s var(--ease-out-expo);
-  will-change: transform;
 }
 .btn-3d-wide:hover,
 .btn-3d-wide:focus-visible {
   transform: perspective(2400px) rotateX(-3deg) translateY(-1px);
+  will-change: transform;
+}
+@keyframes tick-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes tick-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   *,
