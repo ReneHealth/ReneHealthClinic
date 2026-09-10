@@ -37,6 +37,12 @@ export type PageType<T extends object = object> = {
 const clean = (value?: string | null): string | undefined =>
   value?.trim() ? value.trim() : undefined;
 
+const WP_HOST = new URL(WP_URL).hostname;
+const SITE_HOST = new URL(SITE_URL).hostname.replace(/^www\./, "");
+
+// Any URL on the CMS host - or on the public host under a different
+// protocol/www spelling - is rewritten onto SITE_URL. Anything else is
+// dropped: a canonical pointing off-site is worse than no canonical.
 function toFrontendUrl(url?: string | null): string | undefined {
   const value = clean(url);
   if (!value) return undefined;
@@ -48,10 +54,11 @@ function toFrontendUrl(url?: string | null): string | undefined {
 
   try {
     const parsed = new URL(value);
-    if (parsed.origin === new URL(WP_URL).origin) {
+    const host = parsed.hostname.replace(/^www\./, "");
+    if (host === WP_HOST.replace(/^www\./, "") || host === SITE_HOST) {
       return `${SITE_URL}${normalise(parsed.pathname)}${parsed.search}`;
     }
-    return value;
+    return undefined;
   } catch {
     return undefined;
   }
@@ -74,11 +81,14 @@ export function MetaData(seo?: SeoType | null, fallback?: Metadata): Metadata {
   const title = clean(seo?.title) ?? fallback?.title ?? undefined;
   const description =
     clean(seo?.metaDesc) ?? fallback?.description ?? undefined;
-  const canonical =
-    toFrontendUrl(seo?.canonical) ??
-    (typeof fallback?.alternates?.canonical === "string"
-      ? `${SITE_URL}${fallback.alternates.canonical}`
-      : undefined);
+  // The route owns its canonical. Yoast's value is only a fallback: the CMS
+  // stores backend.renehealth.ca URLs, and letting those through tells Google
+  // the frontend page is a duplicate of the headless backend.
+  const routeCanonical =
+    typeof fallback?.alternates?.canonical === "string"
+      ? `${SITE_URL}${fallback.alternates.canonical.replace(/\/+$/, "")}`
+      : undefined;
+  const canonical = routeCanonical ?? toFrontendUrl(seo?.canonical);
 
   const images = ogImage(seo?.opengraphImage);
   const twitterImageUrl = clean(seo?.twitterImage?.sourceUrl);
@@ -97,7 +107,7 @@ export function MetaData(seo?: SeoType | null, fallback?: Metadata): Metadata {
       title: clean(seo?.opengraphTitle) ?? title,
       description: clean(seo?.opengraphDescription) ?? description,
       siteName: clean(seo?.opengraphSiteName),
-      url: toFrontendUrl(seo?.opengraphUrl) ?? canonical,
+      url: canonical ?? toFrontendUrl(seo?.opengraphUrl),
       publishedTime: clean(seo?.opengraphPublishedTime),
       modifiedTime: clean(seo?.opengraphModifiedTime),
       images,

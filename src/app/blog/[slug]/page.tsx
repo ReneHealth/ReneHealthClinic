@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: BlogDetailPagePropsType) {
   const data = await wpQuery<PageType>(GET_BLOG_DETAIL, { slug }, {
     tags: [`post:${slug}`, 'post'],
   });
-  return MetaData(data.post?.seo);
+  return MetaData(data.post?.seo, { alternates: { canonical: `/blog/${slug}` } });
 }
 export default async function BlogDetailPage({ params }: BlogDetailPagePropsType) {
   const { slug } = await params;

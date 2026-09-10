@@ -8,7 +8,7 @@ const PAGE_URI = "/family-counselling/";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getCommonPageContent(PAGE_URI);
-  return MetaData(seo);
+  return MetaData(seo, { alternates: { canonical: "/family-counselling" } });
 }
 
 export default async function FamilyCounsellingPage() {

@@ -8,7 +8,7 @@ const PAGE_URI = "/anger-management/";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getCommonPageContent(PAGE_URI);
-  return MetaData(seo);
+  return MetaData(seo, { alternates: { canonical: "/anger-management" } });
 }
 
 export default async function AngerManagementPage() {
