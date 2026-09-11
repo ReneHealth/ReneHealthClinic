@@ -8,7 +8,11 @@ const PAGE_URI = "/individual-counselling/";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getCommonPageContent(PAGE_URI);
-  return MetaData(seo, { alternates: { canonical: "/individual-counselling" } });
+  return MetaData(seo, {
+    description:
+      "Individual counselling in Coquitlam at Rene Health Clinic. Work one-on-one with a counsellor in a safe, confidential space to understand what you're facing and move forward.",
+    alternates: { canonical: "/individual-counselling" },
+  });
 }
 
 export default async function IndividualCounsellingPage() {

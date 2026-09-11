@@ -62,7 +62,12 @@ export async function generateMetadata() {
   const data = await wpQuery<PageType>(GET_BLOG_PAGE, {}, {
     tags: ['page:blog', 'post'],
   });
-  return MetaData(data.page?.seo, { alternates: { canonical: '/blog' } });
+  return MetaData(data.page?.seo, {
+    title: 'Health & Wellness Blog | Rene Health Clinic',
+    description:
+      'Counselling, physical health and wellness articles from the Rene Health Clinic team in Coquitlam.',
+    alternates: { canonical: '/blog' },
+  });
 }
 export default async function BlogPage({ searchParams }: BlogPagePropsType) {
   const params = await searchParams;

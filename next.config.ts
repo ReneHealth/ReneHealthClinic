@@ -31,6 +31,31 @@ const LEGACY_SERVICE_REDIRECTS = [
   ["/physical-health/skincare-facials-coquitlam", "/skincare-facials-coquitlam"],
 ].map(([source, destination]) => ({ source, destination, permanent: true }));
 
+// The previous WordPress site served blog posts at the root (/%postname%/).
+// Those are the URLs search engines still hold, so each one gets a permanent
+// redirect to its /blog/<slug> home. Explicit list, not a root catch-all, so
+// genuinely unknown URLs still 404.
+const LEGACY_POST_SLUGS = [
+  "signs-my-child-needs-therapy",
+  "rene-health-best-chiropractic",
+  "couples-counselling-tri-cities-coquitlam-port-moody-port-coquitlam",
+  "facial-acupuncture-coquitlam-rene-health-clinic",
+  "family-counselling-coquitlam-rene-health-clinic",
+  "supporting-child-mental-health-back-to-school",
+  "family-therapy-coquitlam-addiction-recover",
+  "stress-vs-trauma-counselling-coquitlam",
+  "anxiety-counselling-coquitlam",
+  "depression-counselling-in-coquitlam-port-coquitlam-port-moody-rene-health-clinic",
+  "mental-health-counselling-coquitlam",
+  "family-counselling-coquitlam",
+  "couples-counselling",
+  "counselling-coquitlam-anxiety",
+].map((slug) => ({
+  source: `/${slug}`,
+  destination: `/blog/${slug}`,
+  permanent: true,
+}));
+
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
@@ -64,6 +89,7 @@ const nextConfig: NextConfig = {
     // site flattened them, so each old path gets a permanent redirect to
     // its new home. Trailing slashes are stripped by Next before matching.
     ...LEGACY_SERVICE_REDIRECTS,
+    ...LEGACY_POST_SLUGS,
 
     // Services the clinic no longer offers a page for. Send the old URLs
     // to the category page rather than a 404 so their link equity carries.

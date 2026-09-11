@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { wpQuery } from "@/lib/graphql";
 
 const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://renehealth.ca"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.renehealth.ca"
 ).replace(/\/$/, "");
 
 const USE_WP = process.env.NEXT_PUBLIC_CONTENT_SOURCE === "wordpress";

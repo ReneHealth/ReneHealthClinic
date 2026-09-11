@@ -8,7 +8,11 @@ const PAGE_URI = "/adhd-management/";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getCommonPageContent(PAGE_URI);
-  return MetaData(seo, { alternates: { canonical: "/adhd-management" } });
+  return MetaData(seo, {
+    description:
+      "ADHD management and neurodiversity support in Coquitlam at Rene Health Clinic. Counselling and practical strategies for focus, organization and emotional regulation.",
+    alternates: { canonical: "/adhd-management" },
+  });
 }
 
 export default async function AdhdManagementPage() {
