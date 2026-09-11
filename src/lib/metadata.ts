@@ -37,10 +37,33 @@ export type PageType<T extends object = object> = {
 const clean = (value?: string | null): string | undefined =>
   value?.trim() ? value.trim() : undefined;
 
-const WP_HOST = new URL(WP_URL).hostname;
-const SITE_HOST = new URL(SITE_URL).hostname.replace(/^www\./, "");
+const stripWww = (host: string): string => host.replace(/^www\./, "");
 
-// Any URL on the CMS host - or on the public host under a different
+// The headless CMS lives at backend.renehealth.ca. Yoast stamps that host on
+// every canonical, OpenGraph URL and JSON-LD @id it produces. WP_URL is
+// *usually* the same origin, but it is an env var and has been set to a
+// different spelling before - which silently left the backend host in the
+// canonical tag for a month and got the whole site dropped from Google. So
+// the public backend host is listed here explicitly, alongside whatever
+// WP_URL says, and every rewrite matches on host (not origin) so protocol
+// and www differences can never break it again.
+const CMS_PUBLIC_HOST = "backend.renehealth.ca";
+const CMS_HOSTS = new Set(
+  [new URL(WP_URL).hostname, CMS_PUBLIC_HOST].map(stripWww),
+);
+const SITE_HOST = stripWww(new URL(SITE_URL).hostname);
+
+const escapeRegExp = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Matches any absolute URL origin on a CMS host, whatever the protocol or
+// www prefix, e.g. https://backend.renehealth.ca or http://www.backend...
+const CMS_ORIGIN_PATTERN = new RegExp(
+  `https?:\\/\\/(?:www\\.)?(?:${[...CMS_HOSTS].map(escapeRegExp).join("|")})`,
+  "g",
+);
+
+// Any URL on a CMS host - or on the public host under a different
 // protocol/www spelling - is rewritten onto SITE_URL. Anything else is
 // dropped: a canonical pointing off-site is worse than no canonical.
 function toFrontendUrl(url?: string | null): string | undefined {
@@ -54,8 +77,8 @@ function toFrontendUrl(url?: string | null): string | undefined {
 
   try {
     const parsed = new URL(value);
-    const host = parsed.hostname.replace(/^www\./, "");
-    if (host === WP_HOST.replace(/^www\./, "") || host === SITE_HOST) {
+    const host = stripWww(parsed.hostname);
+    if (CMS_HOSTS.has(host) || host === SITE_HOST) {
       return `${SITE_URL}${normalise(parsed.pathname)}${parsed.search}`;
     }
     return undefined;
@@ -81,14 +104,14 @@ export function MetaData(seo?: SeoType | null, fallback?: Metadata): Metadata {
   const title = clean(seo?.title) ?? fallback?.title ?? undefined;
   const description =
     clean(seo?.metaDesc) ?? fallback?.description ?? undefined;
-  // The route owns its canonical. Yoast's value is only a fallback: the CMS
-  // stores backend.renehealth.ca URLs, and letting those through tells Google
-  // the frontend page is a duplicate of the headless backend.
-  const routeCanonical =
+  // The route owns its canonical, full stop. Yoast's canonical is never used:
+  // the CMS stores backend.renehealth.ca URLs, and letting one through tells
+  // Google the frontend page is a duplicate of the (noindexed, redirecting)
+  // headless backend. Every page passes its own path via fallback.alternates.
+  const canonical =
     typeof fallback?.alternates?.canonical === "string"
       ? `${SITE_URL}${fallback.alternates.canonical.replace(/\/+$/, "")}`
       : undefined;
-  const canonical = routeCanonical ?? toFrontendUrl(seo?.canonical);
 
   const images = ogImage(seo?.opengraphImage);
   const twitterImageUrl = clean(seo?.twitterImage?.sourceUrl);
@@ -129,7 +152,9 @@ export function seoJsonLd(seo?: SeoType | null): string | null {
   if (!raw) return null;
 
   try {
-    const rewritten = raw.split(new URL(WP_URL).origin).join(SITE_URL);
+    // Host-based replace, not origin-based: Yoast writes the backend origin
+    // into every @id/url, and it must never survive into the public HTML.
+    const rewritten = raw.replace(CMS_ORIGIN_PATTERN, SITE_URL);
     JSON.parse(rewritten);
     return rewritten.replace(
       /[<>\u2028\u2029]/g,

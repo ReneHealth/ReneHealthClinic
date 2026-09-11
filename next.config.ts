@@ -8,6 +8,24 @@ const wpHost = (() => {
   }
 })();
 
+const LEGACY_SERVICE_REDIRECTS = [
+  ["/mental-health/individual-counselling", "/individual-counselling"],
+  ["/mental-health/mental-health-individualcounselling", "/individual-counselling"],
+  ["/mental-health/couple-counselling", "/couple-counselling"],
+  ["/mental-health/family-counselling", "/family-counselling"],
+  ["/mental-health/kids-and-play-therapy", "/kids-and-play-therapy"],
+  ["/mental-health/adhd-management", "/adhd-management"],
+  ["/mental-health/anger-management", "/anger-management"],
+  ["/physical-health/acupuncture", "/acupuncture"],
+  ["/physical-health/chiropractic", "/chiropractic"],
+  ["/physical-health/dietetics", "/dietetics"],
+  ["/physical-health/massage", "/massage"],
+  ["/physical-health/naturopathy", "/naturopathy"],
+  ["/physical-health/nutritionist", "/nutritionist"],
+  ["/physical-health/osteopathy-coquitlam", "/osteopathy-coquitlam"],
+  ["/physical-health/skincare-facials-coquitlam", "/skincare-facials-coquitlam"],
+].map(([source, destination]) => ({ source, destination, permanent: true }));
+
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
@@ -29,11 +47,29 @@ const nextConfig: NextConfig = {
     { source: "/contact", destination: "/contact-us", permanent: true },
     { source: "/counselling", destination: "/mental-health", permanent: true },
     {
-    source:
-      "/wp-content/uploads/2025/11/Rene-Health-Clinic-Visitor-Guide-1.pdf",
-    destination: "/Rene-Health-Clinic-Visitor-Guide.pdf",
-    permanent: true,
-  },
+      source:
+        "/wp-content/uploads/2025/11/Rene-Health-Clinic-Visitor-Guide-1.pdf",
+      destination: "/Rene-Health-Clinic-Visitor-Guide.pdf",
+      permanent: true,
+    },
+
+    // The previous WordPress site nested every service under its category
+    // (/mental-health/adhd-management/, /physical-health/massage/). Those
+    // URLs are what Google, Bing and every inbound link still know. This
+    // site flattened them, so each old path gets a permanent redirect to
+    // its new home. Trailing slashes are stripped by Next before matching.
+    ...LEGACY_SERVICE_REDIRECTS,
+
+    // Services the clinic no longer offers a page for. Send the old URLs
+    // to the category page rather than a 404 so their link equity carries.
+    ...["/physiotherapy", "/physiotherapy-rene-health-coquitlam", "/kinesiology"].map(
+      (source) => ({ source, destination: "/physical-health", permanent: true }),
+    ),
+
+    // Catch-all for any other nested service slug from the old structure.
+    // Explicit entries above win because Next matches redirects in order.
+    { source: "/mental-health/:slug", destination: "/:slug", permanent: true },
+    { source: "/physical-health/:slug", destination: "/:slug", permanent: true },
   ],
   headers: async () => [
     {
