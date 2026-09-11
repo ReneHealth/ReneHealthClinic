@@ -8,7 +8,11 @@ const PAGE_URI = "/couple-counselling/";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getCommonPageContent(PAGE_URI);
-  return MetaData(seo, { alternates: { canonical: "/couple-counselling" } });
+  return MetaData(seo, {
+    description:
+      "Couples counselling in Coquitlam at Rene Health Clinic. Improve communication, work through conflict and reconnect with your partner with the support of a counsellor.",
+    alternates: { canonical: "/couple-counselling" },
+  });
 }
 
 export default async function CoupleCounsellingPage() {

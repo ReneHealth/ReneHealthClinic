@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { wpQuery } from '@/lib/graphql';
 import { GET_BLOG_PAGE } from '@/lib/blog';
 import FeaturedPost from '@/components/blog/FeaturedPost';
@@ -45,6 +47,22 @@ type BlogCategoryPagePropsType = {
     slug: string;
   }>;
 };
+export async function generateMetadata({ params }: BlogCategoryPagePropsType): Promise<Metadata> {
+  const { slug } = await params;
+  const page = await wpQuery<CatPageType>(GET_BLOG_PAGE, {
+    first: 10,
+    after: null,
+    category: slug
+  });
+  const category = page?.categories?.nodes?.find((item) => item.slug === slug);
+  if (!category) notFound();
+  const name = category.name ?? 'Health';
+  return {
+    title: `${name} Articles | Rene Health Clinic`,
+    description: `Articles about ${name} from the Rene Health Clinic team in Coquitlam.`,
+    alternates: { canonical: `/blog/category/${slug}` },
+  };
+}
 export default async function BlogCategoryPage({ params }: BlogCategoryPagePropsType) {
   const { slug } = await params;
   const page = await wpQuery<CatPageType>(GET_BLOG_PAGE, {
@@ -52,6 +70,7 @@ export default async function BlogCategoryPage({ params }: BlogCategoryPageProps
     after: null,
     category: slug
   });
+  if (!page?.categories?.nodes?.some((item) => item.slug === slug)) notFound();
   const posts = page?.posts?.nodes ?? [];
   const featuredPost = posts[0];
   const blogPosts = posts.slice(1);

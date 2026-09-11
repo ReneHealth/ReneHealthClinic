@@ -8,7 +8,11 @@ const PAGE_URI = "/anger-management/";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getCommonPageContent(PAGE_URI);
-  return MetaData(seo, { alternates: { canonical: "/anger-management" } });
+  return MetaData(seo, {
+    description:
+      "Anger management counselling in Coquitlam at Rene Health Clinic. Understand your triggers, learn healthier ways to respond and improve your relationships.",
+    alternates: { canonical: "/anger-management" },
+  });
 }
 
 export default async function AngerManagementPage() {

@@ -58,8 +58,10 @@ const escapeRegExp = (value: string): string =>
 
 // Matches any absolute URL origin on a CMS host, whatever the protocol or
 // www prefix, e.g. https://backend.renehealth.ca or http://www.backend...
+// Media (/wp-content/) is excluded: uploads only exist on the CMS host, and
+// rewriting them onto SITE_URL points structured data at a 403.
 const CMS_ORIGIN_PATTERN = new RegExp(
-  `https?:\\/\\/(?:www\\.)?(?:${[...CMS_HOSTS].map(escapeRegExp).join("|")})`,
+  `https?:\\/\\/(?:www\\.)?(?:${[...CMS_HOSTS].map(escapeRegExp).join("|")})(?!\\/wp-content\\/)`,
   "g",
 );
 
@@ -103,7 +105,10 @@ function ogImage(image?: OpenGraphImageType | null) {
 export function MetaData(seo?: SeoType | null, fallback?: Metadata): Metadata {
   const title = clean(seo?.title) ?? fallback?.title ?? undefined;
   const description =
-    clean(seo?.metaDesc) ?? fallback?.description ?? undefined;
+    clean(seo?.metaDesc) ??
+    clean(seo?.opengraphDescription) ??
+    fallback?.description ??
+    undefined;
   // The route owns its canonical, full stop. Yoast's canonical is never used:
   // the CMS stores backend.renehealth.ca URLs, and letting one through tells
   // Google the frontend page is a duplicate of the (noindexed, redirecting)

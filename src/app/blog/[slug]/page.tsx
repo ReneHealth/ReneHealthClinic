@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { MetaData, SeoType } from '@/lib/metadata';
 import JsonLd from '@/components/seo/JsonLd';
 import { wpQuery } from '@/lib/graphql';
@@ -49,7 +50,8 @@ export async function generateMetadata({ params }: BlogDetailPagePropsType) {
   const data = await wpQuery<PageType>(GET_BLOG_DETAIL, { slug }, {
     tags: [`post:${slug}`, 'post'],
   });
-  return MetaData(data.post?.seo, { alternates: { canonical: `/blog/${slug}` } });
+  if (!data.post) notFound();
+  return MetaData(data.post.seo, { alternates: { canonical: `/blog/${slug}` } });
 }
 export default async function BlogDetailPage({ params }: BlogDetailPagePropsType) {
   const { slug } = await params;
@@ -58,7 +60,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPagePropsType
   });
   const post = page?.post;
   if (!post) {
-    return null;
+    notFound();
   }
   const recentPosts = (page?.posts?.nodes ?? []).filter((item) => item?.slug !== slug);
   const categories = page?.categories?.nodes ?? [];

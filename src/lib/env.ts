@@ -1,5 +1,5 @@
 const DEV_WP_URL = "http://rene-health-clinic.local";
-const DEFAULT_SITE_URL = "https://renehealth.ca";
+const DEFAULT_SITE_URL = "https://www.renehealth.ca";
 
 function trimSlash(value: string): string {
   return value.trim().replace(/\/$/, "");
