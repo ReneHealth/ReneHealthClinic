@@ -11,6 +11,11 @@ const wpHost = (() => {
 const LEGACY_SERVICE_REDIRECTS = [
   ["/mental-health/individual-counselling", "/individual-counselling"],
   ["/mental-health/mental-health-individualcounselling", "/individual-counselling"],
+  // Vercel's edge router lets the /mental-health/:slug catch-all below win
+  // over the entry above (it does not locally), which strands the old URL on
+  // /mental-health-individualcounselling. Catch that output too so the old
+  // URL reaches the right page whichever rule fires first.
+  ["/mental-health-individualcounselling", "/individual-counselling"],
   ["/mental-health/couple-counselling", "/couple-counselling"],
   ["/mental-health/family-counselling", "/family-counselling"],
   ["/mental-health/kids-and-play-therapy", "/kids-and-play-therapy"],
