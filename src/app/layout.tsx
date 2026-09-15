@@ -70,7 +70,16 @@ export default async function RootLayout({
   return (
     <html lang="en" className={boska.variable}>
       <body suppressHydrationWarning>
-	  {/* Google Ads Tag */}
+        {/*  Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SSWBPG4RM3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-SSWBPG4RM3');
+        </script>
+	      {/* Google Ads Tag */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18328119686"
           strategy="afterInteractive"
