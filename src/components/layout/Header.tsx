@@ -704,6 +704,20 @@ export default function Header({ menus, settings }: HeaderProps) {
           logo={settings.headerLogo}
           pathname={pathname}
         />
+        {/*  Google tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-SSWBPG4RM3"
+        ></script>
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-SSWBPG4RM3');
+          `}
+        </script>
       </header>
 
       <MenuButton
