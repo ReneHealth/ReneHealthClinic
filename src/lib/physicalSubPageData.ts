@@ -129,6 +129,8 @@ export type ProcessSectionType = {
   label?: string;
   heading?: string;
   paragraph?: string;
+  showStepCounter?: boolean;
+  showStepNumber?: boolean;
   steps?: ProcessStepType[];
 };
 
@@ -349,6 +351,8 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
           processLabel
           processHeading
           processParagraph
+          processShowStepCounter
+          processShowStepNumber
           processSteps {
             title
             description
@@ -459,8 +463,7 @@ function teamMembers(picked?: any): TeamMemberType[] {
       width: 0,
       height: 0,
     };
-    const shortDescription =
-      str(fields?.popupIntroduction) || str(fields?.bio);
+    const shortDescription = str(fields?.popupIntroduction) || str(fields?.bio);
 
     return {
       id: str(member?.id),
@@ -602,6 +605,8 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
             label: str(p?.processLabel),
             heading: str(p?.processHeading),
             paragraph: str(p?.processParagraph),
+            showStepCounter: p?.processShowStepCounter !== false,
+            showStepNumber: p?.processShowStepNumber !== false,
             steps: (p?.processSteps ?? []).map((step: any) => ({
               title: str(step?.title),
               description: str(step?.description),

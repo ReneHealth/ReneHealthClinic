@@ -24,6 +24,8 @@ export type HoverFourColumnSliderDataType = {
   label?: string;
   heading?: string;
   paragraph?: string;
+  showStepCounter?: boolean;
+  showStepNumber?: boolean;
   steps?: SliderStepType[] | readonly SliderStepType[];
 };
 
@@ -48,6 +50,8 @@ export default function HoverFourColumnSlider({
   const label = typedContent?.label ?? "";
   const heading = typedContent?.heading ?? "";
   const paragraph = typedContent?.paragraph ?? "";
+  const showStepCounter = typedContent?.showStepCounter !== false;
+  const showStepNumber = typedContent?.showStepNumber !== false;
   const steps: SliderStepType[] = Array.isArray(typedContent?.steps)
     ? (typedContent.steps as SliderStepType[])
     : [];
@@ -108,33 +112,37 @@ export default function HoverFourColumnSlider({
                     }`}
                   />
 
-                  <div
-                    aria-hidden="true"
-                    className={`absolute right-6 top-6 z-10 flex items-center transition-opacity duration-500 ${
-                      isOpen ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    <span className="relative z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white/10 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-1px_1px_rgba(255,255,255,0.15),0_8px_24px_-6px_rgba(20,41,43,0.35)] backdrop-blur-[2px]">
-                      {pad(i + 1)}
-                    </span>
-                    <span className="-ml-2 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white/55 text-ink/70 backdrop-blur-md">
-                      {pad(total)}
-                    </span>
-                  </div>
-
-                  <div className="relative z-10 mt-auto flex w-full flex-col p-5 text-white md:p-6">
-                    <span
+                  {showStepCounter ? (
+                    <div
                       aria-hidden="true"
-                      className={`display-serif font-bold italic leading-none text-white/90 transition-[font-size] duration-1000 [transition-timing-function:var(--ease-out-expo)] ${
-                        isOpen
-                          ? "text-[60px] md:text-[100px]"
-                          : "text-[30px] md:text-[50px]"
+                      className={`slider-count absolute right-6 top-6 z-10 flex items-center transition-opacity duration-500 ${
+                        isOpen ? "opacity-100" : "opacity-0"
                       }`}
                     >
-                      {pad(i + 1)}
-                    </span>
+                      <span className="relative z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white/10 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),inset_0_-1px_1px_rgba(255,255,255,0.15),0_8px_24px_-6px_rgba(20,41,43,0.35)] backdrop-blur-[2px]">
+                        {pad(i + 1)}
+                      </span>
+                      <span className="-ml-2 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white/55 text-ink/70 backdrop-blur-md">
+                        {pad(total)}
+                      </span>
+                    </div>
+                  ) : null}
+
+                  <div className="relative z-10 mt-auto flex w-full flex-col p-5 text-white md:p-6">
+                    {showStepNumber ? (
+                      <span
+                        aria-hidden="true"
+                        className={`slide-count display-serif font-bold italic leading-none text-white/90 transition-[font-size] duration-1000 [transition-timing-function:var(--ease-out-expo)] ${
+                          isOpen
+                            ? "text-[60px] md:text-[100px]"
+                            : "text-[30px] md:text-[50px]"
+                        }`}
+                      >
+                        {pad(i + 1)}
+                      </span>
+                    ) : null}
                     <h3
-                      className={`mt-3 font-bold italic transition-[font-size] duration-1000 [transition-timing-function:var(--ease-out-expo)] ${
+                      className={`${showStepNumber ? "mt-3" : ""} font-bold italic transition-[font-size] duration-1000 [transition-timing-function:var(--ease-out-expo)] ${
                         isOpen ? "text-[25px]" : "text-[18px]"
                       }`}
                     >

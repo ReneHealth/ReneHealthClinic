@@ -90,7 +90,7 @@ export default function Services({ content }: { content?: ServicesDataType }) {
                       />
                     ) : null}
                   </Parallax>
-                  <div className="absolute inset-0 bg-black/25 transition-colors duration-500 group-hover:bg-black/40" />
+                  <div className="rounded-3xl overflow-hidden absolute inset-0 bg-black/25 transition-colors duration-500 group-hover:bg-black/40" />
                   {col.cta ? (
                     <span className="btn-3d absolute inset-0 m-auto flex h-fit w-fit items-center rounded-full border border-white/70 px-6 py-[9px] text-sm text-white transition-all duration-500 group-hover:bg-white group-hover:text-ink">
                       {col.cta.label}
