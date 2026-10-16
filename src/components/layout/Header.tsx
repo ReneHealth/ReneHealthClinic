@@ -363,7 +363,7 @@ function MenuLink({
               animate={{ y: 0, opacity: 1, rotateX: 0 }}
               transition={{ delay, duration: 0.75, ease: EASE }}
               style={{ transformPerspective: 600, transformOrigin: "50% 100%" }}
-              className={`display-serif block text-[30px] leading-[1.05] transition-[color,padding-left] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:pl-3 group-hover:text-pine-soft group-focus-visible:pl-3 group-focus-visible:text-pine-soft md:text-[50px] ${active ? "text-ink" : "text-ink/35"}`}
+              className={`display-serif block text-[30px] leading-[1.05] transition-[color,padding-left] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:pl-3 group-hover:text-teal-hover group-focus-visible:pl-3 group-focus-visible:text-teal-hover md:text-[50px] text-ink`}
             >
               {link.label}
             </motion.span>
@@ -397,7 +397,7 @@ function MenuLink({
                 }
                 onClick={onClose}
                 aria-current={childActive ? "page" : undefined}
-                className={`group/sub touch-target flex items-center gap-2.5 rounded-lg py-[7px] text-[15px] transition-colors duration-300 hover:text-pine-soft ${FOCUS_RING} focus-visible:ring-offset-2 ${childActive ? "text-ink font-medium" : "text-slate-body"}`}
+                className={`group/sub touch-target flex items-center gap-2.5 rounded-lg py-[7px] text-[15px] transition-colors duration-300 hover:text-teal-hover ${FOCUS_RING} focus-visible:ring-offset-2 ${childActive ? "text-ink font-medium" : "text-pine-soft"}`}
               >
                 <span
                   aria-hidden
@@ -411,6 +411,36 @@ function MenuLink({
         </motion.div>
       ) : null}
     </div>
+  );
+}
+
+function BookLink({
+  booking,
+  onClose,
+}: {
+  booking: SiteSettings["menu"]["booking"];
+  onClose: () => void;
+}) {
+  return (
+    <Link
+      href={booking.href}
+      target={booking.target}
+      rel={booking.target === "_blank" ? "noopener noreferrer" : undefined}
+      onClick={onClose}
+      className={`btn-3d w-full justify-between md:w-fit group inline-flex items-center gap-5 rounded-full bg-ink py-2 pr-2 pl-7 text-mist shadow-[0_18px_40px_-20px_rgba(20,41,43,0.7)] transition-colors duration-500 hover:bg-pine-soft ${FOCUS_RING}`}
+    >
+      <span className="text-[15px] font-medium tracking-[0.02em]">
+        {booking.label}
+      </span>
+      <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-aqua text-ink">
+        <span className="absolute h-[18px] w-[18px] transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-4 group-hover:-translate-y-4 group-hover:opacity-0">
+          <ArrowUpRight />
+        </span>
+        <span className="absolute h-[18px] w-[18px] -translate-x-4 translate-y-4 opacity-0 transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100">
+          <ArrowUpRight />
+        </span>
+      </span>
+    </Link>
   );
 }
 
@@ -521,6 +551,10 @@ function MenuOverlay({
               Menu
             </motion.span>
 
+            <motion.div {...railIn(0.1)} className="mt-6 lg:hidden">
+              <BookLink booking={settings.menu.booking} onClose={onClose} />
+            </motion.div>
+
             <div className="mt-10 grid gap-14 lg:mt-14 lg:my-auto lg:grid-cols-[1.5fr_1fr] lg:gap-20 [align-items:self-start]">
               <nav aria-label="Primary" className="flex flex-col">
                 {fullscreenLinks.map((link, i) => (
@@ -543,7 +577,7 @@ function MenuOverlay({
                   {settings.menu.email ? (
                     <a
                       href={`mailto:${settings.menu.email}`}
-                      className={`touch-target w-fit rounded-sm text-[17px] text-ink transition-colors duration-300 hover:text-pine-soft ${FOCUS_RING}`}
+                      className={`touch-target w-fit rounded-sm text-[17px] text-ink transition-colors duration-300 hover:text-teal-hover ${FOCUS_RING}`}
                     >
                       {settings.menu.email}
                     </a>
@@ -551,7 +585,7 @@ function MenuOverlay({
                   {settings.menu.phone ? (
                     <a
                       href={settings.menu.phoneHref}
-                      className={`touch-target w-fit rounded-sm text-[17px] text-ink transition-colors duration-300 hover:text-pine-soft ${FOCUS_RING}`}
+                      className={`touch-target w-fit rounded-sm text-[17px] text-ink transition-colors duration-300 hover:text-teal-hover ${FOCUS_RING}`}
                     >
                       {settings.menu.phone}
                     </a>
@@ -581,30 +615,8 @@ function MenuOverlay({
                   ))}
                 </motion.dl>
 
-                <motion.div {...railIn(0.4)}>
-                  <Link
-                    href={settings.menu.booking.href}
-                    target={settings.menu.booking.target}
-                    rel={
-                      settings.menu.booking.target === "_blank"
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                    onClick={onClose}
-                    className={`btn-3d w-full justify-between md:w-fit group inline-flex items-center gap-5 rounded-full bg-ink py-2 pr-2 pl-7 text-mist shadow-[0_18px_40px_-20px_rgba(20,41,43,0.7)] transition-colors duration-500 hover:bg-pine-soft ${FOCUS_RING}`}
-                  >
-                    <span className="text-[15px] font-medium tracking-[0.02em]">
-                      {settings.menu.booking.label}
-                    </span>
-                    <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-aqua text-ink">
-                      <span className="absolute h-[18px] w-[18px] transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-4 group-hover:-translate-y-4 group-hover:opacity-0">
-                        <ArrowUpRight />
-                      </span>
-                      <span className="absolute h-[18px] w-[18px] -translate-x-4 translate-y-4 opacity-0 transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100">
-                        <ArrowUpRight />
-                      </span>
-                    </span>
-                  </Link>
+                <motion.div {...railIn(0.4)} className="hidden lg:block">
+                  <BookLink booking={settings.menu.booking} onClose={onClose} />
                 </motion.div>
               </div>
             </div>
