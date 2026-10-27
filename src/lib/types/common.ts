@@ -84,6 +84,7 @@ export interface FaqItem {
 }
 
 export interface FaqSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -119,6 +120,7 @@ export interface TeamMember {
 }
 
 export interface TeamSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;

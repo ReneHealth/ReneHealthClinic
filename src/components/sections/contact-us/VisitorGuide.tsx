@@ -42,6 +42,7 @@ export default function VisitorGuide({
   return (
     <section
       ref={sectionRef}
+      id={content.anchorId}
       className="relative flex min-h-[340px] items-center overflow-hidden md:min-h-[550px]"
     >
       {content.image ? (

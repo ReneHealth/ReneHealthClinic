@@ -36,6 +36,7 @@ export type ImageDataType = {
 };
 
 export type CenterImageGridDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -137,7 +138,10 @@ export default function CenterImageGrid({
   const card3 = cards[3];
 
   return (
-    <section className={`px-5 py-10 md:px-6 md:pb-20 ${className}`}>
+    <section
+      id={content?.anchorId}
+      className={`px-5 py-10 md:px-6 md:pb-20 ${className}`}
+    >
       <div className="mx-auto max-w-2xl text-center">
         {richHeading ? (
           <>

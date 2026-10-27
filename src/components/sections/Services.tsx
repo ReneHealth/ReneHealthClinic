@@ -33,7 +33,7 @@ export type ServicesDataType = SectionHeader & {
 
 export default function Services({ content }: { content?: ServicesDataType }) {
   return (
-    <section className="px-5 md:px-6 pb-10 md:pb-30">
+    <section id={content?.anchorId} className="px-5 md:px-6 pb-10 md:pb-30">
       <div className="mx-auto max-w-[800px] text-center">
         <SectionHeading
           label={content?.label}

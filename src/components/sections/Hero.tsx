@@ -11,7 +11,13 @@ import SplitReveal from "@/components/ui/SplitReveal";
 import RichText from "@/components/ui/RichText";
 import { canHover } from "@/lib/motion";
 
-export default function Hero({ panels }: { panels: HeroPanel[] }) {
+export default function Hero({
+  panels,
+  id,
+}: {
+  panels: HeroPanel[];
+  id?: string;
+}) {
   const introDone = useIntroDone();
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -65,6 +71,7 @@ export default function Hero({ panels }: { panels: HeroPanel[] }) {
   return (
     <section
       ref={sectionRef}
+      id={id}
       className="relative flex h-[100svh] min-h-[640px] flex-col md:flex-row"
     >
       {panels.map((panel, i) => (

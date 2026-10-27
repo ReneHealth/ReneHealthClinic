@@ -2,6 +2,7 @@ import type { FaqSection, Html } from "./common";
 import type { CounsellingHero, CtaBanner } from "./mental-health";
 
 export interface ContactInfoSection {
+  anchorId?: string;
   label: string;
   heading: Html;
   paragraph: Html;

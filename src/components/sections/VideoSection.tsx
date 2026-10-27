@@ -123,7 +123,11 @@ export default function VideoSection({
   );
 
   return (
-    <section ref={sectionRef} className={` pb-10 md:pb-32 ${className}`}>
+    <section
+      ref={sectionRef}
+      id={content.anchorId}
+      className={` pb-10 md:pb-32 ${className}`}
+    >
       <div className="video-frame relative aspect-[1360/600] max-h-[86svh] w-full will-change-[clip-path]">
         <video
           ref={videoRef}

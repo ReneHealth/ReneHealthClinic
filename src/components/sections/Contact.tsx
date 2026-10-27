@@ -82,7 +82,10 @@ export default function Contact({ content }: { content: ContactSection }) {
   };
 
   return (
-    <section id="contact" className="grid bg-mist lg:grid-cols-2">
+    <section
+      id={content.anchorId ?? "contact"}
+      className="grid bg-mist lg:grid-cols-2"
+    >
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}

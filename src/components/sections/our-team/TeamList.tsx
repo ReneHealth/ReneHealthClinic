@@ -15,7 +15,7 @@ interface TeamProps {
 }
 export default function TeamList({ content, onSelectMember }: TeamProps) {
   return (
-    <section id="team" className="bg-white mb-10">
+    <section id={content.anchorId ?? "team"} className="bg-white mb-10">
       {content.categories.map((category, categoryIndex) => (
         <section
           key={category.id}

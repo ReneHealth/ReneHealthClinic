@@ -1,53 +1,8 @@
+import { IMAGE_FRAGMENT, SEO_FRAGMENT } from "./fragments";
 import { wpQuery } from "@/lib/graphql";
 import { toOrder } from "@/lib/sectionOrder";
-import { cta, filled, hasContent, image, str } from "@/lib/format";
+import { cta, filled, hasContent, image, sectionId, str } from "@/lib/format";
 import type { SeoType } from "@/lib/metadata";
-
-const IMAGE_FRAGMENT = `
-  fragment Img on MediaItem {
-    sourceUrl
-    altText
-    mediaDetails {
-      width
-      height
-    }
-  }
-`;
-
-const SEO_FRAGMENT = `
-  fragment PageSeo on Page {
-    seo {
-      title
-      metaDesc
-      canonical
-      metaRobotsNoindex
-      metaRobotsNofollow
-      opengraphTitle
-      opengraphDescription
-      opengraphType
-      opengraphSiteName
-      opengraphUrl
-      opengraphPublishedTime
-      opengraphModifiedTime
-      opengraphImage {
-        sourceUrl
-        altText
-        mediaDetails {
-          width
-          height
-        }
-      }
-      twitterTitle
-      twitterDescription
-      twitterImage {
-        sourceUrl
-      }
-      schema {
-        raw
-      }
-    }
-  }
-`;
 
 export type ImageType = {
   src: string;
@@ -63,6 +18,7 @@ export type CtaType = {
 };
 
 export type HeroSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -73,6 +29,7 @@ export type HeroSectionType = {
 };
 
 export type IntroSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -95,6 +52,7 @@ export type ServiceColumnType = {
 };
 
 export type ServicesSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -110,6 +68,7 @@ export type SupportCardType = {
 };
 
 export type SupportSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -125,6 +84,7 @@ export type ProcessStepType = {
 };
 
 export type ProcessSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -135,6 +95,7 @@ export type ProcessSectionType = {
 };
 
 export type InsuranceCtaType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -164,6 +125,7 @@ export type TeamMemberType = {
 };
 
 export type TeamSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -180,6 +142,7 @@ export type BenefitsCardType = {
 };
 
 export type BenefitsSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -199,6 +162,7 @@ export type ReviewItemType = {
 };
 
 export type ReviewsSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -213,6 +177,7 @@ export type FaqItemType = {
 };
 
 export type FaqSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -221,6 +186,7 @@ export type FaqSectionType = {
 };
 
 export type CtaBannerType = {
+  anchorId?: string;
   order?: number;
   heading?: string;
   paragraph?: string;
@@ -278,6 +244,7 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
         id
         ...PageSeo
         physicalSubPagesFieldsData {
+          heroSectionId
           heroOrder
           heroLabel
           heroHeading
@@ -295,6 +262,8 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
             }
           }
 
+          introSectionId
+
           introOrder
           introLabel
           introHeading
@@ -304,6 +273,8 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
               ...Img
             }
           }
+
+          servicesSectionId
 
           servicesOrder
           servicesLabel
@@ -326,6 +297,8 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
             }
           }
 
+          supportSectionId
+
           supportOrder
           supportLabel
           supportHeading
@@ -347,6 +320,8 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
             buttonUrl
           }
 
+          processSectionId
+
           processOrder
           processLabel
           processHeading
@@ -363,12 +338,16 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
             }
           }
 
+          insuranceSectionId
+
           insuranceOrder
           insuranceLabel
           insuranceHeading
           insuranceParagraph
           insuranceButtonLabel
           insuranceButtonUrl
+
+          teamSectionId
 
           teamOrder
           teamLabel
@@ -399,6 +378,8 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
             }
           }
 
+          benefitsSectionId
+
           benefitsOrder
           benefitsLabel
           benefitsHeading
@@ -416,10 +397,14 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
           }
           benefitsFootnote
 
+          reviewsSectionId
+
           reviewsOrder
           reviewsLabel
           reviewsHeading
           reviewsParagraph
+
+          faqSectionId
 
           faqOrder
           faqTagline
@@ -429,6 +414,8 @@ export const PHYSICAL_SUB_PAGE_QUERY = `
             faqQuestion
             faqAnswer
           }
+
+          ctaSectionId
 
           ctaOrder
           ctaHeading
@@ -547,6 +534,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
     page: {
       hero: hasHero
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             order: toOrder(p?.heroOrder),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
@@ -558,6 +546,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       intro: hasIntro
         ? {
+            anchorId: sectionId(p?.introSectionId),
             order: toOrder(p?.introOrder),
             label: str(p?.introLabel),
             heading: str(p?.introHeading),
@@ -567,6 +556,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       services: hasServices
         ? {
+            anchorId: sectionId(p?.servicesSectionId),
             order: toOrder(p?.servicesOrder),
             label: str(p?.servicesLabel),
             heading: str(p?.servicesHeading),
@@ -586,6 +576,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       support: hasSupport
         ? {
+            anchorId: sectionId(p?.supportSectionId),
             order: toOrder(p?.supportOrder),
             label: str(p?.supportLabel),
             heading: str(p?.supportHeading),
@@ -601,6 +592,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       process: hasProcess
         ? {
+            anchorId: sectionId(p?.processSectionId),
             order: toOrder(p?.processOrder),
             label: str(p?.processLabel),
             heading: str(p?.processHeading),
@@ -616,6 +608,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       insurance: hasInsurance
         ? {
+            anchorId: sectionId(p?.insuranceSectionId),
             order: toOrder(p?.insuranceOrder),
             label: str(p?.insuranceLabel),
             heading: str(p?.insuranceHeading),
@@ -625,6 +618,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       team: hasTeam
         ? {
+            anchorId: sectionId(p?.teamSectionId),
             order: toOrder(p?.teamOrder),
             label: str(p?.teamLabel),
             heading: str(p?.teamHeading),
@@ -636,6 +630,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       benefits: hasBenefits
         ? {
+            anchorId: sectionId(p?.benefitsSectionId),
             order: toOrder(p?.benefitsOrder),
             label: str(p?.benefitsLabel),
             heading: str(p?.benefitsHeading),
@@ -653,6 +648,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       reviews: hasReviews
         ? {
+            anchorId: sectionId(p?.reviewsSectionId),
             order: toOrder(p?.reviewsOrder),
             label: str(p?.reviewsLabel),
             heading: str(p?.reviewsHeading),
@@ -662,6 +658,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       faq: hasFaq
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             order: toOrder(p?.faqOrder),
             label: str(p?.faqTagline),
             heading: str(p?.faqHeading),
@@ -675,6 +672,7 @@ export function formatPhysicalSubPageData(data: any): PhysicalSubPageType {
         : null,
       cta: hasCta
         ? {
+            anchorId: sectionId(p?.ctaSectionId),
             order: toOrder(p?.ctaOrder),
             heading: str(p?.ctaHeading),
             paragraph: str(p?.ctaParagraph),

@@ -13,6 +13,7 @@ export interface NoticeItem {
 }
 
 export interface NoticeSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -21,6 +22,7 @@ export interface NoticeSection {
 }
 
 export interface ApproachSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -29,6 +31,7 @@ export interface ApproachSection {
 }
 
 export interface KidsSupportSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -43,6 +46,7 @@ export interface RoleItem {
 }
 
 export interface RoleSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -50,6 +54,7 @@ export interface RoleSection {
 }
 
 export interface InsuranceCta {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;

@@ -12,6 +12,7 @@ export type ImageDataType = {
 };
 
 export type SideImageContentDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -40,7 +41,10 @@ export default function SideImageContent({
   const isImageLeft = imagePosition === "left";
 
   return (
-    <section className={`bg-mist px-5 py-10 md:px-6 ${className}`}>
+    <section
+      id={content?.anchorId}
+      className={`bg-mist px-5 py-10 md:px-6 ${className}`}
+    >
       <div className="mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-2 lg:gap-16">
         <div
           className={`flex max-w-xl flex-col justify-center ${

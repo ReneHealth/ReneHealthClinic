@@ -19,6 +19,15 @@ export function str(value?: string | null, fallback = ""): string {
   return value ?? fallback;
 }
 
+export function sectionId(value?: string | null): string | undefined {
+  const id = str(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9_]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return id || undefined;
+}
+
 export function hasContent(value?: string | null): boolean {
   if (!value) return false;
   if (EMBEDDED_MEDIA.test(value)) return true;

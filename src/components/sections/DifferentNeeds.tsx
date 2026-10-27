@@ -143,6 +143,7 @@ export default function DifferentNeeds({
   return (
     <section
       ref={sectionRef}
+      id={content.anchorId}
       className="relative overflow-hidden bg-pine text-white"
     >
       <div className="relative flex min-h-svh flex-col items-center px-5 md:px-6 pt-10 md:h-svh md:pt-28">

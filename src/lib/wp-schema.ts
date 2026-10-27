@@ -78,6 +78,7 @@ export interface WpSettings {
 }
 
 export interface WpHomePage {
+  heroSectionId: string | null;
   heroPanels:
     | {
         title: string | null;
@@ -88,6 +89,7 @@ export interface WpHomePage {
       }[]
     | null;
 
+  aboutSectionId: string | null;
   aboutLabel: string | null;
   aboutHeading: string | null;
   aboutParagraph: string | null;
@@ -100,6 +102,7 @@ export interface WpHomePage {
       }[]
     | null;
 
+  needsSectionId: string | null;
   needsLabel: string | null;
   needsHeading: string | null;
   needsParagraph: string | null;
@@ -111,6 +114,7 @@ export interface WpHomePage {
       }[]
     | null;
 
+  teamSectionId: string | null;
   teamLabel: string | null;
   teamHeading: string | null;
   teamParagraph: string | null;
@@ -118,10 +122,12 @@ export interface WpHomePage {
   teamButtonUrl: string | null;
   showTeamButton: boolean | null;
 
+  videoSectionId: string | null;
   videoFile: { node: { mediaItemUrl: string | null } | null } | null;
   videoPoster: WpMediaNode | null;
   videoLabel: string | null;
 
+  servicesSectionId: string | null;
   servicesLabel: string | null;
   servicesHeading: string | null;
   servicesParagraph: string | null;
@@ -137,6 +143,7 @@ export interface WpHomePage {
       }[]
     | null;
 
+  gtkSectionId: string | null;
   gtkLabel: string | null;
   gtkHeading: string | null;
   gtkParagraph: string | null;
@@ -145,15 +152,18 @@ export interface WpHomePage {
   gtkBackgrounds: WpMediaNodes | null;
   gtkCards: { title: string | null; description: string | null }[] | null;
 
+  faqSectionId: string | null;
   faqLabel: string | null;
   faqHeading: string | null;
   faqParagraph: string | null;
   faqItems: WpFaqNodes | null;
 
+  reviewsSectionId: string | null;
   reviewsLabel: string | null;
   reviewsHeading: string | null;
   reviewsParagraph: string | null;
 
+  contactSectionId: string | null;
   contactLabel: string | null;
   contactHeading: string | null;
   contactParagraph: string | null;
@@ -162,6 +172,7 @@ export interface WpHomePage {
 }
 
 export interface WpMentalHealthPage {
+  heroSectionId: string | null;
   heroLabel: string | null;
   heroHeading: string | null;
   heroParagraph: string | null;
@@ -170,11 +181,13 @@ export interface WpMentalHealthPage {
   heroImage: WpMediaNode | null;
   heroLogo: WpMediaNode | null;
 
+  introSectionId: string | null;
   introLabel: string | null;
   introHeading: string | null;
   introParagraph: string | null;
   introImage: WpMediaNode | null;
 
+  supportSectionId: string | null;
   supportLabel: string | null;
   supportHeading: string | null;
   supportParagraph: string | null;
@@ -188,6 +201,7 @@ export interface WpMentalHealthPage {
       }[]
     | null;
 
+  processSectionId: string | null;
   processLabel: string | null;
   processHeading: string | null;
   processParagraph: string | null;
@@ -199,12 +213,14 @@ export interface WpMentalHealthPage {
       }[]
     | null;
 
+  teamSectionId: string | null;
   teamLabel: string | null;
   teamHeading: string | null;
   teamParagraph: string | null;
   teamDisplayMode?: string | null;
   teamCategoriesPicked?: WpTeamCategorySlugs | null;
 
+  benefitsSectionId: string | null;
   benefitsLabel: string | null;
   benefitsHeading: string | null;
   benefitsParagraph: string | null;
@@ -219,11 +235,13 @@ export interface WpMentalHealthPage {
     | null;
   benefitsFootnote: string | null;
 
+  faqSectionId: string | null;
   faqLabel: string | null;
   faqHeading: string | null;
   faqParagraph: string | null;
   faqItems: WpFaqNodes | null;
 
+  ctaSectionId: string | null;
   ctaHeading: string | null;
   ctaParagraph: string | null;
   ctaButtonLabel: string | null;
@@ -232,6 +250,7 @@ export interface WpMentalHealthPage {
 }
 
 export interface WpContactUsPage {
+  heroSectionId: string | null;
   heroLabel: string | null;
   heroHeading: string | null;
   heroParagraph: string | null;
@@ -240,11 +259,13 @@ export interface WpContactUsPage {
   heroImage: WpMediaNode | null;
   heroLogo: WpMediaNode | null;
 
+  infoSectionId: string | null;
   infoLabel: string | null;
   infoHeading: string | null;
   infoParagraph: string | null;
   infoMapEmbed: string | null;
 
+  guideSectionId: string | null;
   guideLabel: string | null;
   guideHeading: string | null;
   guideParagraph: string | null;
@@ -252,11 +273,13 @@ export interface WpContactUsPage {
   guideButtonUrl: string | null;
   guideImage: WpMediaNode | null;
 
+  faqSectionId: string | null;
   faqLabel: string | null;
   faqHeading: string | null;
   faqParagraph: string | null;
   faqItems: WpFaqNodes | null;
 
+  ctaSectionId: string | null;
   ctaHeading: string | null;
   ctaParagraph: string | null;
   ctaButtonLabel: string | null;
@@ -265,6 +288,7 @@ export interface WpContactUsPage {
 }
 
 export interface WpInsurancePage {
+  heroSectionId: string | null;
   heroLabel: string | null;
   heroHeading: string | null;
   heroParagraph: string | null;
@@ -273,6 +297,7 @@ export interface WpInsurancePage {
   heroImage: WpMediaNode | null;
   heroLogo: WpMediaNode | null;
 
+  coverageSectionId: string | null;
   coverageLabel: string | null;
   coverageHeading: string | null;
   coverageParagraph: string | null;
@@ -286,6 +311,7 @@ export interface WpInsurancePage {
       }[]
     | null;
 
+  processSectionId: string | null;
   processLabel: string | null;
   processHeading: string | null;
   processParagraph: string | null;
@@ -297,6 +323,7 @@ export interface WpInsurancePage {
       }[]
     | null;
 
+  benefitsSectionId: string | null;
   benefitsLabel: string | null;
   benefitsHeading: string | null;
   benefitsParagraph: string | null;
@@ -304,6 +331,7 @@ export interface WpInsurancePage {
   benefitsItems: { title: string | null; description: string | null }[] | null;
   benefitsFootnote: string | null;
 
+  providersSectionId: string | null;
   providersLabel: string | null;
   providersHeading: string | null;
   providersParagraph: string | null;
@@ -317,12 +345,14 @@ export interface WpInsurancePage {
     | null;
   providersNote: string | null;
 
+  beforeSectionId: string | null;
   beforeLabel: string | null;
   beforeHeading: string | null;
   beforeParagraph: string | null;
   beforeButtonLabel: string | null;
   beforeButtonUrl: string | null;
 
+  faqSectionId: string | null;
   faqLabel: string | null;
   faqHeading: string | null;
   faqParagraph: string | null;
@@ -330,6 +360,7 @@ export interface WpInsurancePage {
 }
 
 export interface WpKidsPlayTherapyPage {
+  heroSectionId: string | null;
   heroLabel: string | null;
   heroHeading: string | null;
   heroParagraph: string | null;
@@ -338,6 +369,7 @@ export interface WpKidsPlayTherapyPage {
   heroImage: WpMediaNode | null;
   heroLogo: WpMediaNode | null;
 
+  noticeSectionId: string | null;
   noticeLabel: string | null;
   noticeHeading: string | null;
   noticeParagraph: string | null;
@@ -347,12 +379,14 @@ export interface WpKidsPlayTherapyPage {
     | { title: string | null; description: string | null; icon: WpMediaNode | null }[]
     | null;
 
+  approachSectionId: string | null;
   approachLabel: string | null;
   approachHeading: string | null;
   approachParagraph: string | null;
   approachImage: WpMediaNode | null;
   approachQuote: string | null;
 
+  supportSectionId: string | null;
   supportLabel: string | null;
   supportHeading: string | null;
   supportParagraph: string | null;
@@ -367,6 +401,7 @@ export interface WpKidsPlayTherapyPage {
       }[]
     | null;
 
+  processSectionId: string | null;
   processLabel: string | null;
   processHeading: string | null;
   processParagraph: string | null;
@@ -381,6 +416,7 @@ export interface WpKidsPlayTherapyPage {
     | null;
   processFootnote: string | null;
 
+  roleSectionId: string | null;
   roleLabel: string | null;
   roleHeading: string | null;
   roleParagraph: string | null;
@@ -388,6 +424,7 @@ export interface WpKidsPlayTherapyPage {
     | { title: string | null; description: string | null; image: WpMediaNode | null }[]
     | null;
 
+  teamSectionId: string | null;
   teamLabel: string | null;
   teamHeading: string | null;
   teamParagraph: string | null;
@@ -395,17 +432,20 @@ export interface WpKidsPlayTherapyPage {
   teamButtonUrl: string | null;
   teamMembersPicked: WpTeamMemberNodes | null;
 
+  insuranceSectionId: string | null;
   insuranceLabel: string | null;
   insuranceHeading: string | null;
   insuranceParagraph: string | null;
   insuranceButtonLabel: string | null;
   insuranceButtonUrl: string | null;
 
+  faqSectionId: string | null;
   faqLabel: string | null;
   faqHeading: string | null;
   faqParagraph: string | null;
   faqItems: WpFaqNodes | null;
 
+  ctaSectionId: string | null;
   ctaHeading: string | null;
   ctaParagraph: string | null;
   ctaButtonLabel: string | null;
@@ -414,6 +454,7 @@ export interface WpKidsPlayTherapyPage {
 }
 
 export interface WpOurTeamPage {
+  heroSectionId: string | null;
   heroLabel: string | null;
   heroHeading: string | null;
   heroParagraph: string | null;
@@ -421,15 +462,20 @@ export interface WpOurTeamPage {
   heroButtonLabel: string | null;
   heroButtonUrl: string | null;
 
+  teamSectionId: string | null;
+
+  videoSectionId: string | null;
   videoFile: { node: { mediaItemUrl: string | null } | null } | null;
   videoPoster: WpMediaNode | null;
   videoLabel: string | null;
 
+  faqSectionId: string | null;
   faqLabel: string | null;
   faqHeading: string | null;
   faqParagraph: string | null;
   faqItems: WpFaqNodes | null;
 
+  ctaSectionId: string | null;
   ctaHeading: string | null;
   ctaParagraph: string | null;
   ctaButtonLabel: string | null;

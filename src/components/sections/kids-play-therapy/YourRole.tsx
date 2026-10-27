@@ -8,7 +8,7 @@ import RichText from "@/components/ui/RichText";
 
 export default function YourRole({ content }: { content: RoleSection }) {
   return (
-    <section className=" px-5 pt-10 md:px-6 md:py-18">
+    <section id={content.anchorId} className=" px-5 pt-10 md:px-6 md:py-18">
       <div className="mx-auto max-w-[1400px]">
         <div className="max-w-xl">
           <SectionHeading

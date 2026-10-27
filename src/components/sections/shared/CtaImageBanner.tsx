@@ -20,6 +20,7 @@ export type CtaDataType = {
 };
 
 export type CtaBannerDataType = {
+  anchorId?: string;
   heading?: string;
   paragraph?: string;
   image?: ImageDataType | null;
@@ -70,6 +71,7 @@ export default function CtaImageBanner({
   return (
     <section
       ref={sectionRef}
+      id={content?.anchorId}
       className={`relative flex min-h-[420px] items-center overflow-hidden md:min-h-[600px] ${className}`}
     >
       {imageSrc ? (

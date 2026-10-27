@@ -14,6 +14,7 @@ export type CtaDataType = {
 };
 
 export type CtaPanelDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -80,7 +81,11 @@ export default function CtaPanel({
   );
 
   return (
-    <section ref={sectionRef} className={`bg-mist ${className}`}>
+    <section
+      ref={sectionRef}
+      id={content?.anchorId}
+      className={`bg-mist ${className}`}
+    >
       <div className="ubc-frame w-full bg-ink will-change-[clip-path]">
         <div className="mx-auto max-w-[1400px] px-5 py-14 text-center text-white md:px-6 md:py-30">
           <SectionHeading

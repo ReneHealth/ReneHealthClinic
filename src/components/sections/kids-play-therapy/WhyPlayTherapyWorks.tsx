@@ -13,7 +13,7 @@ export default function WhyPlayTherapyWorks({
   content: ApproachSection;
 }) {
   return (
-    <section className="bg-mist px-5 py-10 md:px-6">
+    <section id={content.anchorId} className="bg-mist px-5 py-10 md:px-6">
       <div className="mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-2 lg:gap-16">
         <div className="flex max-w-xl flex-col justify-center">
           <SectionHeading

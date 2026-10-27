@@ -12,7 +12,7 @@ export default function CheckBenefits({
   content: CheckBenefitsSection;
 }) {
   return (
-    <section className="px-5 py-10 md:px-6 md:py-24">
+    <section id={content.anchorId} className="px-5 py-10 md:px-6 md:py-24">
       <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="flex max-w-xl flex-col lg:h-full">
           <SectionHeading

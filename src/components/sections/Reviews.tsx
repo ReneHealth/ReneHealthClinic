@@ -75,7 +75,10 @@ export default function Reviews({ content }: { content?: ReviewsDataType }) {
   useRailScrollChain(trackRef);
 
   return (
-    <section className="overflow-hidden bg-aqua py-10 md:py-24 md:py-32">
+    <section
+      id={content?.anchorId}
+      className="overflow-hidden bg-aqua py-10 md:py-24 md:py-32"
+    >
       <div className="mx-auto max-w-[1400px] px-5 md:px-6">
         <div className="max-w-[560px]">
           <SectionHeading

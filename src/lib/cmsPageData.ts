@@ -1,73 +1,9 @@
+import { IMAGE_FRAGMENT, SEO_FRAGMENT, TEAM_CATEGORY_FIELDS } from "./fragments";
 import { wpQuery } from "@/lib/graphql";
 import { toOrder } from "@/lib/sectionOrder";
-import { cta, filled, hasContent, image, str } from "@/lib/format";
+import { cta, filled, hasContent, image, sectionId, str } from "@/lib/format";
 import type { WpImageField } from "@/lib/format";
 import type { SeoType } from "@/lib/metadata";
-
-const IMAGE_FRAGMENT = `
-  fragment Img on MediaItem {
-    sourceUrl
-    altText
-    mediaDetails {
-      width
-      height
-    }
-  }
-`;
-
-const TEAM_CATEGORY_FIELDS = `
-  teamCategories(first: 100) {
-    nodes {
-      id
-      databaseId
-      name
-      slug
-      description
-      displayOrder
-      teamCategoryFields {
-        showOnOurTeam
-        tabLabel
-        sectionTitle
-        sectionDescription
-      }
-    }
-  }
-`;
-
-const SEO_FRAGMENT = `
-  fragment PageSeo on Page {
-    seo {
-      title
-      metaDesc
-      canonical
-      metaRobotsNoindex
-      metaRobotsNofollow
-      opengraphTitle
-      opengraphDescription
-      opengraphType
-      opengraphSiteName
-      opengraphUrl
-      opengraphPublishedTime
-      opengraphModifiedTime
-      opengraphImage {
-        sourceUrl
-        altText
-        mediaDetails {
-          width
-          height
-        }
-      }
-      twitterTitle
-      twitterDescription
-      twitterImage {
-        sourceUrl
-      }
-      schema {
-        raw
-      }
-    }
-  }
-`;
 
 export type ImageType = {
   src: string;
@@ -83,6 +19,7 @@ export type CtaType = {
 };
 
 export type CounsellingHeroType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -99,6 +36,7 @@ export type NoticeItemType = {
 };
 
 export type NoticeSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -108,6 +46,7 @@ export type NoticeSectionType = {
 };
 
 export type ApproachSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -124,6 +63,7 @@ export type SupportCardType = {
 };
 
 export type KidsSupportSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -139,6 +79,7 @@ export type ProcessCardType = {
 };
 
 export type BenefitsSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -155,6 +96,7 @@ export type RoleItemType = {
 };
 
 export type RoleSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -194,6 +136,7 @@ export type TeamCategoryType = {
 };
 
 export type TeamSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -204,6 +147,7 @@ export type TeamSectionType = {
 };
 
 export type InsuranceCtaType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -218,6 +162,7 @@ export type FaqItemType = {
 };
 
 export type FaqSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -226,6 +171,7 @@ export type FaqSectionType = {
 };
 
 export type CtaBannerType = {
+  anchorId?: string;
   order?: number;
   heading?: string;
   paragraph?: string;
@@ -264,6 +210,7 @@ export const COMMON_PAGE_QUERY = `
         id
         ...PageSeo
         commonFieldsData {
+          heroSectionId
           heroOrder
           heroLabel
           heroHeading
@@ -280,6 +227,7 @@ export const COMMON_PAGE_QUERY = `
               ...Img
             }
           }
+          noticeSectionId
           noticeOrder
           noticeLabel
           noticeHeading
@@ -295,6 +243,7 @@ export const COMMON_PAGE_QUERY = `
               }
             }
           }
+          approachSectionId
           approachOrder
           approachLabel
           approachHeading
@@ -305,6 +254,7 @@ export const COMMON_PAGE_QUERY = `
             }
           }
           approachQuote
+          supportSectionId
           supportOrder
           supportLabel
           supportHeading
@@ -325,6 +275,7 @@ export const COMMON_PAGE_QUERY = `
             buttonLabel
             buttonUrl
           }
+          processSectionId
           processOrder
           processLabel
           processHeading
@@ -341,6 +292,7 @@ export const COMMON_PAGE_QUERY = `
             buttonUrl
           }
           processFootnote
+          roleSectionId
           roleOrder
           roleLabel
           roleHeading
@@ -354,6 +306,7 @@ export const COMMON_PAGE_QUERY = `
               }
             }
           }
+          teamSectionId
           teamOrder
           teamLabel
           teamHeading
@@ -382,12 +335,14 @@ export const COMMON_PAGE_QUERY = `
               }
             }
           }
+          insuranceSectionId
           insuranceOrder
           insuranceLabel
           insuranceHeading
           insuranceParagraph
           insuranceButtonLabel
           insuranceButtonUrl
+          faqSectionId
           faqOrder
           faqLabel
           faqHeading
@@ -409,6 +364,7 @@ export const COMMON_PAGE_QUERY = `
             faqQuestion
             faqAnswer
           }
+          ctaSectionId
           ctaOrder
           ctaHeading
           ctaParagraph
@@ -525,6 +481,7 @@ export function formatCommonPageData(data: any): CommonPageType {
   const faqData: FaqSectionType | null = hasFaq
     ? hasCustomFaq
       ? {
+          anchorId: sectionId(p?.faqSectionId),
           order: toOrder(p?.faqOrder),
           label: str(p?.faqTagline),
           heading: str(p?.faqHeading),
@@ -538,6 +495,7 @@ export function formatCommonPageData(data: any): CommonPageType {
             : [],
         }
       : {
+          anchorId: sectionId(p?.faqSectionId),
           order: toOrder(p?.faqOrder),
           label: str(p?.faqLabel),
           heading: str(p?.faqHeading),
@@ -550,6 +508,7 @@ export function formatCommonPageData(data: any): CommonPageType {
     page: {
       hero: hasHero
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             order: toOrder(p?.heroOrder),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
@@ -561,6 +520,7 @@ export function formatCommonPageData(data: any): CommonPageType {
         : null,
       notice: hasNotice
         ? {
+            anchorId: sectionId(p?.noticeSectionId),
             order: toOrder(p?.noticeOrder),
             label: str(p?.noticeLabel),
             heading: str(p?.noticeHeading),
@@ -575,6 +535,7 @@ export function formatCommonPageData(data: any): CommonPageType {
         : null,
       approach: hasApproach
         ? {
+            anchorId: sectionId(p?.approachSectionId),
             order: toOrder(p?.approachOrder),
             label: str(p?.approachLabel),
             heading: str(p?.approachHeading),
@@ -585,6 +546,7 @@ export function formatCommonPageData(data: any): CommonPageType {
         : null,
       support: hasSupport
         ? {
+            anchorId: sectionId(p?.supportSectionId),
             order: toOrder(p?.supportOrder),
             label: str(p?.supportLabel),
             heading: str(p?.supportHeading),
@@ -600,6 +562,7 @@ export function formatCommonPageData(data: any): CommonPageType {
         : null,
       process: hasProcess
         ? {
+            anchorId: sectionId(p?.processSectionId),
             order: toOrder(p?.processOrder),
             label: str(p?.processLabel),
             heading: str(p?.processHeading),
@@ -617,6 +580,7 @@ export function formatCommonPageData(data: any): CommonPageType {
         : null,
       role: hasRole
         ? {
+            anchorId: sectionId(p?.roleSectionId),
             order: toOrder(p?.roleOrder),
             label: str(p?.roleLabel),
             heading: str(p?.roleHeading),
@@ -630,6 +594,7 @@ export function formatCommonPageData(data: any): CommonPageType {
         : null,
       team: hasTeam
         ? {
+            anchorId: sectionId(p?.teamSectionId),
             order: toOrder(p?.teamOrder),
             label: str(p?.teamLabel),
             heading: str(p?.teamHeading),
@@ -641,6 +606,7 @@ export function formatCommonPageData(data: any): CommonPageType {
         : null,
       insurance: hasInsurance
         ? {
+            anchorId: sectionId(p?.insuranceSectionId),
             order: toOrder(p?.insuranceOrder),
             label: str(p?.insuranceLabel),
             heading: str(p?.insuranceHeading),
@@ -651,6 +617,7 @@ export function formatCommonPageData(data: any): CommonPageType {
       faq: faqData,
       cta: hasCta
         ? {
+            anchorId: sectionId(p?.ctaSectionId),
             order: toOrder(p?.ctaOrder),
             heading: str(p?.ctaHeading),
             paragraph: str(p?.ctaParagraph),

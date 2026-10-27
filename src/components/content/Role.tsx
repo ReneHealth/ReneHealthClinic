@@ -19,6 +19,7 @@ export type RoleItemType = {
 };
 
 export type RoleSectionDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -42,7 +43,10 @@ export default function Role({
   const items = Array.isArray(typedContent?.items) ? typedContent.items : [];
 
   return (
-    <section className={`px-5 pt-10 md:px-6 md:py-18 ${className}`}>
+    <section
+      id={content?.anchorId}
+      className={`px-5 pt-10 md:px-6 md:py-18 ${className}`}
+    >
       <div className="mx-auto max-w-[1400px]">
         <div className="max-w-xl">
           <SectionHeading

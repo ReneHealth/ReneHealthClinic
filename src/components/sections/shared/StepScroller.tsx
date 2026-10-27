@@ -19,6 +19,7 @@ export type StepScrollerStepType = {
 };
 
 export type StepScrollerDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -202,6 +203,7 @@ export default function StepScroller({
   return (
     <section
       ref={sectionRef}
+      id={content?.anchorId}
       className={`relative overflow-hidden bg-ink ${className}`}
     >
       <div className="flex min-h-[600px] flex-col justify-center gap-10 px-5 py-14 md:h-svh md:min-h-[640px] md:justify-between md:gap-0 md:px-6 md:py-0 md:pt-24 md:pb-16">

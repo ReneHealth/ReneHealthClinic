@@ -19,6 +19,7 @@ export type SplitCardType = {
 };
 
 export type SplitCardGridDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -44,7 +45,10 @@ export default function SplitCardGrid({
   ) as SplitCardType[];
 
   return (
-    <section className={`px-5 py-10 md:px-6 md:py-20 ${className}`}>
+    <section
+      id={content?.anchorId}
+      className={`px-5 py-10 md:px-6 md:py-20 ${className}`}
+    >
       <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.7fr_1fr] lg:gap-10">
         <div className="max-w-xl lg:sticky lg:top-28 lg:self-start">
           <SectionHeading

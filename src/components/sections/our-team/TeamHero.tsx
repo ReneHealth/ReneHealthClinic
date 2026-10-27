@@ -18,7 +18,10 @@ export default function TeamHero({ content }: { content: Content }) {
     },
   });
   return (
-    <section className="relative flex h-[100lvh] min-h-[650px] max-h-[800px] items-center justify-center overflow-hidden">
+    <section
+      id={content.anchorId}
+      className="relative flex h-[100lvh] min-h-[650px] max-h-[800px] items-center justify-center overflow-hidden"
+    >
       {content.image ? (
         <div className="absolute inset-0">
           <Image

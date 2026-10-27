@@ -95,7 +95,7 @@ export default function WhoWeBill({ content }: { content: WhoWeBillSection }) {
   return (
     <section
       ref={sectionRef}
-      id="who-we-bill"
+      id={content.anchorId ?? "who-we-bill"}
       className="bg-[#F7FAFC] px-5 py-10 md:px-6 md:py-24"
     >
       <div className="mx-auto max-w-[1400px]">

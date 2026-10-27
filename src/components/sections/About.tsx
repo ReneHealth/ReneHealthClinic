@@ -10,7 +10,7 @@ import TiltCard from "@/components/ui/TiltCard";
 
 export default function About({ content }: { content: AboutSection }) {
   return (
-    <section className="px-5 md:px-6 py-10 md:py-25">
+    <section id={content.anchorId} className="px-5 md:px-6 py-10 md:py-25">
       <div className="mx-auto max-w-[640px] text-center">
         <Reveal>
           <p className="section-label">{content.label}</p>

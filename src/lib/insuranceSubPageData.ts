@@ -1,6 +1,7 @@
+import { IMAGE_FRAGMENT, SEO_FRAGMENT } from "./fragments";
 import { wpQuery } from "@/lib/graphql";
 import { toOrder } from "@/lib/sectionOrder";
-import { cta, filled, hasContent, image, str } from "@/lib/format";
+import { cta, filled, hasContent, image, sectionId, str } from "@/lib/format";
 import type { SeoType } from "@/lib/metadata";
 import type {
   CtaType,
@@ -9,53 +10,8 @@ import type {
   CtaBannerType,
 } from "@/lib/physicalSubPageData";
 
-const IMAGE_FRAGMENT = `
-  fragment Img on MediaItem {
-    sourceUrl
-    altText
-    mediaDetails {
-      width
-      height
-    }
-  }
-`;
-
-const SEO_FRAGMENT = `
-  fragment PageSeo on Page {
-    seo {
-      title
-      metaDesc
-      canonical
-      metaRobotsNoindex
-      metaRobotsNofollow
-      opengraphTitle
-      opengraphDescription
-      opengraphType
-      opengraphSiteName
-      opengraphUrl
-      opengraphPublishedTime
-      opengraphModifiedTime
-      opengraphImage {
-        sourceUrl
-        altText
-        mediaDetails {
-          width
-          height
-        }
-      }
-      twitterTitle
-      twitterDescription
-      twitterImage {
-        sourceUrl
-      }
-      schema {
-        raw
-      }
-    }
-  }
-`;
-
 export type HeroSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -72,6 +28,7 @@ export type IconTextItemType = {
 };
 
 export type IconTextListSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -86,6 +43,7 @@ export type SplitCardType = {
 };
 
 export type SplitCardGridSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -100,6 +58,7 @@ export type StepType = {
 };
 
 export type StepScrollerSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -115,6 +74,7 @@ export type SupportCardType = {
 };
 
 export type SupportSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -123,6 +83,7 @@ export type SupportSectionType = {
 };
 
 export type CtaPanelSectionType = {
+  anchorId?: string;
   order?: number;
   label?: string;
   heading?: string;
@@ -159,6 +120,7 @@ export const INSURANCE_SUB_PAGE_QUERY = `
         id
         ...PageSeo
         insuranceSubPagesFieldsData {
+          heroSectionId
           heroOrder
           heroLabel
           heroHeading
@@ -176,6 +138,8 @@ export const INSURANCE_SUB_PAGE_QUERY = `
             }
           }
 
+          highlightsSectionId
+
           highlightsOrder
           highlightsLabel
           highlightsHeading
@@ -190,6 +154,8 @@ export const INSURANCE_SUB_PAGE_QUERY = `
             }
           }
 
+          splitGridSectionId
+
           splitGridOrder
           splitGridLabel
           splitGridHeading
@@ -200,6 +166,8 @@ export const INSURANCE_SUB_PAGE_QUERY = `
             buttonLabel
             buttonUrl
           }
+
+          stepsSectionId
 
           stepsOrder
           stepsLabel
@@ -214,6 +182,8 @@ export const INSURANCE_SUB_PAGE_QUERY = `
               }
             }
           }
+
+          supportSectionId
 
           supportOrder
           supportLabel
@@ -233,12 +203,16 @@ export const INSURANCE_SUB_PAGE_QUERY = `
 
           showWhoWeBill
 
+          panelSectionId
+
           panelOrder
           panelLabel
           panelHeading
           panelParagraph
           panelButtonLabel
           panelButtonUrl
+
+          faqSectionId
 
           faqOrder
           faqTagline
@@ -248,6 +222,8 @@ export const INSURANCE_SUB_PAGE_QUERY = `
             faqQuestion
             faqAnswer
           }
+
+          ctaSectionId
 
           ctaOrder
           ctaHeading
@@ -295,6 +271,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
     page: {
       hero: hasHero
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             order: toOrder(p?.heroOrder),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
@@ -306,6 +283,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
         : null,
       highlights: hasHighlights
         ? {
+            anchorId: sectionId(p?.highlightsSectionId),
             order: toOrder(p?.highlightsOrder),
             label: str(p?.highlightsLabel),
             heading: str(p?.highlightsHeading),
@@ -319,6 +297,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
         : null,
       splitGrid: hasSplitGrid
         ? {
+            anchorId: sectionId(p?.splitGridSectionId),
             order: toOrder(p?.splitGridOrder),
             label: str(p?.splitGridLabel),
             heading: str(p?.splitGridHeading),
@@ -332,6 +311,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
         : null,
       steps: hasSteps
         ? {
+            anchorId: sectionId(p?.stepsSectionId),
             order: toOrder(p?.stepsOrder),
             label: str(p?.stepsLabel),
             heading: str(p?.stepsHeading),
@@ -345,6 +325,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
         : null,
       support: hasSupport
         ? {
+            anchorId: sectionId(p?.supportSectionId),
             order: toOrder(p?.supportOrder),
             label: str(p?.supportLabel),
             heading: str(p?.supportHeading),
@@ -360,6 +341,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
       showWhoWeBill: p?.showWhoWeBill !== false,
       panel: hasPanel
         ? {
+            anchorId: sectionId(p?.panelSectionId),
             order: toOrder(p?.panelOrder),
             label: str(p?.panelLabel),
             heading: str(p?.panelHeading),
@@ -369,6 +351,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
         : null,
       faq: hasFaq
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             order: toOrder(p?.faqOrder),
             label: str(p?.faqTagline),
             heading: str(p?.faqHeading),
@@ -382,6 +365,7 @@ export function formatInsuranceSubPageData(data: any): InsuranceSubPageType {
         : null,
       cta: hasCta
         ? {
+            anchorId: sectionId(p?.ctaSectionId),
             order: toOrder(p?.ctaOrder),
             heading: str(p?.ctaHeading),
             paragraph: str(p?.ctaParagraph),

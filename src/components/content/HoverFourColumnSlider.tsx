@@ -21,6 +21,7 @@ export type SliderStepType = {
 };
 
 export type HoverFourColumnSliderDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -60,7 +61,10 @@ export default function HoverFourColumnSlider({
   if (total === 0) return null;
 
   return (
-    <section className={`px-5 py-10 md:px-6 md:py-20 ${className}`}>
+    <section
+      id={content?.anchorId}
+      className={`px-5 py-10 md:px-6 md:py-20 ${className}`}
+    >
       <div className="mx-auto max-w-[1400px]">
         <div className="max-w-[700px]">
           <SectionHeading
@@ -108,7 +112,7 @@ export default function HoverFourColumnSlider({
 
                   <div
                     className={`absolute inset-0 transition-colors duration-1000 ${
-                      isOpen ? "bg-ink/0" : "bg-ink/55"
+                      isOpen ? "bg-ink/20" : "bg-ink/75"
                     }`}
                   />
 
@@ -159,7 +163,7 @@ export default function HoverFourColumnSlider({
                     >
                       <RichText
                         html={step?.description ?? ""}
-                        className="overflow-hidden text-[16px] leading-[normal] text-white/80 md:w-[550px] md:max-w-full"
+                        className="overflow-hidden text-[16px] leading-[normal] text-white/80 md:w-[480px] md:max-w-full"
                       />
                     </div>
                   </div>

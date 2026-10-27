@@ -35,7 +35,7 @@ export default async function HomePage() {
       <main>
         {home.hero.length > 0 ? (
           <ScrollScene enter={false}>
-            <Hero panels={home.hero} />
+            <Hero panels={home.hero} id={home.heroAnchorId} />
           </ScrollScene>
         ) : null}
         {home.about ? (

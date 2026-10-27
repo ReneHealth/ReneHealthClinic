@@ -14,6 +14,7 @@ export type FeatureCardType = {
 };
 
 export type FeatureCardsDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -73,6 +74,7 @@ export default function FeatureCards({
   return (
     <section
       ref={sectionRef}
+      id={content?.anchorId}
       className={`relative min-h-svh overflow-hidden bg-cover bg-center ${className}`}
       style={background ? { backgroundImage: `url(${background})` } : undefined}
     >

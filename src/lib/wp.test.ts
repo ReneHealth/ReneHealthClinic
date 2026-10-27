@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { sectionId } from "./format";
 import { toSettings, toHome } from "./wp";
 import type { WpHomeQuery } from "./wp-schema";
 
@@ -32,6 +33,8 @@ const query = {
   page: {
     id: "home",
     homePage: {
+      heroSectionId: "  Book A Call! ",
+      teamSectionId: "#our-team",
       heroPanels: [
         {
           title: "Counselling",
@@ -79,5 +82,14 @@ assert.equal(settings.menu.booking.target, "_blank");
 assert.equal(settings.menu.phoneHref, "tel:6045542620");
 assert.equal(settings.menu.address, "<p>1203 Glen Drive</p>");
 assert.equal(settings.menu.hours.length, 1);
+
+assert.equal(home.heroAnchorId, "book-a-call");
+assert.equal(team.anchorId, "our-team");
+assert.equal(home.about, null, "an unset section keeps no anchor");
+
+assert.equal(sectionId(undefined), undefined);
+assert.equal(sectionId("   "), undefined, "whitespace is not an id");
+assert.equal(sectionId("Our Team / Staff"), "our-team-staff");
+assert.equal(sectionId("já-sección"), "j-secci-n", "non-ASCII is dropped");
 
 console.log("wp mappers: ok");

@@ -16,7 +16,7 @@ export default function WhatWeSupport({
   const [card0, card1, card2, card3] = content.cards;
 
   return (
-    <section className="px-5 py-10 md:px-6 md:pb-20">
+    <section id={content.anchorId} className="px-5 py-10 md:px-6 md:pb-20">
       <div className="mx-auto max-w-2xl text-center">
         <SectionHeading
           label={content.label}

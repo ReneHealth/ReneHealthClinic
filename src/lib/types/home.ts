@@ -21,6 +21,7 @@ export interface AboutCard {
 }
 
 export interface AboutSection {
+  anchorId?: string;
   label: string;
   heading: Html;
   paragraph: Html;
@@ -34,6 +35,7 @@ export interface NeedItem {
 }
 
 export interface DifferentNeedsSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -41,6 +43,7 @@ export interface DifferentNeedsSection {
 }
 
 export interface VideoSectionContent {
+  anchorId?: string;
   src: string;
   poster: string;
   label: string;
@@ -63,6 +66,7 @@ export interface ServiceColumn {
 }
 
 export interface ServicesSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -75,6 +79,7 @@ export interface GoodToKnowCard {
 }
 
 export interface GoodToKnowSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -93,6 +98,7 @@ export interface Review {
 }
 
 export interface ReviewsSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -100,6 +106,7 @@ export interface ReviewsSection {
 }
 
 export interface ContactSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -116,6 +123,7 @@ export interface ContactFormFields {
 }
 
 export interface HomeContent {
+  heroAnchorId?: string;
   hero: HeroPanel[];
   about: AboutSection | null;
   differentNeeds: DifferentNeedsSection | null;

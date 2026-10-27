@@ -110,7 +110,7 @@ const icon = (field: WpIconNode | null | undefined): SiteIcon | null => {
 const serviceCardLayout = (value: unknown): ServiceCardLayout =>
   format.selectValue(value) === "split" ? "split" : "stacked";
 
-const { str, filled, hasRows } = format;
+const { str, filled, hasRows, sectionId } = format;
 
 const hours = (rows: WpHours[] | null | undefined): OpeningHours[] =>
   (rows ?? []).map((row) => ({ days: str(row.days), time: str(row.time) }));
@@ -347,6 +347,8 @@ export function toHome(data: WpHomeQuery): HomeContent {
   })();
 
   return {
+    heroAnchorId: sectionId(p?.heroSectionId),
+
     hero: (p?.heroPanels ?? []).map((panel) => ({
       title: str(panel.title),
       description: str(panel.description),
@@ -358,6 +360,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       filled(p?.aboutLabel, p?.aboutHeading, p?.aboutParagraph) ||
       hasRows(p?.aboutCards)
         ? {
+            anchorId: sectionId(p?.aboutSectionId),
             label: str(p?.aboutLabel),
             heading: str(p?.aboutHeading),
             paragraph: str(p?.aboutParagraph),
@@ -374,6 +377,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       filled(p?.needsLabel, p?.needsHeading, p?.needsParagraph) ||
       hasRows(p?.needsItems)
         ? {
+            anchorId: sectionId(p?.needsSectionId),
             label: str(p?.needsLabel),
             heading: str(p?.needsHeading),
             paragraph: str(p?.needsParagraph),
@@ -389,6 +393,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       filled(p?.teamLabel, p?.teamHeading, p?.teamParagraph) ||
       hasRows(members)
         ? {
+            anchorId: sectionId(p?.teamSectionId),
             label: str(p?.teamLabel),
             heading: str(p?.teamHeading),
             paragraph: str(p?.teamParagraph),
@@ -403,6 +408,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
 
     video: videoSrc
       ? {
+          anchorId: sectionId(p?.videoSectionId),
           src: videoSrc,
           poster: videoPoster?.src ?? "",
           label: str(p?.videoLabel),
@@ -413,6 +419,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       filled(p?.servicesLabel, p?.servicesHeading, p?.servicesParagraph) ||
       hasRows(p?.servicesColumns)
         ? {
+            anchorId: sectionId(p?.servicesSectionId),
             label: str(p?.servicesLabel),
             heading: str(p?.servicesHeading),
             paragraph: str(p?.servicesParagraph),
@@ -434,6 +441,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       filled(p?.gtkLabel, p?.gtkHeading, p?.gtkParagraph) ||
       hasRows(p?.gtkCards)
         ? {
+            anchorId: sectionId(p?.gtkSectionId),
             label: str(p?.gtkLabel),
             heading: str(p?.gtkHeading),
             paragraph: str(p?.gtkParagraph),
@@ -451,6 +459,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
     faq:
       filled(p?.faqLabel, p?.faqHeading, p?.faqParagraph) || hasRows(faq)
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             label: str(p?.faqLabel),
             heading: str(p?.faqHeading),
             paragraph: str(p?.faqParagraph),
@@ -462,6 +471,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       filled(p?.reviewsLabel, p?.reviewsHeading, p?.reviewsParagraph) ||
       hasRows(reviews)
         ? {
+            anchorId: sectionId(p?.reviewsSectionId),
             label: str(p?.reviewsLabel),
             heading: str(p?.reviewsHeading),
             paragraph: str(p?.reviewsParagraph),
@@ -480,6 +490,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       filled(p?.contactLabel, p?.contactHeading, p?.contactParagraph) ||
       Boolean(contactImage)
         ? {
+            anchorId: sectionId(p?.contactSectionId),
             label: str(p?.contactLabel),
             heading: str(p?.contactHeading),
             paragraph: str(p?.contactParagraph),
@@ -502,6 +513,7 @@ function toCounsellingHub(
       filled(p?.heroLabel, p?.heroHeading, p?.heroParagraph) ||
       Boolean(image(p?.heroImage))
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
             paragraph: str(p?.heroParagraph),
@@ -515,6 +527,7 @@ function toCounsellingHub(
       filled(p?.introLabel, p?.introHeading, p?.introParagraph) ||
       Boolean(image(p?.introImage))
         ? {
+            anchorId: sectionId(p?.introSectionId),
             label: str(p?.introLabel),
             heading: str(p?.introHeading),
             paragraph: str(p?.introParagraph),
@@ -526,6 +539,7 @@ function toCounsellingHub(
       filled(p?.supportLabel, p?.supportHeading, p?.supportParagraph) ||
       hasRows(p?.supportCards)
         ? {
+            anchorId: sectionId(p?.supportSectionId),
             label: str(p?.supportLabel),
             heading: str(p?.supportHeading),
             paragraph: str(p?.supportParagraph),
@@ -542,6 +556,7 @@ function toCounsellingHub(
       filled(p?.processLabel, p?.processHeading, p?.processParagraph) ||
       hasRows(p?.processSteps)
         ? {
+            anchorId: sectionId(p?.processSectionId),
             label: str(p?.processLabel),
             heading: str(p?.processHeading),
             paragraph: str(p?.processParagraph),
@@ -557,6 +572,7 @@ function toCounsellingHub(
       filled(p?.teamLabel, p?.teamHeading, p?.teamParagraph) ||
       hasRows(members)
         ? {
+            anchorId: sectionId(p?.teamSectionId),
             label: str(p?.teamLabel),
             heading: str(p?.teamHeading),
             paragraph: str(p?.teamParagraph),
@@ -574,6 +590,7 @@ function toCounsellingHub(
         p?.benefitsFootnote,
       ) || hasRows(p?.benefitsCards)
         ? {
+            anchorId: sectionId(p?.benefitsSectionId),
             label: str(p?.benefitsLabel),
             heading: str(p?.benefitsHeading),
             paragraph: str(p?.benefitsParagraph),
@@ -592,6 +609,7 @@ function toCounsellingHub(
     faq:
       filled(p?.faqLabel, p?.faqHeading, p?.faqParagraph) || hasRows(faq)
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             label: str(p?.faqLabel),
             heading: str(p?.faqHeading),
             paragraph: str(p?.faqParagraph),
@@ -602,6 +620,7 @@ function toCounsellingHub(
     cta:
       filled(p?.ctaHeading, p?.ctaParagraph) || Boolean(image(p?.ctaImage))
         ? {
+            anchorId: sectionId(p?.ctaSectionId),
             heading: str(p?.ctaHeading),
             paragraph: str(p?.ctaParagraph),
             cta: cta(p?.ctaButtonLabel, p?.ctaButtonUrl),
@@ -638,6 +657,7 @@ export function toContactUs(data: WpContactUsQuery): ContactUsContent {
       filled(p?.heroLabel, p?.heroHeading, p?.heroParagraph) ||
       Boolean(image(p?.heroImage))
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
             paragraph: str(p?.heroParagraph),
@@ -654,6 +674,7 @@ export function toContactUs(data: WpContactUsQuery): ContactUsContent {
       p?.infoMapEmbed,
     )
       ? {
+          anchorId: sectionId(p?.infoSectionId),
           label: str(p?.infoLabel),
           heading: str(p?.infoHeading),
           paragraph: str(p?.infoParagraph),
@@ -665,6 +686,7 @@ export function toContactUs(data: WpContactUsQuery): ContactUsContent {
       filled(p?.guideLabel, p?.guideHeading, p?.guideParagraph) ||
       Boolean(image(p?.guideImage))
         ? {
+            anchorId: sectionId(p?.guideSectionId),
             label: str(p?.guideLabel),
             heading: str(p?.guideHeading),
             paragraph: str(p?.guideParagraph),
@@ -676,6 +698,7 @@ export function toContactUs(data: WpContactUsQuery): ContactUsContent {
     faq:
       filled(p?.faqLabel, p?.faqHeading, p?.faqParagraph) || hasRows(faq)
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             label: str(p?.faqLabel),
             heading: str(p?.faqHeading),
             paragraph: str(p?.faqParagraph),
@@ -686,6 +709,7 @@ export function toContactUs(data: WpContactUsQuery): ContactUsContent {
     cta:
       filled(p?.ctaHeading, p?.ctaParagraph) || Boolean(image(p?.ctaImage))
         ? {
+            anchorId: sectionId(p?.ctaSectionId),
             heading: str(p?.ctaHeading),
             paragraph: str(p?.ctaParagraph),
             cta: cta(p?.ctaButtonLabel, p?.ctaButtonUrl),
@@ -748,6 +772,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
       filled(p?.heroLabel, p?.heroHeading, p?.heroParagraph) ||
       Boolean(image(p?.heroImage))
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
             paragraph: str(p?.heroParagraph),
@@ -761,6 +786,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
       filled(p?.coverageLabel, p?.coverageHeading, p?.coverageParagraph) ||
       hasRows(p?.coverageCards)
         ? {
+            anchorId: sectionId(p?.coverageSectionId),
             label: str(p?.coverageLabel),
             heading: str(p?.coverageHeading),
             paragraph: str(p?.coverageParagraph),
@@ -777,6 +803,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
       filled(p?.processLabel, p?.processHeading, p?.processParagraph) ||
       hasRows(p?.processSteps)
         ? {
+            anchorId: sectionId(p?.processSectionId),
             label: str(p?.processLabel),
             heading: str(p?.processHeading),
             paragraph: str(p?.processParagraph),
@@ -796,6 +823,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
         p?.benefitsFootnote,
       ) || hasRows(p?.benefitsItems)
         ? {
+            anchorId: sectionId(p?.benefitsSectionId),
             label: str(p?.benefitsLabel),
             heading: str(p?.benefitsHeading),
             paragraph: str(p?.benefitsParagraph),
@@ -816,6 +844,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
         p?.providersNote,
       ) || hasRows(tabs)
         ? {
+            anchorId: sectionId(p?.providersSectionId),
             label: str(p?.providersLabel),
             heading: str(p?.providersHeading),
             paragraph: str(p?.providersParagraph),
@@ -830,6 +859,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
       p?.beforeParagraph,
     )
       ? {
+          anchorId: sectionId(p?.beforeSectionId),
           label: str(p?.beforeLabel),
           heading: str(p?.beforeHeading),
           paragraph: str(p?.beforeParagraph),
@@ -840,6 +870,7 @@ export function toInsurance(data: WpInsuranceQuery): InsuranceContent {
     faq:
       filled(p?.faqLabel, p?.faqHeading, p?.faqParagraph) || hasRows(faq)
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             label: str(p?.faqLabel),
             heading: str(p?.faqHeading),
             paragraph: str(p?.faqParagraph),
@@ -861,6 +892,7 @@ export function toKidsPlayTherapy(
       filled(p?.heroLabel, p?.heroHeading, p?.heroParagraph) ||
       Boolean(image(p?.heroImage))
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
             paragraph: str(p?.heroParagraph),
@@ -874,6 +906,7 @@ export function toKidsPlayTherapy(
       filled(p?.noticeLabel, p?.noticeHeading, p?.noticeParagraph) ||
       hasRows(p?.noticeItems)
         ? {
+            anchorId: sectionId(p?.noticeSectionId),
             label: str(p?.noticeLabel),
             heading: str(p?.noticeHeading),
             paragraph: str(p?.noticeParagraph),
@@ -894,6 +927,7 @@ export function toKidsPlayTherapy(
         p?.approachQuote,
       ) || Boolean(image(p?.approachImage))
         ? {
+            anchorId: sectionId(p?.approachSectionId),
             label: str(p?.approachLabel),
             heading: str(p?.approachHeading),
             paragraph: str(p?.approachParagraph),
@@ -906,6 +940,7 @@ export function toKidsPlayTherapy(
       filled(p?.supportLabel, p?.supportHeading, p?.supportParagraph) ||
       hasRows(p?.supportCards)
         ? {
+            anchorId: sectionId(p?.supportSectionId),
             label: str(p?.supportLabel),
             heading: str(p?.supportHeading),
             paragraph: str(p?.supportParagraph),
@@ -927,6 +962,7 @@ export function toKidsPlayTherapy(
         p?.processFootnote,
       ) || hasRows(p?.processCards)
         ? {
+            anchorId: sectionId(p?.processSectionId),
             label: str(p?.processLabel),
             heading: str(p?.processHeading),
             paragraph: str(p?.processParagraph),
@@ -946,6 +982,7 @@ export function toKidsPlayTherapy(
       filled(p?.roleLabel, p?.roleHeading, p?.roleParagraph) ||
       hasRows(p?.roleItems)
         ? {
+            anchorId: sectionId(p?.roleSectionId),
             label: str(p?.roleLabel),
             heading: str(p?.roleHeading),
             paragraph: str(p?.roleParagraph),
@@ -961,6 +998,7 @@ export function toKidsPlayTherapy(
       filled(p?.teamLabel, p?.teamHeading, p?.teamParagraph) ||
       hasRows(members)
         ? {
+            anchorId: sectionId(p?.teamSectionId),
             label: str(p?.teamLabel),
             heading: str(p?.teamHeading),
             paragraph: str(p?.teamParagraph),
@@ -976,6 +1014,7 @@ export function toKidsPlayTherapy(
       p?.insuranceParagraph,
     )
       ? {
+          anchorId: sectionId(p?.insuranceSectionId),
           label: str(p?.insuranceLabel),
           heading: str(p?.insuranceHeading),
           paragraph: str(p?.insuranceParagraph),
@@ -986,6 +1025,7 @@ export function toKidsPlayTherapy(
     faq:
       filled(p?.faqLabel, p?.faqHeading, p?.faqParagraph) || hasRows(faq)
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             label: str(p?.faqLabel),
             heading: str(p?.faqHeading),
             paragraph: str(p?.faqParagraph),
@@ -996,6 +1036,7 @@ export function toKidsPlayTherapy(
     cta:
       filled(p?.ctaHeading, p?.ctaParagraph) || Boolean(image(p?.ctaImage))
         ? {
+            anchorId: sectionId(p?.ctaSectionId),
             heading: str(p?.ctaHeading),
             paragraph: str(p?.ctaParagraph),
             cta: cta(p?.ctaButtonLabel, p?.ctaButtonUrl),
@@ -1074,6 +1115,7 @@ export function toOurTeam(data: WpOurTeamQuery): OurTeamContent {
       filled(p?.heroLabel, p?.heroHeading, p?.heroParagraph) ||
       Boolean(image(p?.heroImage))
         ? {
+            anchorId: sectionId(p?.heroSectionId),
             label: str(p?.heroLabel),
             heading: str(p?.heroHeading),
             paragraph: str(p?.heroParagraph),
@@ -1090,10 +1132,13 @@ export function toOurTeam(data: WpOurTeamQuery): OurTeamContent {
           }
         : null,
 
-    team: hasRows(categories) ? { categories } : null,
+    team: hasRows(categories)
+      ? { anchorId: sectionId(p?.teamSectionId), categories }
+      : null,
 
     video: videoUrl
       ? {
+          anchorId: sectionId(p?.videoSectionId),
           src: videoUrl,
           poster: image(p?.videoPoster)?.src ?? "",
           label: str(p?.videoLabel),
@@ -1103,6 +1148,7 @@ export function toOurTeam(data: WpOurTeamQuery): OurTeamContent {
     faq:
       filled(p?.faqLabel, p?.faqHeading, p?.faqParagraph) || hasRows(faq)
         ? {
+            anchorId: sectionId(p?.faqSectionId),
             label: str(p?.faqLabel),
             heading: str(p?.faqHeading),
             paragraph: str(p?.faqParagraph),
@@ -1113,6 +1159,7 @@ export function toOurTeam(data: WpOurTeamQuery): OurTeamContent {
     cta:
       filled(p?.ctaHeading, p?.ctaParagraph) || Boolean(image(p?.ctaImage))
         ? {
+            anchorId: sectionId(p?.ctaSectionId),
             heading: str(p?.ctaHeading),
             paragraph: str(p?.ctaParagraph),
             cta: cta(p?.ctaButtonLabel, p?.ctaButtonUrl),

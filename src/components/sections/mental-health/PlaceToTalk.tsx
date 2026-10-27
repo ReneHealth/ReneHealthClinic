@@ -12,7 +12,7 @@ export default function PlaceToTalk({
   content: CounsellingIntro;
 }) {
   return (
-    <section className=" px-5 py-10 md:px-6 md:py-24">
+    <section id={content.anchorId} className=" px-5 py-10 md:px-6 md:py-24">
       <div className="mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-2 lg:gap-16">
         <div className="flex max-w-xl flex-col justify-between gap-10 lg:order-1 lg:py-2">
           <Reveal from="left">

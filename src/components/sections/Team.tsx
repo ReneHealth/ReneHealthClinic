@@ -50,6 +50,7 @@ export type TeamMemberItemType = {
 };
 
 export type TeamSectionDataType = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;
@@ -302,7 +303,10 @@ export default function Team({
   useRailScrollChain(trackRef, scroll);
 
   return (
-    <section className={`bg-mist px-5 py-10 md:px-6 md:py-24 ${className}`}>
+    <section
+      id={content?.anchorId}
+      className={`bg-mist px-5 py-10 md:px-6 md:py-24 ${className}`}
+    >
       <div className="mx-auto max-w-[1400px]">
         <div
           className={

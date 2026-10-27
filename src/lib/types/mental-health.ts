@@ -1,6 +1,7 @@
 import type { CtaLink, FaqSection, Html, MediaImage, TeamSection } from "./common";
 
 export interface CounsellingHero {
+  anchorId?: string;
   logo: MediaImage | null;
   label: string;
   heading: string;
@@ -10,6 +11,7 @@ export interface CounsellingHero {
 }
 
 export interface CounsellingIntro {
+  anchorId?: string;
   label: string;
   heading: Html;
   paragraph: Html;
@@ -24,6 +26,7 @@ export interface SupportCard {
 }
 
 export interface SupportSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -37,6 +40,7 @@ export interface ProcessStep {
 }
 
 export interface ProcessSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -50,6 +54,7 @@ export interface BenefitsCard {
 }
 
 export interface BenefitsSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -59,6 +64,7 @@ export interface BenefitsSection {
 }
 
 export interface CtaBanner {
+  anchorId?: string;
   heading: string;
   paragraph: Html;
   cta: CtaLink | null;

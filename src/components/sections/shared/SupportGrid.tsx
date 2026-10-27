@@ -30,7 +30,7 @@ export default function SupportGrid({
   const cards = Array.isArray(content?.cards) ? content.cards : [];
 
   return (
-    <section className="px-5 py-10 md:px-6 md:py-24">
+    <section id={content?.anchorId} className="px-5 py-10 md:px-6 md:py-24">
       <div className="mx-auto max-w-2xl text-center">
         <SectionHeading
           label={label}

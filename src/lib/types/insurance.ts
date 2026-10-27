@@ -8,6 +8,7 @@ export interface CheckBenefitsItem {
 }
 
 export interface CheckBenefitsSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;
@@ -29,6 +30,7 @@ export interface InsuranceProviderTab {
 }
 
 export interface WhoWeBillSection {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: Html;

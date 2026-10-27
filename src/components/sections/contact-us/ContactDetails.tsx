@@ -92,7 +92,10 @@ trackLeadConversion();
   };
 
   return (
-    <section className="px-5 py-10 md:px-6 md:pt-20 md:pb-10">
+    <section
+      id={content.anchorId}
+      className="px-5 py-10 md:px-6 md:pt-20 md:pb-10"
+    >
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-[850px]">

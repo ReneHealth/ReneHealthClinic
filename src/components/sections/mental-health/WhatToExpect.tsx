@@ -18,7 +18,7 @@ export default function WhatToExpect({ content }: { content: ProcessSection }) {
   const total = content.steps.length;
 
   return (
-    <section className=" px-5 py-10 md:px-6 md:py-20">
+    <section id={content.anchorId} className=" px-5 py-10 md:px-6 md:py-20">
       <div className="mx-auto max-w-[1400px]">
         <div className="max-w-xl">
           <SectionHeading
@@ -64,7 +64,7 @@ export default function WhatToExpect({ content }: { content: ProcessSection }) {
 
                   <div
                     className={`absolute inset-0 transition-colors duration-1000 ${
-                      isOpen ? "bg-ink/0" : "bg-ink/55"
+                      isOpen ? "bg-ink/20" : "bg-ink/75"
                     }`}
                   />
 
@@ -111,7 +111,7 @@ export default function WhatToExpect({ content }: { content: ProcessSection }) {
                     >
                       <RichText
                         html={step.description}
-                        className="overflow-hidden text-[16px] leading-[normal] text-white/80 md:w-[550px] md:max-w-full"
+                        className="overflow-hidden text-[16px] leading-[normal] text-white/80 md:max-w-full"
                       />
                     </div>
                   </div>

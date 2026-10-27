@@ -13,6 +13,7 @@ export type FaqItemType = {
 };
 
 export type FaqSectionDataType = {
+  anchorId?: string;
   label?: string;
   tagline?: string;
   heading?: string;
@@ -42,7 +43,10 @@ export default function Faq({
   ) as FaqItemType[];
 
   return (
-    <section id="faq" className={`px-5 md:px-6 ${className}`}>
+    <section
+      id={content?.anchorId ?? "faq"}
+      className={`px-5 md:px-6 ${className}`}
+    >
       <div className="mx-auto max-w-2xl text-center">
         <SectionHeading
           label={label}

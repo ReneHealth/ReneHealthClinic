@@ -25,6 +25,7 @@ export type SectionStep = {
 };
 
 export type SectionHeader = {
+  anchorId?: string;
   label?: string;
   heading?: string;
   paragraph?: string;

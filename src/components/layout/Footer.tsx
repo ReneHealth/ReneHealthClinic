@@ -1,37 +1,11 @@
 "use client";
 
-import { type FormEvent, type MouseEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import RichText from "@/components/ui/RichText";
-import { getLenis } from "@/lib/lenis";
 import type { NavLink, SiteMenus, SiteSettings } from "@/lib/types";
-
-const FAQ_ID = "faq";
-
-const isFaqLink = (href: string) => href.split("?")[0].endsWith(`#${FAQ_ID}`);
-
-const onFaqClick = (e: MouseEvent<HTMLAnchorElement>) => {
-  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-
-  const target = document.getElementById(FAQ_ID);
-  if (!target) return;
-
-  e.preventDefault();
-
-  const lenis = getLenis();
-
-  if (lenis) {
-    lenis.scrollTo(target);
-    return;
-  }
-
-  target.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
-};
 
 interface FooterProps {
   settings: SiteSettings;
@@ -279,7 +253,6 @@ export default function Footer({ settings, menus }: FooterProps) {
                   <Link
                     href={link.href}
                     target={link.target}
-                    onClick={isFaqLink(link.href) ? onFaqClick : undefined}
                     rel={
                       link.target === "_blank"
                         ? "noopener noreferrer"
@@ -346,7 +319,6 @@ export default function Footer({ settings, menus }: FooterProps) {
                   key={link.id}
                   href={link.href}
                   target={link.target}
-                  onClick={isFaqLink(link.href) ? onFaqClick : undefined}
                   rel={
                     link.target === "_blank"
                       ? "noopener noreferrer"

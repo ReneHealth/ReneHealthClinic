@@ -1,13 +1,4 @@
-const IMAGE_FRAGMENT = `
-  fragment Img on MediaItem {
-    sourceUrl
-    altText
-    mediaDetails {
-      width
-      height
-    }
-  }
-`;
+import { IMAGE_FRAGMENT, SEO_FRAGMENT, TEAM_CATEGORY_FIELDS } from "./fragments";
 
 const MENU_FRAGMENT = `
   fragment MenuItems on MenuItemConnection {
@@ -18,25 +9,6 @@ const MENU_FRAGMENT = `
       url
       target
       parentId
-    }
-  }
-`;
-
-const TEAM_CATEGORY_FIELDS = `
-  teamCategories(first: 100) {
-    nodes {
-      id
-      databaseId
-      name
-      slug
-      description
-      displayOrder
-      teamCategoryFields {
-        showOnOurTeam
-        tabLabel
-        sectionTitle
-        sectionDescription
-      }
     }
   }
 `;
@@ -158,41 +130,6 @@ const SITE_FIELDS = `
     }
 `;
 
-const SEO_FRAGMENT = `
-  fragment PageSeo on Page {
-    seo {
-      title
-      metaDesc
-      canonical
-      metaRobotsNoindex
-      metaRobotsNofollow
-      opengraphTitle
-      opengraphDescription
-      opengraphType
-      opengraphSiteName
-      opengraphUrl
-      opengraphPublishedTime
-      opengraphModifiedTime
-      opengraphImage {
-        sourceUrl
-        altText
-        mediaDetails {
-          width
-          height
-        }
-      }
-      twitterTitle
-      twitterDescription
-      twitterImage {
-        sourceUrl
-      }
-      schema {
-        raw
-      }
-    }
-  }
-`;
-
 export const SITE_QUERY = `
   ${IMAGE_FRAGMENT}
   ${MENU_FRAGMENT}
@@ -233,6 +170,8 @@ export const HOME_QUERY = `
         id
         ...PageSeo
         homePage {
+          heroSectionId
+
           heroPanels {
             title
             description
@@ -245,6 +184,7 @@ export const HOME_QUERY = `
             }
           }
 
+          aboutSectionId
           aboutLabel
           aboutHeading
           aboutParagraph
@@ -259,6 +199,7 @@ export const HOME_QUERY = `
             }
           }
 
+          needsSectionId
           needsLabel
           needsHeading
           needsParagraph
@@ -268,6 +209,7 @@ export const HOME_QUERY = `
             description
           }
 
+          teamSectionId
           teamLabel
           teamHeading
           teamParagraph
@@ -275,6 +217,7 @@ export const HOME_QUERY = `
           teamButtonUrl
           showTeamButton
 
+          videoSectionId
           videoFile {
             node {
               mediaItemUrl
@@ -287,6 +230,7 @@ export const HOME_QUERY = `
           }
           videoLabel
 
+          servicesSectionId
           servicesLabel
           servicesHeading
           servicesParagraph
@@ -307,6 +251,7 @@ export const HOME_QUERY = `
             }
           }
 
+          gtkSectionId
           gtkLabel
           gtkHeading
           gtkParagraph
@@ -322,6 +267,7 @@ export const HOME_QUERY = `
             description
           }
 
+          faqSectionId
           faqLabel
           faqHeading
           faqParagraph
@@ -339,10 +285,12 @@ export const HOME_QUERY = `
             }
           }
 
+          reviewsSectionId
           reviewsLabel
           reviewsHeading
           reviewsParagraph
 
+          contactSectionId
           contactLabel
           contactHeading
           contactParagraph
@@ -371,6 +319,7 @@ export const CONTACT_US_QUERY = `
         id
         ...PageSeo
         contactUsPage {
+          heroSectionId
           heroLabel
           heroHeading
           heroParagraph
@@ -387,11 +336,13 @@ export const CONTACT_US_QUERY = `
             }
           }
 
+          infoSectionId
           infoLabel
           infoHeading
           infoParagraph
           infoMapEmbed
 
+          guideSectionId
           guideLabel
           guideHeading
           guideParagraph
@@ -403,6 +354,7 @@ export const CONTACT_US_QUERY = `
             }
           }
 
+          faqSectionId
           faqLabel
           faqHeading
           faqParagraph
@@ -418,6 +370,7 @@ export const CONTACT_US_QUERY = `
             }
           }
 
+          ctaSectionId
           ctaHeading
           ctaParagraph
           ctaButtonLabel
@@ -446,6 +399,7 @@ export const INSURANCE_QUERY = `
         id
         ...PageSeo
         insurancePage {
+          heroSectionId
           heroLabel
           heroHeading
           heroParagraph
@@ -462,6 +416,7 @@ export const INSURANCE_QUERY = `
             }
           }
 
+          coverageSectionId
           coverageLabel
           coverageHeading
           coverageParagraph
@@ -477,6 +432,7 @@ export const INSURANCE_QUERY = `
             buttonUrl
           }
 
+          processSectionId
           processLabel
           processHeading
           processParagraph
@@ -490,6 +446,7 @@ export const INSURANCE_QUERY = `
             }
           }
 
+          benefitsSectionId
           benefitsLabel
           benefitsHeading
           benefitsParagraph
@@ -504,6 +461,7 @@ export const INSURANCE_QUERY = `
           }
           benefitsFootnote
 
+          providersSectionId
           providersLabel
           providersHeading
           providersParagraph
@@ -522,12 +480,14 @@ export const INSURANCE_QUERY = `
           }
           providersNote
 
+          beforeSectionId
           beforeLabel
           beforeHeading
           beforeParagraph
           beforeButtonLabel
           beforeButtonUrl
 
+          faqSectionId
           faqLabel
           faqHeading
           faqParagraph
@@ -563,6 +523,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
         id
         ...PageSeo
         kidsPlayTherapyPage {
+          heroSectionId
           heroLabel
           heroHeading
           heroParagraph
@@ -579,6 +540,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
             }
           }
 
+          noticeSectionId
           noticeLabel
           noticeHeading
           noticeParagraph
@@ -594,6 +556,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
             }
           }
 
+          approachSectionId
           approachLabel
           approachHeading
           approachParagraph
@@ -604,6 +567,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
           }
           approachQuote
 
+          supportSectionId
           supportLabel
           supportHeading
           supportParagraph
@@ -624,6 +588,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
             buttonUrl
           }
 
+          processSectionId
           processLabel
           processHeading
           processParagraph
@@ -640,6 +605,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
           }
           processFootnote
 
+          roleSectionId
           roleLabel
           roleHeading
           roleParagraph
@@ -653,6 +619,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
             }
           }
 
+          teamSectionId
           teamLabel
           teamHeading
           teamParagraph
@@ -681,12 +648,14 @@ export const KIDS_PLAY_THERAPY_QUERY = `
             }
           }
 
+          insuranceSectionId
           insuranceLabel
           insuranceHeading
           insuranceParagraph
           insuranceButtonLabel
           insuranceButtonUrl
 
+          faqSectionId
           faqLabel
           faqHeading
           faqParagraph
@@ -702,6 +671,7 @@ export const KIDS_PLAY_THERAPY_QUERY = `
             }
           }
 
+          ctaSectionId
           ctaHeading
           ctaParagraph
           ctaButtonLabel
@@ -732,6 +702,7 @@ export const OUR_TEAM_QUERY = `
         id
         ...PageSeo
         ourTeamPage {
+          heroSectionId
           heroLabel
           heroHeading
           heroParagraph
@@ -743,6 +714,9 @@ export const OUR_TEAM_QUERY = `
           heroButtonLabel
           heroButtonUrl
 
+          teamSectionId
+
+          videoSectionId
           videoFile {
             node {
               mediaItemUrl
@@ -755,6 +729,7 @@ export const OUR_TEAM_QUERY = `
           }
           videoLabel
 
+          faqSectionId
           faqLabel
           faqHeading
           faqParagraph
@@ -770,6 +745,7 @@ export const OUR_TEAM_QUERY = `
             }
           }
 
+          ctaSectionId
           ctaHeading
           ctaParagraph
           ctaButtonLabel
@@ -799,6 +775,7 @@ export const MENTAL_HEALTH_QUERY = `
         id
         ...PageSeo
         mentalHealthPage {
+          heroSectionId
           heroLabel
           heroHeading
           heroParagraph
@@ -815,6 +792,7 @@ export const MENTAL_HEALTH_QUERY = `
             }
           }
 
+          introSectionId
           introLabel
           introHeading
           introParagraph
@@ -824,6 +802,7 @@ export const MENTAL_HEALTH_QUERY = `
             }
           }
 
+          supportSectionId
           supportLabel
           supportHeading
           supportParagraph
@@ -839,6 +818,7 @@ export const MENTAL_HEALTH_QUERY = `
             buttonUrl
           }
 
+          processSectionId
           processLabel
           processHeading
           processParagraph
@@ -852,6 +832,7 @@ export const MENTAL_HEALTH_QUERY = `
             }
           }
 
+          teamSectionId
           teamLabel
           teamHeading
           teamParagraph
@@ -867,6 +848,7 @@ export const MENTAL_HEALTH_QUERY = `
             }
           }
 
+          benefitsSectionId
           benefitsLabel
           benefitsHeading
           benefitsParagraph
@@ -883,6 +865,7 @@ export const MENTAL_HEALTH_QUERY = `
           }
           benefitsFootnote
 
+          faqSectionId
           faqLabel
           faqHeading
           faqParagraph
@@ -902,6 +885,7 @@ export const MENTAL_HEALTH_QUERY = `
             }
           }
 
+          ctaSectionId
           ctaHeading
           ctaParagraph
           ctaButtonLabel
@@ -931,6 +915,7 @@ export const PHYSICAL_HEALTH_QUERY = `
         id
         ...PageSeo
         physicalHealthPage {
+          heroSectionId
           heroLabel
           heroHeading
           heroParagraph
@@ -947,6 +932,7 @@ export const PHYSICAL_HEALTH_QUERY = `
             }
           }
 
+          introSectionId
           introLabel
           introHeading
           introParagraph
@@ -956,6 +942,7 @@ export const PHYSICAL_HEALTH_QUERY = `
             }
           }
 
+          supportSectionId
           supportLabel
           supportHeading
           supportParagraph
@@ -971,6 +958,7 @@ export const PHYSICAL_HEALTH_QUERY = `
             buttonUrl
           }
 
+          processSectionId
           processLabel
           processHeading
           processParagraph
@@ -984,6 +972,7 @@ export const PHYSICAL_HEALTH_QUERY = `
             }
           }
 
+          teamSectionId
           teamLabel
           teamHeading
           teamParagraph
@@ -999,6 +988,7 @@ export const PHYSICAL_HEALTH_QUERY = `
             }
           }
 
+          benefitsSectionId
           benefitsLabel
           benefitsHeading
           benefitsParagraph
@@ -1015,6 +1005,7 @@ export const PHYSICAL_HEALTH_QUERY = `
           }
           benefitsFootnote
 
+          faqSectionId
           faqLabel
           faqHeading
           faqParagraph
@@ -1034,6 +1025,7 @@ export const PHYSICAL_HEALTH_QUERY = `
             }
           }
 
+          ctaSectionId
           ctaHeading
           ctaParagraph
           ctaButtonLabel

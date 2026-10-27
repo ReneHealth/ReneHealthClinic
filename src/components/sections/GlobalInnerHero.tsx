@@ -17,6 +17,7 @@ export type CtaLinkType = {
   target?: string;
 };
 export type GlobalInnerHeroDataType = {
+  anchorId?: string;
   logo?: ImageDataType | null;
   label?: string;
   heading?: string;
@@ -53,6 +54,7 @@ export default function GlobalInnerHero({
   });
   return (
     <section
+      id={content?.anchorId}
       className={`relative flex h-[100lvh] min-h-[650px] max-h-[800px] items-center justify-center overflow-hidden pt-[150px] md:pt-0 ${className}`}
     >
       {imageSrc ? (

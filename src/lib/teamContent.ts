@@ -30,15 +30,18 @@ export type TeamCategoryType = {
   members: TeamMemberType[];
 };
 export interface VideoSectionContent {
+  anchorId?: string;
   src: string;
   poster: string;
   label: string;
 }
 export type TeamSectionType = {
+  anchorId?: string;
   categories: TeamCategoryType[];
   video?: VideoSectionContent[];
 };
 export type TeamHeroType = {
+  anchorId?: string;
   label: string;
   heading: string;
   paragraph: string;
