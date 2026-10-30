@@ -70,7 +70,6 @@ export default async function RootLayout({
   return (
     <html lang="en" className={boska.variable}>
       <body suppressHydrationWarning>
-        {/* Google Ads Tag */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18328119686"
           strategy="afterInteractive"
@@ -83,10 +82,8 @@ export default async function RootLayout({
             gtag('js', new Date());
 
             gtag('config', 'AW-18328119686');
-         
           `}
         </Script>
-        {/* 2. Global Phone Conversion Config */}
         <Script id="google-phone-conversion" strategy="afterInteractive">
           {`
             gtag('config', 'AW-18328119686/RuMMCPv-8NUcEIbTw6NE', {
@@ -95,7 +92,6 @@ export default async function RootLayout({
           `}
         </Script>
 
-        {/* 3. Global Click Listener for ANY tel: link on the site */}
         <Script id="global-phone-click-listener" strategy="afterInteractive">
           {`
             document.addEventListener('click', function(event) {

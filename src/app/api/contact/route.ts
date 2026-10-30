@@ -16,7 +16,6 @@ export async function POST(request: Request) {
       message,
     } = body;
 
-    // Required fields
     if (!name || !email || !message) {
       return NextResponse.json(
         {
@@ -27,7 +26,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check environment configuration
     if (!WORDPRESS_URL || !CONTACT_FORM_7_ID) {
       console.error(
         "Missing WORDPRESS_URL or CONTACT_FORM_7_ID environment variable."
@@ -44,7 +42,7 @@ export async function POST(request: Request) {
 
     const formData = new FormData();
     formData.append("_wpcf7", CONTACT_FORM_7_ID);
-formData.append("_wpcf7_unit_tag", `wpcf7-f${CONTACT_FORM_7_ID}-o1`);
+    formData.append("_wpcf7_unit_tag", `wpcf7-f${CONTACT_FORM_7_ID}-o1`);
     formData.append("name", name);
     formData.append("email", email);
     formData.append("phone", phone || "");

@@ -716,7 +716,6 @@ export default function Header({ menus, settings }: HeaderProps) {
           logo={settings.headerLogo}
           pathname={pathname}
         />
-        {/*  Google tag (gtag.js) */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-SSWBPG4RM3"

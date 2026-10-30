@@ -353,6 +353,7 @@ export function toHome(data: WpHomeQuery): HomeContent {
       title: str(panel.title),
       description: str(panel.description),
       cta: cta(panel.buttonLabel, panel.buttonUrl),
+      bookCta: cta(panel.bookButtonLabel, panel.bookButtonUrl),
       image: image(panel.image),
     })),
 

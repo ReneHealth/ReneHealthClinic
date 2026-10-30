@@ -10,6 +10,7 @@ export interface HeroPanel {
   title: string;
   description: Html;
   cta: CtaLink | null;
+  bookCta: CtaLink | null;
   image: MediaImage | null;
 }
 

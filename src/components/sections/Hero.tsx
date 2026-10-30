@@ -2,6 +2,8 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import { gsap, useGSAP } from "@/lib/gsap";
@@ -72,10 +74,13 @@ export default function Hero({
     <section
       ref={sectionRef}
       id={id}
-      className="relative flex h-[100svh] min-h-[640px] flex-col md:flex-row"
+      className="relative flex flex-col h-[100svh] min-h-[640px] md:flex-row"
     >
       {panels.map((panel, i) => (
-        <div key={i} className="relative flex-1 basis-0 overflow-hidden">
+        <div
+          key={i}
+          className="relative flex min-h-[40svh] overflow-hidden md:min-h-0 flex-1 basis-0"
+        >
           <div className="hero-photo absolute inset-0">
             {panel.image ? (
               <Image
@@ -89,8 +94,10 @@ export default function Hero({
             ) : null}
           </div>
 
+          <div className="absolute inset-0 bg-black/30 md:hidden" />
+
           <div
-            className={`relative z-10 flex h-full flex-col items-center justify-center px-8 text-center text-white ${i === 0 ? "pt-24 md:pt-0" : ""}`}
+            className={`relative z-10 flex w-full flex-col items-center justify-center px-8 py-14 text-center text-white md:py-0 ${i === 0 ? "pt-35 md:pt-0" : ""}`}
           >
             <SplitReveal
               as="h1"
@@ -108,9 +115,37 @@ export default function Hero({
               />
             </motion.div>
 
-            {panel.cta ? (
-              <motion.div {...enter(i, 2, 24)} className="mt-8">
-                <Button cta={panel.cta} variant="banner" size="sm" />
+            {panel.cta || panel.bookCta ? (
+              <motion.div
+                {...enter(i, 2, 24)}
+                className="mt-4 flex flex-col items-center gap-4 md:mt-8"
+              >
+                {panel.cta ? (
+                  <>
+                    <Link
+                      href={panel.cta.href}
+                      target={panel.cta.target}
+                      rel={
+                        panel.cta.target === "_blank"
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      className="touch-target inline-flex items-center gap-1.5 text-white underline underline-offset-4 transition-colors duration-300 hover:text-aqua md:hidden"
+                    >
+                      {panel.cta.label}
+                      <ArrowUpRight className="size-4" aria-hidden />
+                    </Link>
+                    <span className="hidden md:block">
+                      <Button cta={panel.cta} variant="banner" size="sm" />
+                    </span>
+                  </>
+                ) : null}
+
+                {panel.bookCta ? (
+                  <span className="md:hidden">
+                    <Button cta={panel.bookCta} variant="banner" size="sm" />
+                  </span>
+                ) : null}
               </motion.div>
             ) : null}
           </div>

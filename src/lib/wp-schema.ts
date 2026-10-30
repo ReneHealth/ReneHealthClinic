@@ -85,6 +85,8 @@ export interface WpHomePage {
         description: string | null;
         buttonLabel: string | null;
         buttonUrl: string | null;
+        bookButtonLabel: string | null;
+        bookButtonUrl: string | null;
         image: WpMediaNode | null;
       }[]
     | null;

@@ -177,6 +177,8 @@ export const HOME_QUERY = `
             description
             buttonLabel
             buttonUrl
+            bookButtonLabel
+            bookButtonUrl
             image {
               node {
                 ...Img
